@@ -6,6 +6,7 @@ import ReactFlow, {
   useEdgesState,
   Background,
   Controls,
+  MiniMap,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 
@@ -13,13 +14,22 @@ import Sidebar from './Components/Sidebar/Sidebar'
 import Custom from './Components/Custom/Custom'
 import Markdown from './Components/Markdown/Markdown'
 import Option from './Components/Option/Option'
+import { LeafNode, BranchNode, RootNode } from './Components/CustomNode/CustomNodes'
+const nodeTypes = {
+  leaf: LeafNode,
+  branch: BranchNode,
+  root: RootNode
+};
+
+
+
 
 const initialNodes = [
   {
     id: 'dndnode_head',
     data: { label: 'Root' },
     position: { x: 0, y: 0 },
-    type: 'input',
+    type: 'root',
   },
 ]
 
@@ -89,6 +99,7 @@ const DnDFlow = () => {
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
+            nodeTypes={nodeTypes}
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
@@ -103,6 +114,7 @@ const DnDFlow = () => {
             <Background />
             <Controls />
           </ReactFlow>
+          <MiniMap />
         </div>
         <Option option={option} setOption={setOption} />
         <Sidebar option={option} />

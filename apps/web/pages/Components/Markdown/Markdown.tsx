@@ -41,9 +41,13 @@ function Markdown({ marked, setMarked, setNode, option }) {
               <ReactMarkdown>{text}</ReactMarkdown>
             ) : (
               <textarea
+                className="text-area-style"
                 onChange={(e) => setText(e.target.value)}
                 value={text}
                 type="text"
+                style={{
+                  /* minHeight: 256, */
+                }}
                 disabled={option === 'reader'}
               ></textarea>
             )}

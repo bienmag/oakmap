@@ -53,6 +53,10 @@ a {
   font-size: 12px;
   background: #4e4e4e; */;
 }
+
+input {
+  @apply border-2 ml-4 mr-4;
+}
 .dndflow .markdown {
   @apply opacity-100 w-3/12 h-full z-20 absolute right-0  bg-white pl-4 pt-4
   /* opacity: 1;

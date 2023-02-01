@@ -24,7 +24,7 @@ function Option({ option, setOption }) {
           value={'creator'}
           className={
             (option === 'creator'
-              ? 'bg-green-500'
+              ? 'bg-green-600'
               : 'bg-slate-500 hover:bg-red-800') +
             '  bg-slate-500 border-2 p-4 rounded border-black'
           }

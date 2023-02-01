@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react'
-function Custom({ id, setNode }) {
+function Custom({ selected, setNode }) {
   const [nodeName, setNodeName] = useState('')
 
   const handleDelNode = () => {
-    setNode((nds) => nds.filter((nd) => nd.id !== id))
+    setNode((nds) => nds.filter((nd) => nd.id !== selected.id))
   }
+  useEffect(() => {
+    setNodeName(selected?.data?.label)
+  }, [selected])
+
   useEffect(() => {
     setNode((nds) =>
       nds.map((node) => {
-        if (node.id === id) {
+        if (node.id === selected.id) {
           // it's important that you create a new object here
           // in order to notify react flow about the change
           node.data = {
@@ -20,12 +24,12 @@ function Custom({ id, setNode }) {
         return node
       })
     )
-  }, [id, nodeName, setNode])
+  }, [selected.id, nodeName, setNode])
 
   return (
     <div className="custom">
       <div className="description">Custom Styles</div>
-      <h3>Current Selected Node: {id}</h3>
+      <h3>Current Selected Node: {selected.id}</h3>
       <label htmlFor="name">Name</label>
       <input
         onChange={(e) => setNodeName(e.target.value)}

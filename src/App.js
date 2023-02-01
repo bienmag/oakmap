@@ -78,7 +78,7 @@ const DnDFlow = () => {
             onDrop={onDrop}
             onDragOver={onDragOver}
             onNodeClick={(event, node) => {
-              setSelected(node.id)
+              setSelected(node)
             }}
             fitView
           >
@@ -87,7 +87,7 @@ const DnDFlow = () => {
           </ReactFlow>
         </div>
         <Sidebar />
-        <Custom id={selected} setNode={setNodes} />
+        <Custom selected={selected} setNode={setNodes} />
       </ReactFlowProvider>
     </div>
   )

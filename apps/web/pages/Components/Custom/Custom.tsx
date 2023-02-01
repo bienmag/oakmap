@@ -3,7 +3,7 @@ function Custom({ selected, setNode }) {
   const [nodeName, setNodeName] = useState('')
 
   const handleDelNode = () => {
-    setNode((nds) => nds.filter((nd) => nd.id !== selected.id))
+    setNode((nds) => nds.filter((nd) => nd.id !== 'dndnode_head' ? nd.id !== selected.id : nds))
   }
   useEffect(() => {
     setNodeName(selected?.data?.label)

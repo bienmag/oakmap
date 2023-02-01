@@ -14,17 +14,17 @@ export default function Sidebar({ option }) {
       </div>
       <div
         className="dndnode"
-        onDragStart={(event) => onDragStart(event, 'default')}
+        onDragStart={(event) => onDragStart(event, 'branch')}
         draggable
       >
         Branch
       </div>
       <div
         className="dndnode output"
-        onDragStart={(event) => onDragStart(event, 'output')}
+        onDragStart={(event) => onDragStart(event, 'leaf')}
         draggable
       >
-        Leave
+        Leaf
       </div>
     </aside>
   )

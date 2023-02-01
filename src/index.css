@@ -1,3 +1,9 @@
+* {
+  z-index: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .dndflow {
   flex-direction: column;
   display: flex;
@@ -15,6 +21,25 @@
 
 .dndflow aside .description {
   margin-bottom: 10px;
+}
+.dndflow .markdownBG {
+  opacity: 0.8;
+  z-index: 1;
+  width: 100vw;
+  height: 100%;
+  border-right: 1px solid #eee;
+  font-size: 12px;
+  background: #4e4e4e;
+}
+.dndflow .markdown {
+  opacity: 1;
+  width: 20vw;
+  height: 100%;
+  z-index: 2;
+  position: absolute;
+  right: 0;
+  font-size: 12px;
+  background: #ffffff;
 }
 .dndflow .custom {
   position: absolute;

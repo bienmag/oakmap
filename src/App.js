@@ -11,10 +11,18 @@ import 'reactflow/dist/style.css'
 
 import Sidebar from './Component/Sidebar'
 import Custom from './Component/Custom'
+import Markdown from './Component/Markdown'
 
 import './index.css'
 
-const initialNodes = []
+const initialNodes = [
+  {
+    id: 'dndnode_head',
+    data: { label: 'Root' },
+    position: { x: 0, y: 0 },
+    type: 'input',
+  },
+]
 
 let id = 0
 const getId = () => `dndnode_${id++}`
@@ -25,7 +33,7 @@ const DnDFlow = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
   const [reactFlowInstance, setReactFlowInstance] = useState(null)
   const [selected, setSelected] = useState('')
-
+  const [marked, setMarked] = useState('')
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     []
@@ -56,7 +64,7 @@ const DnDFlow = () => {
         id: getId(),
         type,
         position,
-        data: { label: `` },
+        data: { label: ``, text: '' },
       }
 
       setNodes((nds) => nds.concat(newNode))
@@ -78,6 +86,8 @@ const DnDFlow = () => {
             onDrop={onDrop}
             onDragOver={onDragOver}
             onNodeClick={(event, node) => {
+              if (selected && selected.id === node.id) setMarked(node)
+              else setMarked('')
               setSelected(node)
             }}
             fitView
@@ -88,6 +98,12 @@ const DnDFlow = () => {
         </div>
         <Sidebar />
         <Custom selected={selected} setNode={setNodes} />
+        <Markdown
+          marked={marked}
+          setMarked={setMarked}
+          setNode={setNodes}
+          selected={selected}
+        />
       </ReactFlowProvider>
     </div>
   )

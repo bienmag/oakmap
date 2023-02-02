@@ -92,7 +92,10 @@ const DnDFlow = () => {
   return (
     <div className="dndflow" style={{ height: '100vh' }}>
       <ReactFlowProvider>
-        <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+        <div
+          className="reactflow-wrapper absolute inset-0"
+          ref={reactFlowWrapper}
+        >
           <ReactFlow
             nodes={nodes}
             edges={edges}

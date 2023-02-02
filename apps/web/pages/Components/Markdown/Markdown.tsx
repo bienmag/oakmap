@@ -34,8 +34,9 @@ function Markdown({ marked, setMarked, setNode, option }) {
       {!marked ? (
         <div></div>
       ) : (
-        <div className="markdownBG" onClick={handleOnMarkDown}>
-          <div onClick={(e) => e.stopPropagation()} className="markdown">
+        <>
+          <div className="markdownBG" onClick={handleOnMarkDown}></div>
+          <div className="markdown">
             {option === 'reader' ? (
               <ReactMarkdown>{text}</ReactMarkdown>
             ) : (
@@ -53,7 +54,7 @@ function Markdown({ marked, setMarked, setNode, option }) {
               ></textarea>
             )}
           </div>
-        </div>
+        </>
       )}
     </div>
   )

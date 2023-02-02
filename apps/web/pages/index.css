@@ -43,8 +43,8 @@ a {
   /* margin-bottom: 10px; */;
 }
 
-.dndflow .markdownBG {
-  @apply opacity-80 z-10 w-screen h-full border-r-2 border-solid border-gray-200 text-xs bg-slate-500
+.markdownBG {
+  @apply opacity-80 z-10 w-screen h-full border-r-2 border-solid  text-xs bg-slate-500
   /* opacity: 0.8;
   z-index: 1;
   width: 100vw;
@@ -58,8 +58,8 @@ input {
   @apply border-2 ml-4 mr-4;
 }
 
-.dndflow .markdown {
-  @apply opacity-100 w-3/12 h-full z-20 absolute right-0 bg-white pl-4 pt-4 pr-4
+.markdown {
+  @apply opacity-100 w-3/12 h-full z-20 absolute top-0 right-0 bg-white pl-4 pt-4 pr-4
   /* opacity: 1;
   width: 20vw;
   height: 100%;

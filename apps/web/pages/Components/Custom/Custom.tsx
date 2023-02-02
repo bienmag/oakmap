@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react'
+// import { InputContext } from '../index';
+import { InputContext } from '../../index';
+
+
 function Custom({ selected, setNode }) {
   const [nodeName, setNodeName] = useState('')
 
@@ -31,8 +35,10 @@ function Custom({ selected, setNode }) {
     )
   }, [selected.id, nodeName, setNode])
 
+  const inputRef = React.useContext(InputContext);
+
   return (
-    <div className="custom ">
+    <div className="custom">
       <div className="description">Custom Styles</div>
       <h3>Current Selected Node: {selected === '' ? 'None' : selected.id}</h3>
       {selected === '' ? null : (
@@ -44,7 +50,9 @@ function Custom({ selected, setNode }) {
             type="text"
             name="name"
             disabled={selected === '' ? true : false}
+            ref={inputRef}
           />
+          {/* className="opacity-0" */}
           <button onClick={handleDelNode}> Delete</button>
         </div>
       )}

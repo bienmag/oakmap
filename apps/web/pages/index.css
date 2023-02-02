@@ -29,6 +29,9 @@ a {
   height: 100%; */
   ;
 }
+.react-flow {
+  @apply absolute;
+}
 
 .dndflow aside {
   @apply absolute border-r-2 border-solid border-gray-200 py-3.5 px-2.5 text-xs bg-white

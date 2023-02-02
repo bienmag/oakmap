@@ -104,6 +104,9 @@ const DnDFlow = () => {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            onPaneClick={() => {
+              setSelected('')
+            }}
             onNodeDoubleClick={(event, node) => {
               if (option === 'creator') setMarked(node)
             }}

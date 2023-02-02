@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react'
+import React, { useState, useRef, useCallback, useEffect, createContext } from 'react'
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -37,6 +37,8 @@ const initialNodes = [
 let id = 0
 const getId = () => `dndnode_${id++}`
 
+export const InputContext = createContext(null);
+
 const DnDFlow = () => {
   const reactFlowWrapper = useRef(null)
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
@@ -46,6 +48,8 @@ const DnDFlow = () => {
   const [selected, setSelected] = useState('')
   const [marked, setMarked] = useState('')
   const [option, setOption] = useState('creator')
+
+  const inputRef: any = useRef(null);
 
   useEffect(() => {
     setIsDraggable(option === 'creator')
@@ -91,54 +95,63 @@ const DnDFlow = () => {
 
   return (
     <div className="dndflow" style={{ height: '100vh' }}>
-      <ReactFlowProvider>
-        <div
-          className="reactflow-wrapper absolute inset-0"
-          ref={reactFlowWrapper}
-        >
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            nodesDraggable={isDraggable}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            nodeTypes={nodeTypes}
-            onInit={setReactFlowInstance}
-            onDrop={onDrop}
-            onDragOver={onDragOver}
-            onPaneClick={() => {
-              setSelected('')
-            }}
-            onNodeDoubleClick={(event, node) => {
-              if (option === 'creator') setMarked(node)
-            }}
-            onNodeClick={(event, node) => {
-              if (option === 'reader') setMarked(node)
-              setSelected(node)
-            }}
-            fitView
+      <InputContext.Provider value={inputRef}>
+        <ReactFlowProvider>
+          <div
+            className="reactflow-wrapper absolute inset-0"
+            ref={reactFlowWrapper}
           >
-            <Background />
-            <Controls />
-          </ReactFlow>
-          <MiniMap />
-        </div>
-        <Option option={option} setOption={setOption} />
-        <Sidebar option={option} />
-        {option === 'creator' ? (
-          <Custom selected={selected} setNode={setNodes} />
-        ) : (
-          <div></div>
-        )}
-        <Markdown
-          marked={marked}
-          setMarked={setMarked}
-          setNode={setNodes}
-          selected={selected}
-          option={option}
-        />
-      </ReactFlowProvider>
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              nodesDraggable={isDraggable}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onConnect={onConnect}
+              nodeTypes={nodeTypes}
+              onInit={setReactFlowInstance}
+              onDrop={onDrop}
+              onDragOver={onDragOver}
+              onPaneClick={() => {
+                setSelected('')
+              }}
+              onNodeDoubleClick={(event, node) => {
+                if (option === 'creator') {
+                  inputRef.current.focus()
+                  inputRef.current.select()
+                } // setMarked(node)
+              }}
+              onNodeClick={(event, node) => {
+                if (option === 'reader') setMarked(node)
+                setSelected(node)
+              }}
+              fitView
+            >
+              <Background />
+              <Controls />
+            </ReactFlow>
+            <MiniMap />
+          </div>
+          <Option option={option} setOption={setOption} />
+          <Sidebar option={option} />
+          {option === 'creator' ? (
+            <Custom
+              selected={selected}
+              setNode={setNodes}
+              marked={marked}
+              setMarked={setMarked} />
+          ) : (
+            <div></div>
+          )}
+          <Markdown
+            marked={marked}
+            setMarked={setMarked}
+            setNode={setNodes}
+            selected={selected}
+            option={option}
+          />
+        </ReactFlowProvider>
+      </InputContext.Provider>
     </div>
   )
 }

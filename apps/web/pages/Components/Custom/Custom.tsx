@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
-function Custom({ selected, setNode }) {
+// import { InputContext } from '../index';
+import { InputContext } from '../../index';
+
+
+function Custom({ selected, setNode, marked, setMarked }) {
   const [nodeName, setNodeName] = useState('')
 
   const handleDelNode = () => {
@@ -9,6 +13,11 @@ function Custom({ selected, setNode }) {
       )
     )
   }
+
+  /*   const handleMarkdown = () => {
+      setMarked(node)
+    } */
+
   useEffect(() => {
     if (selected) setNodeName(selected?.data?.label)
     else setNodeName('')
@@ -31,8 +40,10 @@ function Custom({ selected, setNode }) {
     )
   }, [selected.id, nodeName, setNode])
 
+  const inputRef = React.useContext(InputContext);
+
   return (
-    <div className="custom ">
+    <div className="custom">
       <div className="description">Custom Styles</div>
       <h3>Current Selected Node: {selected === '' ? 'None' : selected.id}</h3>
       {selected === '' ? null : (
@@ -44,7 +55,9 @@ function Custom({ selected, setNode }) {
             type="text"
             name="name"
             disabled={selected === '' ? true : false}
+            ref={inputRef}
           />
+          {/* className="opacity-0" */}
           <button onClick={handleDelNode}> Delete</button>
         </div>
       )}

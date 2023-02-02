@@ -19,6 +19,7 @@ export function LeafNode({ data }) {
 
 
 export function BranchNode({ data }) {
+
   return (
     <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-orange-900 w-40
     ">

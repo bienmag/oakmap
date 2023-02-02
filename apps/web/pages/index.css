@@ -29,6 +29,7 @@ a {
   height: 100%; */
   ;
 }
+
 .react-flow {
   @apply absolute;
 }
@@ -91,6 +92,22 @@ input {
   font-size: 12px;
   background: #fcfcfc; */
   ;
+}
+
+.dndflow .custom-name-input {
+  margin-top: 1rem;
+}
+
+.dndflow .custom-menu-buttons {
+  clear: both;
+  margin: 1rem;
+}
+
+.dndflow .custom-button {
+  clear: both;
+  margin: .5rem;
+  background-color: lightgrey;
+  padding: .2rem;
 }
 
 .dndflow .dndnode {

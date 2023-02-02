@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 
-function Markdown({ marked, setMarked, setNode, option }) {
+function Markdown({ marked, setMarked, setNodes, option }) {
   const handleOnMarkDown = (e) => {
     setMarked('')
   }
@@ -9,7 +9,7 @@ function Markdown({ marked, setMarked, setNode, option }) {
   const [text, setText] = useState('')
 
   useEffect(() => {
-    setNode((nds) =>
+    setNodes((nds) =>
       nds.map((node) => {
         if (node.id === marked.id) {
           // it's important that you create a new object here
@@ -23,7 +23,7 @@ function Markdown({ marked, setMarked, setNode, option }) {
         return node
       })
     )
-  }, [marked.id, text, setNode])
+  }, [marked.id, text, setNodes])
 
   useEffect(() => {
     setText(marked?.data?.text)

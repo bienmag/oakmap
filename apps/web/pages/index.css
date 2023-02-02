@@ -79,8 +79,21 @@ input {
   ;
 }
 
+/* .dndflow .flex-markdown {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+} */
+
 .dndflow .text-area-style {
   @apply w-5/6 h-1/3 absolute m-0 px-2 place-content-center;
+  height: 200px;
+  outline: 1px solid black;
+}
+
+.dndflow .markdown-buttons {
+  @apply w-5/6 h-1/3 absolute m-2 p-3 px-5 place-content-center;
+  top: 200px;
 }
 
 .dndflow .custom {
@@ -95,20 +108,17 @@ input {
 }
 
 .dndflow .custom-name-input {
-  margin-top: 1rem;
+  @apply mt-4;
 }
 
 .dndflow .custom-menu-buttons {
-  clear: both;
-  margin: 1rem;
+  @apply clear-both m-4;
 }
 
 .dndflow .custom-button {
-  clear: both;
-  margin: .5rem;
-  background-color: lightgrey;
-  padding: .2rem;
+  @apply clear-both m-2 bg-gray-200 p-2 w-24;
 }
+
 
 .dndflow .dndnode {
   @apply h-8 p-1 border-2 border-solid border-black rounded-sm mb-2 flex justify-center items-center cursor-grab

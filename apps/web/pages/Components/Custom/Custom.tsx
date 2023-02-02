@@ -45,7 +45,7 @@ function Custom({ selected, setNode, marked, setMarked }) {
   return (
     <div className="custom">
       <div className="description">Custom Styles</div>
-      <h3>Current Selected Node: {selected === '' ? 'None' : selected.id}</h3>
+      <h3> Selected Node: {selected === '' ? 'None' : selected.id}</h3>
       {selected === '' ? null : (
         <div>
           <label htmlFor="name">Name</label>

@@ -23,7 +23,6 @@ function Markdown({ marked, setMarked, setNode, option }) {
         return node
       })
     )
-    console.log('marked: ', marked)
   }, [marked.id, text, setNode])
 
   useEffect(() => {
@@ -45,9 +44,11 @@ function Markdown({ marked, setMarked, setNode, option }) {
                 onChange={(e) => setText(e.target.value)}
                 value={text}
                 type="text"
-                style={{
-                  /* minHeight: 256, */
-                }}
+                style={
+                  {
+                    /* minHeight: 256, */
+                  }
+                }
                 disabled={option === 'reader'}
               ></textarea>
             )}

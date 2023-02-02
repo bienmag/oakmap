@@ -7,7 +7,7 @@ html {
   font-family: 'Courier New', Courier, monospace;
 }
 
-.markdown > * {
+.markdown>* {
   all: revert;
 }
 
@@ -26,7 +26,8 @@ a {
   /* flex-direction: column;
   display: flex;
   flex-grow: 1;
-  height: 100%; */;
+  height: 100%; */
+  ;
 }
 
 .dndflow aside {
@@ -35,23 +36,26 @@ a {
   border-right: 1px solid #eee;
   padding: 15px 10px;
   font-size: 12px;
-  background: #fcfcfc; */;
+  background: #fcfcfc; */
+  ;
 }
 
 .dndflow aside .description {
   @apply mb-3
-  /* margin-bottom: 10px; */;
+  /* margin-bottom: 10px; */
+  ;
 }
 
 .markdownBG {
-  @apply opacity-80 z-10 w-screen h-full border-r-2 border-solid  text-xs bg-slate-500
+  @apply opacity-80 z-10 w-screen h-full border-r-2 border-solid text-xs bg-slate-500
   /* opacity: 0.8;
   z-index: 1;
   width: 100vw;
   height: 100%;
   border-right: 1px solid #eee;
   font-size: 12px;
-  background: #4e4e4e; */;
+  background: #4e4e4e; */
+  ;
 }
 
 input {
@@ -67,7 +71,8 @@ input {
   position: absolute;
   right: 0;
   font-size: 12px;
-  background: #ffffff; */;
+  background: #ffffff; */
+  ;
 }
 
 .dndflow .text-area-style {
@@ -81,7 +86,8 @@ input {
   border-right: 1px solid #eee;
   padding: 15px 10px;
   font-size: 12px;
-  background: #fcfcfc; */;
+  background: #fcfcfc; */
+  ;
 }
 
 .dndflow .dndnode {
@@ -94,7 +100,8 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: grab; */;
+  cursor: grab; */
+  ;
 }
 
 .dndflow .dndnode.input {
@@ -115,13 +122,15 @@ input {
 
 .dndflow .selectall {
   @apply mt-3
-  /* margin-top: 10px; */;
+  /* margin-top: 10px; */
+  ;
 }
 
 @media screen and (min-width: 768px) {
   .dndflow {
     @apply flex flex-row
-    /* flex-direction: row; */;
+    /* flex-direction: row; */
+    ;
   }
 
   .dndflow aside {

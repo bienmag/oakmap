@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { InputContext } from '../../index';
 
 
-function Custom({ selected, setNode }) {
+function Custom({ selected, setNode, marked, setMarked }) {
   const [nodeName, setNodeName] = useState('')
 
   const handleDelNode = () => {
@@ -13,6 +13,11 @@ function Custom({ selected, setNode }) {
       )
     )
   }
+
+  /*   const handleMarkdown = () => {
+      setMarked(node)
+    } */
+
   useEffect(() => {
     if (selected) setNodeName(selected?.data?.label)
     else setNodeName('')

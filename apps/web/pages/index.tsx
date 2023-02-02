@@ -135,7 +135,11 @@ const DnDFlow = () => {
           <Option option={option} setOption={setOption} />
           <Sidebar option={option} />
           {option === 'creator' ? (
-            <Custom selected={selected} setNode={setNodes} />
+            <Custom
+              selected={selected}
+              setNode={setNodes}
+              marked={marked}
+              setMarked={setMarked} />
           ) : (
             <div></div>
           )}

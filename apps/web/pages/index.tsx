@@ -14,15 +14,16 @@ import Sidebar from './Components/Sidebar/Sidebar'
 import Custom from './Components/Custom/Custom'
 import Markdown from './Components/Markdown/Markdown'
 import Option from './Components/Option/Option'
-import { LeafNode, BranchNode, RootNode } from './Components/CustomNode/CustomNodes'
+import {
+  LeafNode,
+  BranchNode,
+  RootNode,
+} from './Components/CustomNode/CustomNodes'
 const nodeTypes = {
   leaf: LeafNode,
   branch: BranchNode,
-  root: RootNode
-};
-
-
-
+  root: RootNode,
+}
 
 const initialNodes = [
   {
@@ -103,9 +104,13 @@ const DnDFlow = () => {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            onPaneClick={() => {
+              setSelected('')
+            }}
+            onNodeDoubleClick={(event, node) => {
+              if (option === 'creator') setMarked(node)
+            }}
             onNodeClick={(event, node) => {
-              if (selected && selected.id === node.id) setMarked(node)
-              else setMarked('')
               if (option === 'reader') setMarked(node)
               setSelected(node)
             }}

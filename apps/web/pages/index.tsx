@@ -111,7 +111,7 @@ const DnDFlow = () => {
               setSelected('')
             }}
             onNodeDoubleClick={(event, node) => {
-              if (option === 'creator') setMarked(node)
+              if (option === 'creator') 
             }}
             onNodeClick={(event, node) => {
               if (option === 'reader') setMarked(node)

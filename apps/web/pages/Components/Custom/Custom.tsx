@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 // import { InputContext } from '../index';
-import { InputContext } from '../../index';
-
+import { InputContext } from '../../index'
 
 function Custom({ selected, setNodes, setMarked }: any) {
   const [nodeName, setNodeName] = useState('')
@@ -40,7 +39,7 @@ function Custom({ selected, setNodes, setMarked }: any) {
     )
   }, [selected.id, nodeName, setNodes])
 
-  const inputRef = React.useContext(InputContext);
+  const inputRef = React.useContext(InputContext)
 
   return (
     <div className="custom">
@@ -59,8 +58,20 @@ function Custom({ selected, setNodes, setMarked }: any) {
           />
           {/* className="opacity-0" */}
           <div className="custom-menu-buttons">
-            <button className="custom-button hover:bg-red-400" onClick={handleDelNode}> Delete</button>
-            <button className="custom-button hover:bg-blue-400" onClick={handleMarkdown}> Markdown</button>
+            <button
+              className="custom-button hover:bg-red-400"
+              onClick={handleDelNode}
+            >
+              {' '}
+              Delete
+            </button>
+            <button
+              className="custom-button hover:bg-blue-400"
+              onClick={handleMarkdown}
+            >
+              {' '}
+              Markdown
+            </button>
           </div>
         </div>
       )}

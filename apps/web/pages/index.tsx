@@ -1,4 +1,10 @@
-import React, { useState, useRef, useCallback, useEffect, createContext } from 'react'
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+  createContext,
+} from 'react'
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -37,7 +43,7 @@ const initialNodes = [
 let id = 0
 const getId = () => `dndnode_${id++}`
 
-export const InputContext = createContext(null);
+export const InputContext = createContext(null)
 
 const DnDFlow = () => {
   const reactFlowWrapper = useRef(null)
@@ -49,7 +55,7 @@ const DnDFlow = () => {
   const [marked, setMarked] = useState('')
   const [option, setOption] = useState('creator')
 
-  const inputRef: any = useRef(null);
+  const inputRef: any = useRef(null)
 
   useEffect(() => {
     setIsDraggable(option === 'creator')
@@ -111,6 +117,7 @@ const DnDFlow = () => {
               nodeTypes={nodeTypes}
               onInit={setReactFlowInstance}
               onDrop={onDrop}
+              deleteKeyCode={null}
               onDragOver={onDragOver}
               onPaneClick={() => {
                 setSelected('')
@@ -139,7 +146,8 @@ const DnDFlow = () => {
             <Custom
               selected={selected}
               setNodes={setNodes}
-              setMarked={setMarked} />
+              setMarked={setMarked}
+            />
           ) : (
             <div></div>
           )}

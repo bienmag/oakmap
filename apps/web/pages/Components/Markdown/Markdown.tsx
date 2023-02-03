@@ -40,76 +40,90 @@ function Markdown({ marked, setMarked, setNodes, option }) {
     setText(text.slice(0, start) + insertion + text.slice(end) + '\n')
   }
 
-  return (
-    <div>
-      {!marked ? (
-        <div></div>
-      ) : (
-        <>
-          <div className="markdownBG" onClick={handleOnMarkDown}></div>
-          <div className="markdown">
-            {option === 'reader' ? (
-              <ReactMarkdown>{text}</ReactMarkdown>
-            ) : (
-              <div className="flex-markdown">
-                <textarea
-                  className="text-area-style"
-                  onChange={(e) => setText(e.target.value)}
-                  value={text}
-                  type="text"
-                  disabled={option === 'reader'}
-                  ref={textAreaRef}
-                ></textarea>
-                <div className="markdown-buttons">
-                  <button
-                    className="custom-button hover:bg-blue-400"
-                    onClick={() => insertText('# Headline')}
-                  >
-                    Headline
-                  </button>
-                  <button
-                    className="custom-button hover:bg-blue-400"
-                    onClick={() =>
-                      insertText('[title](https://www.google.com)')
-                    }
-                  >
-                    Link
-                  </button>
-                  <button
-                    className="custom-button hover:bg-blue-400"
-                    onClick={() => insertText('**Bold**')}
-                  >
-                    Bold
-                  </button>
-                  <button
-                    className="custom-button hover:bg-blue-400"
-                    onClick={() => insertText('*Italics*')}
-                  >
-                    Italics
-                  </button>
-                  <button
-                    className="custom-button hover:bg-blue-400"
-                    onClick={() =>
-                      insertText('* List Item 1\n* List Item 2\n* List Item 3')
-                    }
-                  >
-                    List
-                  </button>
-                  <button
-                    className="custom-button hover:bg-blue-400"
-                    onClick={() => insertText('`Code`')}
-                  >
-                    Code
-                  </button>
-                  {/* Add more buttons for other formatting options */}
-                </div>
-              </div>
-            )}
+  //reader and no text
+  if (marked && option === 'reader' && marked.data.text === "" || marked.data?.text === undefined) {
+    return (
+      <div></div>
+    )
+  }
+
+  //reader and text
+  else if (marked && option === 'reader' && marked.data.text !== "") {
+    return (
+      <>
+        <div className="markdownBG" onClick={handleOnMarkDown}></div>
+        <div className="markdown">
+          <ReactMarkdown>{text}</ReactMarkdown>
+        </div>
+      </>
+    )
+  }
+
+  // creator
+  else if (marked && option === 'creator') {
+    return (
+      <>
+        <div className="markdownBG" onClick={handleOnMarkDown}></div>
+        <div className="markdown">
+          <div className="flex-markdown">
+            <textarea
+              className="text-area-style"
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+              type="text"
+              disabled={option === 'reader'}
+              ref={textAreaRef}
+            ></textarea>
+            <div className="markdown-buttons">
+              <button
+                className="custom-button hover:bg-blue-400"
+                onClick={() => insertText('# Headline')}
+              >
+                Headline
+              </button>
+              <button
+                className="custom-button hover:bg-blue-400"
+                onClick={() =>
+                  insertText('[title](https://www.google.com)')
+                }
+              >
+                Link
+              </button>
+              <button
+                className="custom-button hover:bg-blue-400"
+                onClick={() => insertText('**Bold**')}
+              >
+                Bold
+              </button>
+              <button
+                className="custom-button hover:bg-blue-400"
+                onClick={() => insertText('*Italics*')}
+              >
+                Italics
+              </button>
+              <button
+                className="custom-button hover:bg-blue-400"
+                onClick={() =>
+                  insertText('* List Item 1\n* List Item 2\n* List Item 3')
+                }
+              >
+                List
+              </button>
+              <button
+                className="custom-button hover:bg-blue-400"
+                onClick={() => insertText('`Code`')}
+              >
+                Code
+              </button>
+              {/* Add more buttons for other formatting options */}
+            </div>
           </div>
-        </>
-      )}
-    </div>
-  )
+
+        </div>
+
+      </>
+    )
+  }
 }
 
 export default Markdown

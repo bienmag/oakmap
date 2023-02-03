@@ -17,7 +17,7 @@ const useValidatorFn = () => {
 
 export function LeafNode({ data }) {
   return (
-    <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-green-700 w-36 
+    <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-green-700 w-36  hover:bg-gray-200
     ">
       <div className="flex justify-center text-center">
         <div className="ml-2">
@@ -34,7 +34,7 @@ export function LeafNode({ data }) {
 export function BranchNode({ data }) {
 
   return (
-    <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-orange-900 w-40
+    <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-orange-900 w-40 hover:bg-gray-200
     ">
       <div className="flex justify-center text-center">
         <div className="ml-2">
@@ -49,7 +49,7 @@ export function BranchNode({ data }) {
 
 export function RootNode({ data }) {
   return (
-    <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-green-600 bg-green-300 w-52
+    <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-green-600 bg-green-300 w-52 hover:bg-green-400
     ">
       <div className="flex justify-center text-center">
         <div className="ml-2 ">

@@ -19,12 +19,20 @@ export default function Sidebar({ option }) {
       >
         Branch
       </div>
+
       <div
         className="dndnode output"
-        onDragStart={(event) => onDragStart(event, 'leaf')}
+        onDragStart={(event) => onDragStart(event, 'leftLeaf')}
         draggable
       >
-        Leaf
+        Left Leaf
+      </div>
+      <div
+        className="dndnode output"
+        onDragStart={(event) => onDragStart(event, 'rightLeaf')}
+        draggable
+      >
+        Right Leaf
       </div>
     </aside>
   )

@@ -22,7 +22,8 @@ import Custom from './Components/Custom/Custom'
 import Markdown from './Components/Markdown/Markdown'
 import Option from './Components/Option/Option'
 import {
-  LeafNode,
+  leftLeafNode,
+  rightLeafNode,
   BranchNode,
   RootNode,
 } from './Components/CustomNode/CustomNodes'
@@ -30,7 +31,8 @@ import {
 
 
 const nodeTypes = {
-  leaf: LeafNode,
+  rightLeaf: rightLeafNode,
+  leftLeaf: leftLeafNode,
   branch: BranchNode,
   root: RootNode,
 }
@@ -102,6 +104,8 @@ const DnDFlow = () => {
     },
     [reactFlowInstance, setNodes]
   )
+
+  console.log(nodes)
 
   return (
     <div className="dndflow" style={{ height: '100vh' }}>

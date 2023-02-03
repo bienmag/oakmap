@@ -13,6 +13,7 @@ import ReactFlow, {
   Background,
   Controls,
   MiniMap,
+  ConnectionLineType,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 
@@ -25,6 +26,9 @@ import {
   BranchNode,
   RootNode,
 } from './Components/CustomNode/CustomNodes'
+
+
+
 const nodeTypes = {
   leaf: LeafNode,
   branch: BranchNode,
@@ -135,7 +139,10 @@ const DnDFlow = () => {
               }}
               fitView
             >
-              <Background />
+
+              {option === 'creator' ? (
+                <Background />) : (<Background variant='lines' />)
+              }
               <Controls />
             </ReactFlow>
             <MiniMap />

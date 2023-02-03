@@ -1,5 +1,18 @@
-import React, { memo } from 'react'
-import { Handle, Position } from 'reactflow';
+import React, { memo, useCallback } from 'react'
+import { getConnectedEdges, Handle, Position, useReactFlow } from 'reactflow';
+
+
+const useValidatorFn = () => {
+  const { getNode, getEdges } = useReactFlow()
+
+  return useCallback((connection) => {
+    const edges = getConnectedEdges([getNode(connection.target)], getEdges())
+
+    return !edges.length
+  },
+    [getNode, getEdges])
+}
+
 
 
 export function LeafNode({ data }) {
@@ -12,7 +25,7 @@ export function LeafNode({ data }) {
         </div>
       </div>
 
-      <Handle type="target" position={Position.Top} className="w-16 !bg-green-700" />
+      <Handle type="target" position={Position.Top} isValidConnection={useValidatorFn()} className="w-16 !bg-green-700" />
     </div >
   )
 }

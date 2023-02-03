@@ -119,6 +119,7 @@ const DnDFlow = () => {
                 if (option === 'creator') {
                   inputRef.current.focus()
                   inputRef.current.select()
+                  console.log('node: ', node)
                 } // setMarked(node)
               }}
               onNodeClick={(event, node) => {
@@ -137,8 +138,7 @@ const DnDFlow = () => {
           {option === 'creator' ? (
             <Custom
               selected={selected}
-              setNode={setNodes}
-              marked={marked}
+              setNodes={setNodes}
               setMarked={setMarked} />
           ) : (
             <div></div>
@@ -146,7 +146,7 @@ const DnDFlow = () => {
           <Markdown
             marked={marked}
             setMarked={setMarked}
-            setNode={setNodes}
+            setNodes={setNodes}
             selected={selected}
             option={option}
           />

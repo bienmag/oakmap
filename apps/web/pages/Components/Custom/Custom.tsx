@@ -3,20 +3,20 @@ import React, { useState, useEffect } from 'react'
 import { InputContext } from '../../index';
 
 
-function Custom({ selected, setNode, marked, setMarked }) {
+function Custom({ selected, setNodes, setMarked }: any) {
   const [nodeName, setNodeName] = useState('')
 
   const handleDelNode = () => {
-    setNode((nds) =>
+    setNodes((nds) =>
       nds.filter((nd) =>
         nd.id !== 'dndnode_head' ? nd.id !== selected.id : nds
       )
     )
   }
 
-  /*   const handleMarkdown = () => {
-      setMarked(node)
-    } */
+  const handleMarkdown = () => {
+    setMarked(selected)
+  }
 
   useEffect(() => {
     if (selected) setNodeName(selected?.data?.label)
@@ -24,7 +24,7 @@ function Custom({ selected, setNode, marked, setMarked }) {
   }, [selected])
 
   useEffect(() => {
-    setNode((nds) =>
+    setNodes((nds) =>
       nds.map((node) => {
         if (node.id === selected.id) {
           // it's important that you create a new object here
@@ -38,7 +38,7 @@ function Custom({ selected, setNode, marked, setMarked }) {
         return node
       })
     )
-  }, [selected.id, nodeName, setNode])
+  }, [selected.id, nodeName, setNodes])
 
   const inputRef = React.useContext(InputContext);
 
@@ -47,7 +47,7 @@ function Custom({ selected, setNode, marked, setMarked }) {
       <div className="description">Custom Styles</div>
       <h3> Selected Node: {selected === '' ? 'None' : selected.id}</h3>
       {selected === '' ? null : (
-        <div>
+        <div className="custom-name-input">
           <label htmlFor="name">Name</label>
           <input
             onChange={(e) => setNodeName(e.target.value)}
@@ -58,7 +58,10 @@ function Custom({ selected, setNode, marked, setMarked }) {
             ref={inputRef}
           />
           {/* className="opacity-0" */}
-          <button onClick={handleDelNode}> Delete</button>
+          <div className="custom-menu-buttons">
+            <button className="custom-button hover:bg-red-400" onClick={handleDelNode}> Delete</button>
+            <button className="custom-button hover:bg-blue-400" onClick={handleMarkdown}> Markdown</button>
+          </div>
         </div>
       )}
     </div>

@@ -43,8 +43,7 @@ a {
 }
 
 .dndflow aside .description {
-  @apply mb-3
-  /* margin-bottom: 10px; */;
+  @apply mb-3;
 }
 
 .markdownBG {
@@ -115,7 +114,6 @@ input {
   @apply clear-both m-2 bg-gray-200 p-2 w-24;
 }
 
-
 .dndflow .dndnode {
   @apply h-8 p-1 border-2 border-solid border-black rounded-sm mb-2 flex justify-center items-center cursor-grab
   /* height: 20px;
@@ -130,11 +128,11 @@ input {
 }
 
 .dndflow .dndnode.input {
-  border-color: #0041d0;
+  @apply border-orange-900 rounded-md hover:bg-gray-100;
 }
 
 .dndflow .dndnode.output {
-  border-color: #ff0072;
+  @apply border-green-700 rounded-md hover:bg-gray-100;
 }
 
 .dndflow .reactflow-wrapper {
@@ -157,7 +155,6 @@ input {
   }
 
   .dndflow aside {
-    width: 20%;
-    max-width: 250px;
+    @apply w-1/5 max-w-xs mt-48 border-2 rounded-xl pl-2 pr-4;
   }
 }

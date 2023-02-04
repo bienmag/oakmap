@@ -17,7 +17,7 @@ import ReactFlow, {
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 
-import Sidebar from './Components/Sidebar/Sidebar'
+// import Sidebar from './Components/Sidebar/Sidebar'
 import Custom from './Components/Custom/Custom'
 import Markdown from './Components/Markdown/Markdown'
 import Option from './Components/Option/Option'
@@ -39,7 +39,7 @@ const nodeTypes = {
 
 const initialNodes = [
   {
-    id: 'dndnode_head',
+    id: 'node_head',
     data: { label: 'Root' },
     position: { x: 0, y: 0 },
     type: 'root',
@@ -47,7 +47,7 @@ const initialNodes = [
 ]
 
 let id = 0
-const getId = () => `dndnode_${id++}`
+const getId = () => `node_${id++}`
 
 export const InputContext = createContext(null)
 
@@ -105,7 +105,7 @@ const DnDFlow = () => {
     [reactFlowInstance, setNodes]
   )
 
-  console.log(nodes)
+
 
   return (
     <div className="dndflow" style={{ height: '100vh' }}>
@@ -134,7 +134,7 @@ const DnDFlow = () => {
                 if (option === 'creator') {
                   inputRef.current.focus()
                   inputRef.current.select()
-                  console.log('node: ', node)
+
                 } // setMarked(node)
               }}
               onNodeClick={(event, node) => {
@@ -152,12 +152,13 @@ const DnDFlow = () => {
             <MiniMap />
           </div>
           <Option option={option} setOption={setOption} />
-          <Sidebar option={option} />
+          {/* <Sidebar option={option} /> */}
           {option === 'creator' ? (
             <Custom
               selected={selected}
               setNodes={setNodes}
               setMarked={setMarked}
+              option={option}
             />
           ) : (
             <div></div>

@@ -17,6 +17,8 @@ import ReactFlow, {
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 
+import DescriptionMenu from './Components/DescriptionMenu/DescriptionMenu'
+
 // import Sidebar from './Components/Sidebar/Sidebar'
 import Custom from './Components/Custom/Custom'
 import Markdown from './Components/Markdown/Markdown'
@@ -61,6 +63,13 @@ const DnDFlow = () => {
   const [marked, setMarked] = useState('')
   const [option, setOption] = useState('creator')
 
+  // Draggable State
+  const [isOpen, setIsOpen] = useState(false)
+
+  const openBottomSheet = () => setIsOpen(true)
+  const closeBottomSheet = () => setIsOpen(false)
+
+  // useRef for double click on node to focus on input text
   const inputRef: any = useRef(null)
 
   useEffect(() => {
@@ -104,6 +113,13 @@ const DnDFlow = () => {
     },
     [reactFlowInstance, setNodes]
   )
+
+  // Description Menu markdown
+  const [description, setDescription] = useState('')
+
+  useEffect(() => {
+    setDescription(marked?.data?.text)
+  }, [marked])
 
 
 
@@ -151,7 +167,7 @@ const DnDFlow = () => {
             </ReactFlow>
             <MiniMap />
           </div>
-          <Option option={option} setOption={setOption} />
+          <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} />
           {/* <Sidebar option={option} /> */}
           {option === 'creator' ? (
             <Custom
@@ -172,7 +188,16 @@ const DnDFlow = () => {
           />
         </ReactFlowProvider>
       </InputContext.Provider>
-    </div>
+      <div>
+        <DescriptionMenu
+          isOpen={isOpen}
+          closeBottomSheet={closeBottomSheet}
+          setDescription={setDescription}
+          description={description}
+          option={option}
+        />
+      </div >
+    </div >
   )
 }
 

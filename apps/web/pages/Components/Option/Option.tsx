@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
 
-function Option({ option, setOption }) {
+function Option({ option, setOption, openBottomSheet }) {
   return (
     <div className="  absolute inset-x-0 top-0 flex justify-center  ">
       <div className=" m-5">
@@ -31,6 +31,11 @@ function Option({ option, setOption }) {
           disabled={option === 'creator'}
         >
           Creator
+        </button>
+      </div>
+      <div className=" m-5">
+        <button className="bg-white border-2 p-4 rounded border-black hover:bg-red-800" onClick={openBottomSheet}>
+          Info
         </button>
       </div>
     </div>

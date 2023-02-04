@@ -15,7 +15,7 @@ const useValidatorFn = () => {
 
 
 
-export function LeafNode({ data }) {
+export function rightLeafNode({ data }) {
 
   const leafText = data.text
   return (
@@ -28,7 +28,7 @@ export function LeafNode({ data }) {
           </div>
         </div>
 
-        <Handle type="target" position={Position.Top} isValidConnection={useValidatorFn()} className="w-16 !bg-green-700" />
+        <Handle type="target" position={Position.Left} isValidConnection={useValidatorFn()} className="w-16 !bg-green-700" />
       </div >) : (<div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-green-700 w-36  
     ">
         <div className="flex justify-center text-center">
@@ -37,13 +37,46 @@ export function LeafNode({ data }) {
           </div>
         </div>
 
-        <Handle type="target" position={Position.Top} isValidConnection={useValidatorFn()} className="w-16 !bg-green-700" />
+        <Handle type="target" position={Position.Left} isValidConnection={useValidatorFn()} className="w-16 !bg-green-700" />
       </div >)}
 
     </div>
 
   )
 }
+
+
+export function leftLeafNode({ data }) {
+
+  const leafText = data.text
+  return (
+    <div>
+      {leafText !== "" ? (<div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-green-700 w-36  hover:bg-gray-200
+    ">
+        <div className="flex justify-center text-center">
+          <div className="ml-2">
+            <div className="text-sm font-bold">{data.label}</div>
+          </div>
+        </div>
+
+        <Handle type="target" position={Position.Right} isValidConnection={useValidatorFn()} className="w-16 !bg-green-700" />
+      </div >) : (<div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-green-700 w-36  
+    ">
+        <div className="flex justify-center text-center">
+          <div className="ml-2">
+            <div className="text-sm font-bold">{data.label}</div>
+          </div>
+        </div>
+
+        <Handle type="target" position={Position.Right} isValidConnection={useValidatorFn()} className="w-16 !bg-green-700" />
+      </div >)}
+
+    </div>
+
+  )
+}
+
+
 
 
 export function BranchNode({ data }) {

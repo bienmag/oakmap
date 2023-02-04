@@ -22,32 +22,16 @@ import Custom from './Components/Custom/Custom'
 import Markdown from './Components/Markdown/Markdown'
 import Option from './Components/Option/Option'
 import {
-  leftLeafNode,
-  rightLeafNode,
-  BranchNode,
-  RootNode,
-} from './Components/CustomNode/CustomNodes'
-
-
-
-const nodeTypes = {
-  rightLeaf: rightLeafNode,
-  leftLeaf: leftLeafNode,
-  branch: BranchNode,
-  root: RootNode,
-}
-
-const initialNodes = [
-  {
-    id: 'node_head',
-    data: { label: 'Root' },
-    position: { x: 0, y: 0 },
-    type: 'root',
-  },
-]
-
-let id = 0
-const getId = () => `node_${id++}`
+  nodeTypes,
+  initialNodes,
+  getId,
+  CBackOnDragOver,
+  CBackOnDrop,
+  handleOnPaneClick,
+  handleOnNodeClick,
+  handleOnNodeDoubleClick,
+} from '../Resources/Packages/RFlow/RFlow'
+import { CREATOR } from '../Resources/Enums/Options'
 
 export const InputContext = createContext(null)
 
@@ -59,12 +43,12 @@ const DnDFlow = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null)
   const [selected, setSelected] = useState('')
   const [marked, setMarked] = useState('')
-  const [option, setOption] = useState('creator')
+  const [option, setOption] = useState(CREATOR)
 
   const inputRef: any = useRef(null)
 
   useEffect(() => {
-    setIsDraggable(option === 'creator')
+    setIsDraggable(option === CREATOR)
   }, [option])
 
   const onConnect = useCallback(
@@ -72,40 +56,13 @@ const DnDFlow = () => {
     []
   )
 
-  const onDragOver = useCallback((event) => {
-    event.preventDefault()
-    event.dataTransfer.dropEffect = 'move'
-  }, [])
+  const onDragOver = useCallback((event) => CBackOnDragOver(event), [])
 
   const onDrop = useCallback(
-    (event) => {
-      event.preventDefault()
-
-      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
-      const type = event.dataTransfer.getData('application/reactflow')
-
-      // check if the dropped element is valid
-      if (typeof type === 'undefined' || !type) {
-        return
-      }
-
-      const position = reactFlowInstance.project({
-        x: event.clientX - reactFlowBounds.left,
-        y: event.clientY - reactFlowBounds.top,
-      })
-      const newNode = {
-        id: getId(),
-        type,
-        position,
-        data: { label: ``, text: '' },
-      }
-
-      setNodes((nds) => nds.concat(newNode))
-    },
+    (event) =>
+      CBackOnDrop(event, reactFlowWrapper, reactFlowInstance, setNodes),
     [reactFlowInstance, setNodes]
   )
-
-
 
   return (
     <div className="dndflow" style={{ height: '100vh' }}>
@@ -127,33 +84,27 @@ const DnDFlow = () => {
               onDrop={onDrop}
               deleteKeyCode={null}
               onDragOver={onDragOver}
-              onPaneClick={() => {
-                setSelected('')
-              }}
-              onNodeDoubleClick={(event, node) => {
-                if (option === 'creator') {
-                  inputRef.current.focus()
-                  inputRef.current.select()
-
-                } // setMarked(node)
-              }}
-              onNodeClick={(event, node) => {
-                if (option === 'reader') setMarked(node)
-                setSelected(node)
-              }}
+              onPaneClick={() => handleOnPaneClick(setSelected)}
+              onNodeDoubleClick={(event, node) =>
+                handleOnNodeDoubleClick(option, inputRef)
+              }
+              onNodeClick={(event, node) =>
+                handleOnNodeClick(node, option, setMarked, setSelected)
+              }
               fitView
             >
-
-              {option === 'creator' ? (
-                <Background />) : (<Background variant='lines' />)
-              }
+              {option === CREATOR ? (
+                <Background />
+              ) : (
+                <Background variant="lines" />
+              )}
               <Controls />
             </ReactFlow>
             <MiniMap />
           </div>
           <Option option={option} setOption={setOption} />
           {/* <Sidebar option={option} /> */}
-          {option === 'creator' ? (
+          {option === CREATOR ? (
             <Custom
               selected={selected}
               setNodes={setNodes}

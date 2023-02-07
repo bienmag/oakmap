@@ -1,7 +1,7 @@
 // import express, { Express, Request, Response } from "express";
 import express from "express";
 import dotenv from 'dotenv'
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 import { ObjectId } from "mongodb";
 
 
@@ -11,18 +11,17 @@ const app = express()
 const port = 8080
 
 //change to dotenv later
-mongoose.connect("mongodb+srv://bienmag:12345@cluster0.flb34gb.mongodb.net/?retryWrites=true&w=majority").then(() =>
+mongoose.connect("mongodb+srv://bienmag:12345@oakmap.kjrgfwk.mongodb.net/?retryWrites=true&w=majority").then(() =>
   console.log("✅ Database connection successful")).catch(() => console.log("database connection error")
   )
 
 
 
-const TreeSchema = {
-
+const TreeSchema = new mongoose.Schema({
   name: String,
   author: String,
 
-}
+})
 
 
 const Tree = mongoose.model(
@@ -35,7 +34,7 @@ const Tree = mongoose.model(
 
 
 // @ts-ignore
-Tree.findOne({ author: "Rita" }, (err, foundItem) => {
+Tree.findOne({}, (err, foundItem) => {
   if (err) {
     console.log(err)
   } else {

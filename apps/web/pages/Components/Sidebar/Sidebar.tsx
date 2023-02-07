@@ -49,7 +49,7 @@ import React, {
 */
 
 ////////////////////////////////////////////
-//////// TAILWIND STUFF ////////////////////
+//////// TAILWIND TEMPLATE CODE ////////////////////
 ///////////////////////////////////////////
 
 
@@ -132,10 +132,7 @@ const nodeTypes = {
 
 
 export function Sidebar() { // removed epxort default
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // from Tailwind
-    
-// OUR CODE STARTS HERE:
-
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // from Tailwind UI
   
     const reactFlowWrapper = useRef(null)
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
@@ -206,10 +203,7 @@ export function Sidebar() { // removed epxort default
   
 
 
-      
-
-
-// MOSTLY TAILWIND CODE
+// MOSTLY TAILWIND TEMPLATE CODE
 
   return (
     <>
@@ -292,14 +286,20 @@ export function Sidebar() { // removed epxort default
             </div>
             <div className="ml-10 flex flex-shrink-0 items-center space-x-10 pr-4">
               <nav aria-label="Global" className="flex space-x-10">
-                <a href="#" className="text-sm font-medium text-gray-900">
-                  Inboxes
+              <a href="#" className="text-sm font-medium text-gray-900">
+                  Info
+                </a>
+              <a href="#" className="text-sm font-medium text-gray-900">
+                  Edit
                 </a>
                 <a href="#" className="text-sm font-medium text-gray-900">
-                  Reporting
+                  Author
                 </a>
                 <a href="#" className="text-sm font-medium text-gray-900">
-                  Settings
+                <img src="" alt="Watch List" className="text-sm font-medium text-gray-900"/>
+                </a>
+                <a href="#" className="text-sm font-medium text-gray-900">
+                <img src="" alt="Share Link" className="text-sm font-medium text-gray-900"/>
                 </a>
               </nav>
               <div className="flex items-center space-x-8">

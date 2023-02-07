@@ -509,69 +509,71 @@ export function Sidebar() { // removed epxort default
                 Home
               </h1>
                           {/* YOUR CONTENT */}
-                          <div className="dndflow" style={{ height: '100vh' }}>
-      <InputContext.Provider value={inputRef}>
-        <ReactFlowProvider>
-          <div
-            className="reactflow-wrapper absolute inset-0"
-            ref={reactFlowWrapper}
-          >
-            <ReactFlow
-              nodes={nodes}
-              edges={edges}
-              nodesDraggable={isDraggable}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              onConnect={onConnect}
-              nodeTypes={nodeTypes}
-              onInit={setReactFlowInstance}
-              onDrop={onDrop}
-              deleteKeyCode={null}
-              onDragOver={onDragOver}
-              onPaneClick={() => {
-                setSelected('')
-              }}
-              onNodeDoubleClick={(event, node) => {
-                if (option === 'creator') {
-                  inputRef.current.focus()
-                  inputRef.current.select()
+              <div className="dndflow" style={{ height: '100vh' }}>
+                <InputContext.Provider value={inputRef}>
+                  <div className="React-Flow-Container">
+                  <ReactFlowProvider>
+                  <div
+                    className="reactflow-wrapper absolute inset-0"
+                    ref={reactFlowWrapper}
+                  >
+                    <ReactFlow
+                      nodes={nodes}
+                      edges={edges}
+                      nodesDraggable={isDraggable}
+                      onNodesChange={onNodesChange}
+                      onEdgesChange={onEdgesChange}
+                      onConnect={onConnect}
+                      nodeTypes={nodeTypes}
+                      onInit={setReactFlowInstance}
+                      onDrop={onDrop}
+                      deleteKeyCode={null}
+                      onDragOver={onDragOver}
+                      onPaneClick={() => {
+                        setSelected('')
+                      }}
+                      onNodeDoubleClick={(event, node) => {
+                        if (option === 'creator') {
+                          inputRef.current.focus()
+                          inputRef.current.select()
 
-                } // setMarked(node)
-              }}
-              onNodeClick={(event, node) => {
-                if (option === 'reader') setMarked(node)
-                setSelected(node)
-              }}
-              fitView
-            >
+                        } // setMarked(node)
+                      }}
+                      onNodeClick={(event, node) => {
+                        if (option === 'reader') setMarked(node)
+                        setSelected(node)
+                      }}
+                      fitView
+                    >
 
-              {option === 'creator' ? (
-                <Background />) : (<Background variant='lines' />)
-              }
-              <Controls />
-            </ReactFlow>
-            <MiniMap />
-          </div>
-          <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} />
-          {/* <Sidebar option={option} /> */}
-          {option === 'creator' ? (
-            <Custom
-              selected={selected}
-              setNodes={setNodes}
-              setMarked={setMarked}
-              option={option}
-            />
-          ) : (
-            <div></div>
-          )}
-          <Markdown
-            marked={marked}
-            setMarked={setMarked}
-            setNodes={setNodes}
-            selected={selected}
-            option={option}
-          />
-        </ReactFlowProvider>
+                      {option === 'creator' ? (
+                        <Background />) : (<Background variant='lines' />)
+                      }
+                      <Controls />
+                    </ReactFlow>
+                    <MiniMap />
+                  </div>
+                  <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} />
+                  {/* <Sidebar option={option} /> */}
+                  {option === 'creator' ? (
+                    <Custom
+                      selected={selected}
+                      setNodes={setNodes}
+                      setMarked={setMarked}
+                      option={option}
+                    />
+                  ) : (
+                    <div></div>
+                  )}
+                  <Markdown
+                    marked={marked}
+                    setMarked={setMarked}
+                    setNodes={setNodes}
+                    selected={selected}
+                    option={option}
+                  />
+                    </ReactFlowProvider>
+                    </div>
       </InputContext.Provider>
       <div>
         <DescriptionMenu
@@ -591,6 +593,11 @@ export function Sidebar() { // removed epxort default
     </>
   )
 }
+
+
+
+
+
 
 
 

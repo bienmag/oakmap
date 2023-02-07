@@ -169,3 +169,14 @@ input {
     @apply w-1/5 max-w-xs mt-48 border-2 rounded-xl pl-2 pr-4;
   }
 }
+
+
+.React-Flow-Container {
+  position: relative;
+  top: 0px; /* position below the Navbar */
+  left: 0px; /* position to the right of the Sidebar */
+  height: calc(100vh - 30px); /* subtract the height of the Navbar */
+  width: calc(100vw - 75px); /* subtract the width of the Sidebar */
+  /* height: calc(100% - 80px); */ /* subtract the height of the Navbar */
+  /* width: calc(100% - 200px); */ /* subtract the width of the Sidebar */
+}

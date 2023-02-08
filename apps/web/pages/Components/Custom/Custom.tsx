@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 // import { InputContext } from '../index';
-import { InputContext } from '../Sidebar/Sidebar'
+import { InputContext } from '../Modes/TreeEditorMode'
 
 function Custom({ selected, setNodes, setMarked, option }: any) {
   const [nodeName, setNodeName] = useState('')

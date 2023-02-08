@@ -7,7 +7,9 @@ import React, {
 } from 'react'
 import 'reactflow/dist/style.css'
 import { Sidebar } from './Components/Sidebar/Sidebar'
-
+import { TreeEditorMode } from './Components/Modes/TreeEditorMode'
+import DashboardMode from './Components/Modes/DashboardMode'
+import ModeSelector from './Components/Modes/ModeSelector'
 
 /////////////////////////////////////////////
 // SIDEBAR STUFF ///////////////////////////
@@ -18,6 +20,7 @@ const DnDFlow = () => {
 
   return (
     <div>
+      {/* <Sidebar TreeEditorMode={TreeEditorMode} DashboardMode={DashboardMode} ModeSelector={ModeSelector} /> */}
       <Sidebar />
     </div>
     

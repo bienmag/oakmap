@@ -15,18 +15,18 @@ const TreesController = {
   // create tree
   async createTree(req: Request, res: Response, next: NextFunction) {
     try {
-      const { treeName, description, user, branches } = req.body
+      const { treeName, description, user } = req.body
       const date = new Date()
+      const branches: object[] = []
+      const unlinkedLeaves: object[] = []
 
       //user should be from req.user but since we don't have it yet it will come from req.body
       // @ts-ignore
       // const { user } = req.user
 
-      // @ts-ignore
-      const treeId = new ObjectId()
-      console.log(typeof treeId)
 
-      const tree = await Tree.create(treeId, date, treeName, user, description, branches)
+      const treeId = new ObjectId()
+      const tree = await Tree.create(treeId, date, treeName, user, description, branches, unlinkedLeaves)
       res.status(201).json(tree)
     }
     catch (e) { next(e) }
@@ -41,8 +41,8 @@ const TreesController = {
 
       //treeId should come from req.params!
       //nodeID ??????
-
-      const { branchId, treeId, position, branchName, markdownText, leaves } = req.body
+      const { treeId } = req.params
+      const { branchId, position, branchName, markdownText, leaves } = req.body
       const branch = await Branch.create(branchId, treeId, position, branchName, leaves, markdownText)
       const markdown = await Markdown.create(treeId, markdownText, branchId)
       res.status(201).json(branch)
@@ -59,17 +59,26 @@ const TreesController = {
   //create a leaf 
   async createLeaf(req: Request, res: Response, next: NextFunction) {
     try {
-      const { leafId, branchId, treeId, position, leafName, markdownText } = req.body
+      const { treeId } = req.params
+      const { leafId, position } = req.body
       //create leaf in db
-      const leaf = await Leaf.create(leafId, branchId, treeId, position, leafName, markdownText)
-      //create markdown in db
-      const markdown = await Markdown.create(treeId, markdownText, branchId, leafId)
+      const leaf = await Leaf.create(leafId, treeId, position)
+
+
+      // //create markdown in db
+      // const markdown = await Markdown.create(treeId, leafId)
+
       res.status(201).json(leaf)
 
 
-      // INSERT leaf into the tree 
+      // insert the leaf into the tree
       const id = new mongodb.ObjectId(treeId)
-      await DBTree.findOneAndUpdate({ _id: id, "branches.branchId": branchId }, { $push: { "branches.$.leaves": leaf } })
+      await DBTree.findOneAndUpdate({ _id: id }, { $push: { unlinkedLeaves: leaf } })
+
+
+      // // INSERT leaf into the BRANCH!!!!!
+      // const id = new mongodb.ObjectId(treeId)
+      // await DBTree.findOneAndUpdate({ _id: id, "branches.branchId": branchId }, { $push: { "branches.$.leaves": leaf } })
     }
 
     catch (e) {
@@ -77,11 +86,42 @@ const TreesController = {
     }
   },
 
+
+  // update a branch
+
+
+  // update a leaf
+  async updateLeaf(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { treeId } = req.params
+      const { leafId, position, leafName, branchId, markdown } = req.body
+      let update: { position?: object, leafName?: string, branchId?: string } = {}
+
+      if (position) update['position'] = position;
+      if (leafName) update['leafName'] = leafName;
+      if (branchId) update['branchId'] = branchId
+
+      if (markdown) {
+        await Markdown.create(treeId, leafId)
+      }
+
+    }
+
+    catch (e) {
+      next(e)
+    }
+
+  },
+
+
+
+
+
+
   // get a single tree
   async getTree(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params
-      console.log('tree id from req params', typeof id)
       const tree = await Tree.getTreeById(id)
       res.json(tree)
     } catch (e) {
@@ -105,15 +145,34 @@ const TreesController = {
   async getMarkdown(req: Request, res: Response, next: NextFunction) {
     try {
       const { nodeId } = req.params
-      console.log('leaf id should be here', nodeId)
       const markdown = await Markdown.getMarkdownByNodeId(nodeId)
       res.json(markdown)
     }
     catch (e) {
       next(e)
     }
-  }
+  },
 
+  // delete a branch 
+  async deleteBranch(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { branchId } = req.params
+      await Branch.deleteBranch(branchId)
+      res.json('The branch has been sucsessfully deleted')
+    }
+    catch (e) {
+      next(e)
+    }
+  },
+
+  // // delete a leaf 
+  // async deleteLeaf(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     const { leafId } = req.params
+  //     await Leaf.deleteLead(leafId)
+  //     res.json('The leaf has been sucsessfully deleted')
+  //   }
+  // }
 
 
 }

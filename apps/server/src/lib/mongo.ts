@@ -7,6 +7,7 @@ const TreeSchema = new mongoose.Schema({
   user: String,
   description: String,
   branches: Array,
+  unlinkedLeaves: Array
 }, { versionKey: false })
 
 

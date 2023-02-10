@@ -745,6 +745,14 @@
     "@aws-sdk/util-buffer-from" "3.208.0"
     tslib "^2.3.1"
 
+"@azabraao/react-draggable@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@azabraao/react-draggable/-/react-draggable-4.5.1.tgz#1968f86dd5c4ecc8abe671d7541eeef4ea95526f"
+  integrity sha512-DvrlUuCu8xNoElVD7i8TXNDtc3sxa1XBcgMoBQfGcL3D6eu9gU9aUHQutXV7sPvhha8pXVIUiL36/dRMJK+b2Q==
+  dependencies:
+    clsx "^1.1.1"
+    prop-types "^15.8.1"
+
 "@babel/code-frame@7.12.11":
   version "7.12.11"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.12.11.tgz"
@@ -1972,7 +1980,7 @@ client-only@0.0.1, client-only@^0.0.1:
   resolved "https://registry.npmjs.org/client-only/-/client-only-0.0.1.tgz"
   integrity sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==
 
-clsx@^1.1.1:
+clsx@^1.1.1, clsx@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/clsx/-/clsx-1.2.1.tgz"
   integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
@@ -4153,6 +4161,15 @@ react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-draggable-bottom-sheet@^1.13.2:
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/react-draggable-bottom-sheet/-/react-draggable-bottom-sheet-1.13.2.tgz#9ac7cdcff29651cfb7dc5faca6101ab111e660aa"
+  integrity sha512-EmP1iFb2lUkoPQ6wrO/UAq4EyiP4x34aikwipTpnRc5yum0uiWsKIpyh9wLDopFmo9iQLQaaXQfqRBBr6/Cs6A==
+  dependencies:
+    "@azabraao/react-draggable" "^4.5.1"
+    clsx "^1.2.1"
+    use-callback-ref "^1.3.0"
+
 react-draggable@^4.4.5:
   version "4.4.5"
   resolved "https://registry.npmjs.org/react-draggable/-/react-draggable-4.4.5.tgz"
@@ -4696,7 +4713,7 @@ tslib@^1.11.1, tslib@^1.8.1:
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.3.1, tslib@^2.4.0:
+tslib@^2.0.0, tslib@^2.3.1, tslib@^2.4.0:
   version "2.5.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.5.0.tgz"
   integrity sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==
@@ -4879,6 +4896,13 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+use-callback-ref@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.3.0.tgz#772199899b9c9a50526fedc4993fc7fa1f7e32d5"
+  integrity sha512-3FT9PRuRdbB9HfXhEq35u4oZkvpJ5kuYbpqhCfmiZyReuRgpnhDlbr2ZEnnuS0RrJAPn6l23xjFg9kpDM+Ms7w==
+  dependencies:
+    tslib "^2.0.0"
 
 use-sync-external-store@1.2.0:
   version "1.2.0"

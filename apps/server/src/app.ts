@@ -6,8 +6,6 @@ import router from "./router";
 import { Server } from 'http'
 import Logger from "./lib/logger";
 
-
-
 dotenv.config()
 
 const app = express()
@@ -41,12 +39,5 @@ export function startServer(): Server {
   })
   return server
 }
-
-// app.listen(port, () => {
-//   TreesController.createTree
-//   console.log(`🦸🏽 [server]: Server is running at ${port}`)
-// })
-
-
 
 export default app

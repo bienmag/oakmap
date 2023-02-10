@@ -59,8 +59,7 @@ function Markdown({ marked, setMarked, setNodes, treeMode }) {
     )
   }
 
-  // creator
-  else if (marked && treeMode === 'creator') {
+  else if (marked && treeMode === 'editor') { // originally was called 'creator' but now 'editor'
     return (
       <>
         <div className="markdownBG" onClick={handleOnMarkDown}></div>

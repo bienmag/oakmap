@@ -46,7 +46,7 @@ function Custom({ selected, setNodes, setMarked, treeMode }: any) {
 
   const onDragStart = (event, nodeType) => {
     event.dataTransfer.setData('application/reactflow', nodeType)
-    if (treeMode === 'creator') event.dataTransfer.effectAllowed = 'move'
+    if (treeMode === 'editor') event.dataTransfer.effectAllowed = 'move'
     else event.dataTransfer.effectAllowed = 'none'
   }
 

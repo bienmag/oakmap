@@ -53,7 +53,7 @@ const getId = () => `node_${id++}`
 export const InputContext = createContext(null)
 
 
-export function TreeEditorMode() {
+export function TreeEditorMode({ option, setOption }: any) {
 
     const reactFlowWrapper = useRef(null)
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
@@ -62,7 +62,7 @@ export function TreeEditorMode() {
     const [reactFlowInstance, setReactFlowInstance] = useState(null)
     const [selected, setSelected] = useState('')
     const [marked, setMarked] = useState('')
-    const [option, setOption] = useState('creator')
+    // const [option, setOption] = useState('editor')
   
     // Draggable State
     const [isOpen, setIsOpen] = useState(false)
@@ -74,7 +74,7 @@ export function TreeEditorMode() {
     const inputRef: any = useRef(null)
   
     useEffect(() => {
-      setIsDraggable(option === 'creator')
+      setIsDraggable(option === 'editor')
     }, [option])
   
     const onConnect = useCallback(
@@ -151,7 +151,7 @@ export function TreeEditorMode() {
                                 setSelected('')
                             }}
                             onNodeDoubleClick={(event, node) => {
-                                if (option === 'creator') {
+                                if (option === 'editor') {
                                 inputRef.current.focus()
                                 inputRef.current.select()
 
@@ -164,7 +164,7 @@ export function TreeEditorMode() {
                             fitView
                             >
 
-                            {option === 'creator' ? (
+                            {option === 'editor' ? (
                                 <Background />) : (<Background variant='lines' />)
                             }
                             <Controls />
@@ -173,9 +173,9 @@ export function TreeEditorMode() {
                         </div>
                         {/* OLD EDIT MODE SELECT FOR THE ROADMAP EDITOR */}
             
-                        <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} />
-                        {/* <Sidebar option={option} /> */}
-                        {option === 'creator' ? (
+                        {/* <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} /> */}
+            
+                        {option === 'editor' ? (
                             <Custom
                             selected={selected}
                             setNodes={setNodes}

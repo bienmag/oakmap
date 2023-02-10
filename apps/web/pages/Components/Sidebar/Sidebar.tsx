@@ -71,6 +71,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 
+
 const user = {
   name: 'Whitney Francis',
   email: 'whitney.francis@example.com',
@@ -109,9 +110,14 @@ function classNames(...classes: any) {
 
 // { TreeEditorMode, DashboardMode, ModeSelector }: any
 export function Sidebar() { // removed epxort default
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // from Tailwind UI
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // from Tailwind UI
+  
 
-// MOSTLY TAILWIND TEMPLATE CODE
+  // // Toggle editor vs reader modes
+  const [option, setOption] = useState<string>('editor')
+
+
+// MOSTLY TAILWIND TEMPLATE CODE BELOW
 
   return (
     <>
@@ -163,7 +169,7 @@ export function Sidebar() { // removed epxort default
 
           {/* Menu button area */}
           <div className="absolute inset-y-0 right-0 flex items-center pr-4 sm:pr-6 md:hidden">
-            {/* Mobile menu button */}
+            // Mobile menu button
             <button
               type="button"
               className="-mr-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600"
@@ -175,6 +181,7 @@ export function Sidebar() { // removed epxort default
           </div>
 
           {/* Desktop nav area */}
+          
           <div className="hidden md:flex md:min-w-0 md:flex-1 md:items-center md:justify-between">
             <div className="min-w-0 flex-1">
               <div className="relative max-w-2xl text-gray-400 focus-within:text-gray-500">
@@ -191,10 +198,11 @@ export function Sidebar() { // removed epxort default
                   <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />
                 </div>
               </div>
-            </div>
+            </div> 
 
-            { /* NAV MODE DYNAMICALLY RENDERED */}
-            <NavModeSelector />
+            <div>
+              <NavModeSelector option={option} setOption={setOption} />
+            </div>
 
             <div className="ml-10 flex flex-shrink-0 items-center space-x-10 pr-4">
               <div className="flex items-center space-x-8">
@@ -405,8 +413,8 @@ export function Sidebar() { // removed epxort default
                 Home
               </h1>
                       {/* YOUR CONTENT - render modeSelector */}
-                      {/* ModeSelector(DashboardMode, TreeEditorMode) */}
-                      <ModeSelector />
+                      {/* ModeSelector(DashboardMode, TreeEditorMode) -- this was alternative as a way to pass components as props */}
+              <ModeSelector option={option} setOption={setOption} />
                       {/* END YOUR CONTENT */ }
             </section>
           </main>

@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
 
-function Option({ option, setOption, openBottomSheet }) {
+function Option({ option, setOption, openBottomSheet }: any) {
   return (
     <div className="  absolute inset-x-0 top-0 flex justify-center  ">
       <div className=" m-5">

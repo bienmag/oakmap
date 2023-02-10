@@ -33,11 +33,6 @@ function Option({ option, setOption, openBottomSheet }: any) {
           Creator
         </button>
       </div>
-      <div className=" m-5">
-        <button className="bg-white border-2 p-4 rounded border-black hover:bg-red-800" onClick={openBottomSheet}>
-          Info
-        </button>
-      </div>
     </div>
   )
 }

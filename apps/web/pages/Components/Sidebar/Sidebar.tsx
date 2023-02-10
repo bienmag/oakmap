@@ -116,6 +116,21 @@ export function Sidebar() { // removed epxort default
   // // Toggle editor vs reader modes
   const [treeMode, setTreeMode] = useState<string>('editor')
 
+  // Bottom Sheet State
+  const [isOpen, setIsOpen] = useState(false)
+
+  const openBottomSheet = () => setIsOpen(true)
+  const closeBottomSheet = () => setIsOpen(false)
+
+  // Description Menu markdown
+  const [description, setDescription] = useState('')
+
+  const [marked, setMarked] = useState('')
+
+  useEffect(() => {
+    setDescription(marked?.data?.text)
+  }, [marked])
+
 
 // MOSTLY TAILWIND TEMPLATE CODE BELOW
 
@@ -202,7 +217,7 @@ export function Sidebar() { // removed epxort default
 
             { /* Navigation bar selector */ }
             <div>
-              <NavModeSelector treeMode={treeMode} setTreeMode={setTreeMode} />
+              <NavModeSelector treeMode={treeMode} setTreeMode={setTreeMode} openBottomSheet={openBottomSheet} closeBottomSheet={closeBottomSheet} />
             </div>
 
             <div className="ml-10 flex flex-shrink-0 items-center space-x-10 pr-4">
@@ -415,9 +430,19 @@ export function Sidebar() { // removed epxort default
               </h1>
                       {/* YOUR CONTENT - render modeSelector */}
                       {/* ModeSelector(DashboardMode, TreeEditorMode) -- this was alternative as a way to pass components as props */}
-              <ModeSelector treeMode={treeMode} setTreeMode={setTreeMode} />
+              <ModeSelector treeMode={treeMode} setTreeMode={setTreeMode} marked={marked} setMarked={setMarked} />
                       {/* END YOUR CONTENT */ }
             </section>
+            { /* INFO BOTTOM SHEET */ }
+            <div>
+                <DescriptionMenu
+                isOpen={isOpen}
+                closeBottomSheet={closeBottomSheet}
+                setDescription={setDescription}
+                description={description}
+                treeMode={treeMode}
+                />
+            </div >
           </main>
         </div>
       </div>

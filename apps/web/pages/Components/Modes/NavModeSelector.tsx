@@ -7,8 +7,6 @@ function NavModeSelector({ treeMode, setTreeMode }: any) {
     // DETERMINES WHETHER TO RENDER THE DASHBOARD
     const [dashboard, setDasboard] = useState(false) // set to true to view the dashboard page
 
-    console.log('option: ', treeMode)
-
   return (
     <div>
           {dashboard ? (
@@ -46,8 +44,8 @@ function NavModeSelector({ treeMode, setTreeMode }: any) {
                             value={treeMode === 'reader' ? 'editor' : 'reader'}
                             className={
                                 (treeMode === 'reader'
-                                ? 'bg-green-500'
-                                : 'bg-slate-500 hover:bg-red-800') +
+                                ? 'bg-slate-500' + '  border-2 p-4 rounded border-black'
+                                : 'bg-green-500 hover:bg-red-800') +
                                 '  border-2 p-4 rounded border-black'
                             }
                             /* disabled={option === 'reader'} */

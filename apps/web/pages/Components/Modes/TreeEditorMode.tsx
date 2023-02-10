@@ -64,8 +64,6 @@ export function TreeEditorMode({ treeMode, setTreeMode }: any) {
     const [marked, setMarked] = useState('')
     // const [option, setOption] = useState('editor')
   
-  console.log('tree editor option: ', treeMode)
-  
     // Draggable State
     const [isOpen, setIsOpen] = useState(false)
   
@@ -180,7 +178,7 @@ export function TreeEditorMode({ treeMode, setTreeMode }: any) {
                             selected={selected}
                             setNodes={setNodes}
                             setMarked={setMarked}
-                            option={treeMode}
+                            treeMode={treeMode}
                             />
                         ) : (
                             <div></div>
@@ -190,7 +188,7 @@ export function TreeEditorMode({ treeMode, setTreeMode }: any) {
                             setMarked={setMarked}
                             setNodes={setNodes}
                             selected={selected}
-                            option={treeMode}
+                            treeMode={treeMode}
                         />
                             </ReactFlowProvider>
                             </div>
@@ -201,7 +199,7 @@ export function TreeEditorMode({ treeMode, setTreeMode }: any) {
                 closeBottomSheet={closeBottomSheet}
                 setDescription={setDescription}
                 description={description}
-                option={treeMode}
+                treeMode={treeMode}
                 />
             </div >
             </div >

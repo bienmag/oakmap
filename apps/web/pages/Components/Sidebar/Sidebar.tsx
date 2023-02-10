@@ -31,8 +31,9 @@ import DescriptionMenu from '../DescriptionMenu/DescriptionMenu'
     RootNode,
 } from '../CustomNode/CustomNodes'
 
-
+// Selectors
 import ModeSelector from '../Modes/ModeSelector'
+import NavModeSelector from '../Modes/NavModeSelector'
   
       
       /*
@@ -191,24 +192,11 @@ export function Sidebar() { // removed epxort default
                 </div>
               </div>
             </div>
+
+            { /* NAV MODE DYNAMICALLY RENDERED */}
+            <NavModeSelector />
+
             <div className="ml-10 flex flex-shrink-0 items-center space-x-10 pr-4">
-              <nav aria-label="Global" className="flex space-x-10">
-              <a href="#" className="text-sm font-medium text-gray-900">
-                  Info
-                </a>
-              <a href="#" className="text-sm font-medium text-gray-900">
-                  Edit
-                </a>
-                <a href="#" className="text-sm font-medium text-gray-900">
-                  Author
-                </a>
-                <a href="#" className="text-sm font-medium text-gray-900">
-                <img src="" alt="Watch List" className="text-sm font-medium text-gray-900"/>
-                </a>
-                <a href="#" className="text-sm font-medium text-gray-900">
-                <img src="" alt="Share Link" className="text-sm font-medium text-gray-900"/>
-                </a>
-              </nav>
               <div className="flex items-center space-x-8">
                 <span className="inline-flex">
                   <a href="#" className="-mx-1 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500">
@@ -269,6 +257,7 @@ export function Sidebar() { // removed epxort default
           </div>
 
           {/* Mobile menu, show/hide this `div` based on menu open/closed state */}
+
           <Transition.Root show={mobileMenuOpen} as={Fragment}>
             <Dialog as="div" className="relative z-40 md:hidden" onClose={setMobileMenuOpen}>
               <Transition.Child
@@ -428,40 +417,12 @@ export function Sidebar() { // removed epxort default
 }
 
 
-
-
-
-
-
-
-
-            // {/* Secondary column (hidden on smaller screens) */}
-            // <aside className="hidden lg:order-first lg:block lg:flex-shrink-0">
-            //   <div className="relative flex h-full w-96 flex-col overflow-y-auto border-r border-gray-200 bg-gray-100">
-            //     {/* Your content */}
-            //   </div>
-            // </aside>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // {/* Secondary column (hidden on smaller screens) */}
+  // <aside className="hidden lg:order-first lg:block lg:flex-shrink-0">
+  //   <div className="relative flex h-full w-96 flex-col overflow-y-auto border-r border-gray-200 bg-gray-100">
+  //     {/* Your content */}
+  //   </div>
+  // </aside>
 
 
 

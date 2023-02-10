@@ -171,6 +171,8 @@ export function TreeEditorMode() {
                             </ReactFlow>
                             <MiniMap />
                         </div>
+                        {/* OLD EDIT MODE SELECT FOR THE ROADMAP EDITOR */}
+            
                         <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} />
                         {/* <Sidebar option={option} /> */}
                         {option === 'creator' ? (

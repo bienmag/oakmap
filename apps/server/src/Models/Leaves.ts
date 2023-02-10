@@ -51,22 +51,14 @@ class Leaf {
       {
         _id: id, "unlinkedLeaves.leafId": leafId
       }, {
-      $set: {
-        "unlinkedLeaves.$.position": position,
-        "unlinkedLeaves.$.leafName": leafName,
-        "unlinkedLeaves.$.branchId": branchId
-      }
-    },
-      { new: true })
-
-
-
-
-
-
-
-
-
+        $set: {
+          "unlinkedLeaves.$.position": position,
+          "unlinkedLeaves.$.leafName": leafName,
+          "unlinkedLeaves.$.branchId": branchId
+        }
+      },
+      { new: true }
+    )
 
     return new Leaf(leafId, treeId, position, leafName, branchId)
   }

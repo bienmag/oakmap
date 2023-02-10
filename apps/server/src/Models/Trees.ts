@@ -1,4 +1,3 @@
-
 import { DBTree } from "../lib/mongo"
 const mongodb = require('mongodb');
 
@@ -29,7 +28,6 @@ class Tree {
 
 
     await DBTree.create({
-
       _id, treeName, date, user, branches, unlinkedLeaves
     })
 

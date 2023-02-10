@@ -1,27 +1,39 @@
-import { DBMarkdown } from "../lib/mongo";
+import { DBMarkdown, DBTree } from "../lib/mongo";
 import { ObjectId } from "mongodb";
 
 class Leaf {
   constructor(
     public leafId: string,
-    public branchId: string,
     public treeId: string,
     public position: object,
-    public leafName: string
+    public leafName?: string,
+    public branchId?: string,
   ) { }
 
   static async create(
     leafId: string,
-    branchId: string,
     treeId: string,
     position: object,
-    leafName: string,
-    markdownText?: string
   ): Promise<Leaf> {
 
+    return new Leaf(leafId, treeId, position)
+  }
+
+  static async update(
+    leafId: string,
+    treeId: string,
+    position: object,
+    leafName?: string,
+    branchId?: string
+  ): Promise<Leaf> {
+    return new Leaf(leafId, treeId, position, leafName, branchId)
+  }
 
 
-    return new Leaf(leafId, branchId, treeId, position, leafName)
+
+  static async deleteLeaf(leafId: string) {
+    let tree = await DBTree.findOne({ leafId: leafId })
+    tree?.branches
   }
 }
 

@@ -11,7 +11,8 @@ class Tree {
     public date: object,
     public user: string,
     public description: string,
-    public branches: Array<object>
+    public branches: Array<object>,
+    public unlinkedLeaves: Array<object>
   ) { }
 
 
@@ -22,7 +23,8 @@ class Tree {
     treeName: string,
     user: string,
     description: string,
-    branches: Array<object>
+    branches: Array<object>,
+    unlinkedLeaves: Array<object>
   ): Promise<Tree> {
 
     //@ts-ignore
@@ -33,7 +35,7 @@ class Tree {
       _id, treeName, date, user, description, branches
     })
 
-    return new Tree(_id, treeName, date, user, description, branches)
+    return new Tree(_id, treeName, date, user, description, branches, unlinkedLeaves)
   }
 
   static async getAll(): Promise<Tree[]> {

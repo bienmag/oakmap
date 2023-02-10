@@ -1,4 +1,4 @@
-import { DBMarkdown } from "../lib/mongo";
+import { DBMarkdown, DBTree } from "../lib/mongo";
 import { ObjectId } from "mongodb";
 
 
@@ -19,11 +19,19 @@ class Branch {
     leaves: Array<object>,
     markdownText: string
   ): Promise<Branch> {
-
-
-
-
     return new Branch(branchId, treeId, position, branchName, leaves)
+  }
+
+  static async deleteBranch(
+    branchId: string
+  ) {
+    let tree = await DBTree.findOne({ branchId: branchId })
+    //@ts-ignore
+    tree.branches = tree?.branches.filter(function (branch) {
+      return branch.branchId !== branchId
+    })
+    await tree?.save()
+    return
   }
 
 

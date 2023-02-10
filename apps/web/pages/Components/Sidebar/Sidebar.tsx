@@ -114,7 +114,7 @@ export function Sidebar() { // removed epxort default
   
 
   // // Toggle editor vs reader modes
-  const [option, setOption] = useState<string>('editor')
+  const [treeMode, setTreeMode] = useState<string>('editor')
 
 
 // MOSTLY TAILWIND TEMPLATE CODE BELOW
@@ -169,7 +169,7 @@ export function Sidebar() { // removed epxort default
 
           {/* Menu button area */}
           <div className="absolute inset-y-0 right-0 flex items-center pr-4 sm:pr-6 md:hidden">
-            // Mobile menu button
+            {/* Mobile menu button */}
             <button
               type="button"
               className="-mr-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600"
@@ -200,8 +200,9 @@ export function Sidebar() { // removed epxort default
               </div>
             </div> 
 
+            { /* Navigation bar selector */ }
             <div>
-              <NavModeSelector option={option} setOption={setOption} />
+              <NavModeSelector treeMode={treeMode} setTreeMode={setTreeMode} />
             </div>
 
             <div className="ml-10 flex flex-shrink-0 items-center space-x-10 pr-4">
@@ -414,7 +415,7 @@ export function Sidebar() { // removed epxort default
               </h1>
                       {/* YOUR CONTENT - render modeSelector */}
                       {/* ModeSelector(DashboardMode, TreeEditorMode) -- this was alternative as a way to pass components as props */}
-              <ModeSelector option={option} setOption={setOption} />
+              <ModeSelector treeMode={treeMode} setTreeMode={setTreeMode} />
                       {/* END YOUR CONTENT */ }
             </section>
           </main>

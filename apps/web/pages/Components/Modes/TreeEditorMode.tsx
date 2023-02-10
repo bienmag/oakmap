@@ -53,7 +53,7 @@ const getId = () => `node_${id++}`
 export const InputContext = createContext(null)
 
 
-export function TreeEditorMode({ option, setOption }: any) {
+export function TreeEditorMode({ treeMode, setTreeMode }: any) {
 
     const reactFlowWrapper = useRef(null)
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
@@ -63,6 +63,8 @@ export function TreeEditorMode({ option, setOption }: any) {
     const [selected, setSelected] = useState('')
     const [marked, setMarked] = useState('')
     // const [option, setOption] = useState('editor')
+  
+  console.log('tree editor option: ', treeMode)
   
     // Draggable State
     const [isOpen, setIsOpen] = useState(false)
@@ -74,8 +76,8 @@ export function TreeEditorMode({ option, setOption }: any) {
     const inputRef: any = useRef(null)
   
     useEffect(() => {
-      setIsDraggable(option === 'editor')
-    }, [option])
+      setIsDraggable(treeMode === 'editor')
+    }, [treeMode])
   
     const onConnect = useCallback(
       (params) => setEdges((eds) => addEdge(params, eds)),
@@ -124,8 +126,6 @@ export function TreeEditorMode({ option, setOption }: any) {
   
 
 
-
-
   return (
             <div className="dndflow" style={{ height: '100vh' }}>
                         <InputContext.Provider value={inputRef}>
@@ -151,20 +151,20 @@ export function TreeEditorMode({ option, setOption }: any) {
                                 setSelected('')
                             }}
                             onNodeDoubleClick={(event, node) => {
-                                if (option === 'editor') {
+                                if (treeMode === 'editor') {
                                 inputRef.current.focus()
                                 inputRef.current.select()
 
                                 } // setMarked(node)
                             }}
                             onNodeClick={(event, node) => {
-                                if (option === 'reader') setMarked(node)
+                                if (treeMode === 'reader') setMarked(node)
                                 setSelected(node)
                             }}
                             fitView
                             >
 
-                            {option === 'editor' ? (
+                            {treeMode === 'editor' ? (
                                 <Background />) : (<Background variant='lines' />)
                             }
                             <Controls />
@@ -175,12 +175,12 @@ export function TreeEditorMode({ option, setOption }: any) {
             
                         {/* <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} /> */}
             
-                        {option === 'editor' ? (
+                        {treeMode === 'editor' ? (
                             <Custom
                             selected={selected}
                             setNodes={setNodes}
                             setMarked={setMarked}
-                            option={option}
+                            option={treeMode}
                             />
                         ) : (
                             <div></div>
@@ -190,7 +190,7 @@ export function TreeEditorMode({ option, setOption }: any) {
                             setMarked={setMarked}
                             setNodes={setNodes}
                             selected={selected}
-                            option={option}
+                            option={treeMode}
                         />
                             </ReactFlowProvider>
                             </div>
@@ -201,7 +201,7 @@ export function TreeEditorMode({ option, setOption }: any) {
                 closeBottomSheet={closeBottomSheet}
                 setDescription={setDescription}
                 description={description}
-                option={option}
+                option={treeMode}
                 />
             </div >
             </div >

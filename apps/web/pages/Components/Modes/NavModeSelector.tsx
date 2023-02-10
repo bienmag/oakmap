@@ -2,10 +2,12 @@ import React, {
     useState
 } from 'react'
 
-function NavModeSelector({ option, setOption }: any) {
+function NavModeSelector({ treeMode, setTreeMode }: any) {
   
     // DETERMINES WHETHER TO RENDER THE DASHBOARD
     const [dashboard, setDasboard] = useState(false) // set to true to view the dashboard page
+
+    console.log('option: ', treeMode)
 
   return (
     <div>
@@ -39,15 +41,16 @@ function NavModeSelector({ option, setOption }: any) {
                         </a>
                         <a href="#" className="text-sm font-medium text-gray-900">
                         <button
-                            onClick={(e) => setOption(e.target.value)}
-                            value={'reader'}
+                            onClick={(e) => setTreeMode(e.target.value)
+                            }
+                            value={treeMode === 'reader' ? 'editor' : 'reader'}
                             className={
-                                (option === 'reader'
+                                (treeMode === 'reader'
                                 ? 'bg-green-500'
                                 : 'bg-slate-500 hover:bg-red-800') +
                                 '  border-2 p-4 rounded border-black'
                             }
-                            disabled={option === 'reader'}
+                            /* disabled={option === 'reader'} */
                             >
                             Edit
                         </button>

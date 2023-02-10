@@ -33,7 +33,7 @@ import {
 
 
 // dashboardMode: any,treeEditorMode: any
-function ModeSelector(){
+function ModeSelector({ treeMode, setTreeMode }: any ){
   
     // DETERMINES WHETHER TO RENDER THE DASHBOARD
     const [dashboard, setDasboard] = useState(false) // set to true to view the dashboard page
@@ -41,7 +41,7 @@ function ModeSelector(){
 
   return(
     <div>
-      {dashboard ? <DashboardMode /> : <TreeEditorMode />}
+      {dashboard ? <DashboardMode /> : <TreeEditorMode treeMode={treeMode} setTreeMode={setTreeMode} />}
     </div>
     
   )

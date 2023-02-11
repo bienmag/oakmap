@@ -29,7 +29,7 @@ function DashboardMode() {
         .then((response) => {
         setTrees(response.data)
         })
-    axios.get('ttp://localhost:3333/comments')
+    axios.get('http://localhost:3333/comments')
         .then((response) => {
         setPopulartrees(response.data)
         console.log('response here', response.data)

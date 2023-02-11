@@ -4,6 +4,8 @@ import {
   BranchNode,
   RootNode,
 } from '../../../pages/Components/CustomNode/CustomNodes'
+
+
 export const nodeTypes = {
   rightLeaf: rightLeafNode,
   leftLeaf: leftLeafNode,
@@ -36,7 +38,8 @@ export const CBackOnDrop = (
 ) => {
   event.preventDefault()
 
-  const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
+  // const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
+  const reactFlowBounds = reactFlowWrapper.current ? reactFlowWrapper.current.getBoundingClientRect() : null;
   const type = event.dataTransfer.getData('application/reactflow')
 
   // check if the dropped element is valid

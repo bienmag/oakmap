@@ -32,7 +32,6 @@ export const handleSetNode = (setNodes, selected, { text, label }) =>
           label: label ? label : null,
         }
       }
-
       return node
     })
   )

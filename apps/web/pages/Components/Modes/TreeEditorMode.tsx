@@ -7,7 +7,7 @@ import React, {
     Fragment,
   } from 'react'
   import ReactFlow, {
-    ReactFlowProvider,
+  ReactFlowProvider,
     addEdge,
     useNodesState,
     useEdgesState,
@@ -21,11 +21,40 @@ import 'reactflow/dist/style.css'
 import Custom from '../Custom/Custom'
 import Markdown from '../Markdown/Markdown'
 
-// IMPORT FROM RESOURCES
+// TESTING IMPORT FROM RESOURCES
 import {
   initialNodes,
-  nodeTypes
+  nodeTypes,
+  allNodesOptions,
+  CBackHandleDelNode,
+  handleOnDragStart,
+  handleSetNode,
+  CBackOnDragOver,
+  CBackOnDrop
 } from '../../../Resources/Packages/RFlow/RFlow'
+
+/* import {
+  leftLeafNode,
+  rightLeafNode,
+  BranchNode,
+  RootNode,
+} from '../CustomNode/CustomNodes'
+
+const nodeTypes = {
+  rightLeaf: rightLeafNode,
+  leftLeaf: leftLeafNode,
+  branch: BranchNode,
+  root: RootNode,
+} 
+
+const initialNodes = [
+  {
+    id: 'node_head',
+    data: { label: 'Root' },
+    position: { x: 0, y: 0 },
+    type: 'root',
+  },
+]  */
 
 
 let id = 0
@@ -53,6 +82,9 @@ export function TreeEditorMode({ treeMode, setTreeMode, marked, setMarked }: any
       (params) => setEdges((eds) => addEdge(params, eds)),
       []
     )
+  
+    // const onDragOver = useCallback(CBackOnDragOver, []);
+    // const onDrop = useCallback(CBackOnDrop, [reactFlowInstance, setNodes])
   
     const onDragOver = useCallback((event) => {
       event.preventDefault()
@@ -85,7 +117,7 @@ export function TreeEditorMode({ treeMode, setTreeMode, marked, setMarked }: any
         setNodes((nds) => nds.concat(newNode))
       },
       [reactFlowInstance, setNodes]
-    )  
+    ) 
 
 
   return (
@@ -171,7 +203,7 @@ import {
   RootNode,
 } from '../CustomNode/CustomNodes' */
 
-
+// CODE TO REMOVE IF THE RFLOW/RFLOW FILE WORKS
 /* import {
   leftLeafNode,
   rightLeafNode,

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 // import { InputContext } from '../index';
-import InputContext from '../../index'
+import { InputContext } from '../Modes/TreeEditorMode'
 import {
   allNodesOptions,
   CBackHandleDelNode,
@@ -8,7 +8,13 @@ import {
   handleSetNode,
 } from '../../../Resources/Packages/RFlow/Custom'
 import { v4 as uuidv4 } from 'uuid'
-function Custom({ selected, setNodes, setMarked, option }: any) {
+
+/////////////////////////////////////////////////////
+// CUSTOM MENU ON THE LEFT SIDE FOR DRAGGING NODES
+////////////////////////////////////////////////////
+
+
+function Custom({ selected, setNodes, setMarked, treeMode }: any) {
   const [nodeName, setNodeName] = useState('')
 
   const handleDelNode = () => CBackHandleDelNode(setNodes, selected)
@@ -26,12 +32,12 @@ function Custom({ selected, setNodes, setMarked, option }: any) {
     handleSetNode(setNodes, selected, { label: nodeName })
   }, [selected.id, nodeName, setNodes])
 
-  const inputRef = useContext(InputContext)
+  const inputRef = React.useContext(InputContext)
 
   //from Sidebar.tsx
 
   const onDragStart = (event, nodeType) =>
-    handleOnDragStart(event, nodeType, option)
+    handleOnDragStart(event, nodeType, treeMode)
 
   return (
     <aside>

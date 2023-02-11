@@ -2,7 +2,7 @@ function DashboardMode(){
 
     return (
         <div>
-            <h1>HELLO MANEL</h1>
+            <h1>DASHBOARD PAGE</h1>
         </div>
     )
 

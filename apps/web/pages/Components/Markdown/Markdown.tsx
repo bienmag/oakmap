@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { CREATOR, READER } from '../../../Resources/Enums/Options'
+import { EDITOR, READER } from '../../../Resources/Enums/Options'
 import { handleSetNode } from '../../../Resources/Packages/RFlow/Custom'
 import {
   allbuttonTypes,
   CBackInsertText,
 } from '../../../Resources/Packages/RFlow/Markdown'
 import { v4 as uuidv4 } from 'uuid'
-function Markdown({ marked, setMarked, setNodes, option }) {
+function Markdown({ marked, setMarked, setNodes, treeMode }) {
   const handleOnMarkDown = (e) => {
     setMarked('')
   }
@@ -30,14 +30,14 @@ function Markdown({ marked, setMarked, setNodes, option }) {
 
   //reader and no text
   if (
-    (marked && option === READER && marked.data.text === '') ||
+    (marked && treeMode === READER && marked.data.text === '') ||
     marked.data?.text === undefined
   ) {
     return <div></div>
   }
 
   //reader and text
-  else if (marked && option === READER && marked.data.text !== '') {
+  else if (marked && treeMode === READER && marked.data.text !== '') {
     return (
       <>
         <div className="markdownBG" onClick={handleOnMarkDown}></div>
@@ -49,7 +49,7 @@ function Markdown({ marked, setMarked, setNodes, option }) {
   }
 
   // creator
-  else if (marked && option === CREATOR) {
+  else if (marked && treeMode === EDITOR) {
     return (
       <>
         <div className="markdownBG" onClick={handleOnMarkDown}></div>
@@ -60,7 +60,7 @@ function Markdown({ marked, setMarked, setNodes, option }) {
               onChange={(e) => setText(e.target.value)}
               value={text}
               type="text"
-              disabled={option === READER}
+              disabled={treeMode === READER}
               ref={textAreaRef}
             ></textarea>
             <div className="markdown-buttons">

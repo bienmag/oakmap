@@ -61,13 +61,13 @@ export const CBackOnDrop = (
 export const handleOnPaneClick = (setSelected) => {
   setSelected('')
 }
-export const handleOnNodeDoubleClick = (option, inputRef) => {
-  if (option === 'creator') {
+export const handleOnNodeDoubleClick = (treeMode, inputRef) => {
+  if (treeMode === 'editor') {
     inputRef.current.focus()
     inputRef.current.select()
   } // setMarked(node)
 }
-export const handleOnNodeClick = (node, option, setMarked, setSelected) => {
-  if (option === 'reader') setMarked(node)
+export const handleOnNodeClick = (node, treeMode, setMarked, setSelected) => {
+  if (treeMode === 'reader') setMarked(node)
   setSelected(node)
 }

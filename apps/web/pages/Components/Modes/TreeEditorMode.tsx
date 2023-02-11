@@ -20,38 +20,18 @@ import 'reactflow/dist/style.css'
 
 import Custom from '../Custom/Custom'
 import Markdown from '../Markdown/Markdown'
-import DescriptionMenu from '../DescriptionMenu/DescriptionMenu'
-import Option from '../Option/Option'
-import {
-  leftLeafNode,
-  rightLeafNode,
-  BranchNode,
-  RootNode,
-} from '../CustomNode/CustomNodes'
-  
 
-const nodeTypes = {
-    rightLeaf: rightLeafNode,
-    leftLeaf: leftLeafNode,
-    branch: BranchNode,
-    root: RootNode,
-  }
-  
-  const initialNodes = [
-    {
-      id: 'node_head',
-      data: { label: 'Root' },
-      position: { x: 0, y: 0 },
-      type: 'root',
-    },
-  ]
-  
+// IMPORT FROM RESOURCES
+import {
+  initialNodes,
+  nodeTypes
+} from '../../../Resources/Packages/RFlow/RFlow'
+
 
 let id = 0
 const getId = () => `node_${id++}`
 
 export const InputContext = createContext(null)
-
 
 export function TreeEditorMode({ treeMode, setTreeMode, marked, setMarked }: any) {
 
@@ -177,6 +157,40 @@ export function TreeEditorMode({ treeMode, setTreeMode, marked, setMarked }: any
                             </ReactFlowProvider>
                             </div>
             </InputContext.Provider>
-            </div >
+          </div >
 )
 }
+
+
+/* import DescriptionMenu from '../DescriptionMenu/DescriptionMenu'
+import Option from '../Option/Option'
+import {
+  leftLeafNode,
+  rightLeafNode,
+  BranchNode,
+  RootNode,
+} from '../CustomNode/CustomNodes' */
+
+
+/* import {
+  leftLeafNode,
+  rightLeafNode,
+  BranchNode,
+  RootNode,
+} from '../CustomNode/CustomNodes'
+
+const nodeTypes = {
+  rightLeaf: rightLeafNode,
+  leftLeaf: leftLeafNode,
+  branch: BranchNode,
+  root: RootNode,
+} 
+
+const initialNodes = [
+  {
+    id: 'node_head',
+    data: { label: 'Root' },
+    position: { x: 0, y: 0 },
+    type: 'root',
+  },
+] */

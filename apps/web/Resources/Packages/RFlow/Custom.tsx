@@ -8,9 +8,9 @@ export const allNodesOptions = [
   { name: 'Right Leaf', type: 'rightLeaf', className: 'dndnode output' },
 ]
 
-export const handleOnDragStart = (event, nodeType, option) => {
+export const handleOnDragStart = (event, nodeType, treeMode) => {
   event.dataTransfer.setData('application/reactflow', nodeType)
-  if (option === 'creator') event.dataTransfer.effectAllowed = 'move'
+  if (treeMode === 'editor') event.dataTransfer.effectAllowed = 'move'
   else event.dataTransfer.effectAllowed = 'none'
 }
 

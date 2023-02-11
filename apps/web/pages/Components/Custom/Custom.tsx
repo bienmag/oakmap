@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react'
 // import { InputContext } from '../index';
-import { InputContext } from '../../index'
+import { InputContext } from '../Modes/TreeEditorMode'
 
-function Custom({ selected, setNodes, setMarked, option }: any) {
+//////////////////////////////////////////////////////////////////
+// CUSTOM MENU ON THE LEFT SIDE FOR DRAGGING NODES
+//////////////////////////////////////////////////////////////////
+
+
+function Custom({ selected, setNodes, setMarked, treeMode }: any) {
   const [nodeName, setNodeName] = useState('')
 
   const handleDelNode = () => {
@@ -46,7 +51,7 @@ function Custom({ selected, setNodes, setMarked, option }: any) {
 
   const onDragStart = (event, nodeType) => {
     event.dataTransfer.setData('application/reactflow', nodeType)
-    if (option === 'creator') event.dataTransfer.effectAllowed = 'move'
+    if (treeMode === 'editor') event.dataTransfer.effectAllowed = 'move'
     else event.dataTransfer.effectAllowed = 'none'
   }
 

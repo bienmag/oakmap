@@ -6,12 +6,12 @@ const Draggable = dynamic(() => import('react-draggable-bottom-sheet'), {
 })
 import ReactMarkdown from 'react-markdown'
 
-function DescriptionMenu({ isOpen, closeBottomSheet, setDescription, description, option }) {
+function DescriptionMenu({ isOpen, closeBottomSheet, setDescription, description, treeMode }: any) {
 
     return (
     <Draggable isOpen={isOpen} close={closeBottomSheet}>
         <div style={{ textAlign: "center", padding: "0px 16px 16px 16px" }}>
-            {option === 'creator' ?
+            {treeMode === 'editor' ?
                     (<div>
                         <h3>Description</h3>
                         <textarea

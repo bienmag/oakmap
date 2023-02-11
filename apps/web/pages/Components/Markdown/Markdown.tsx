@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
 
-function Markdown({ marked, setMarked, setNodes, option }) {
+function Markdown({ marked, setMarked, setNodes, treeMode }) {
   const handleOnMarkDown = (e) => {
     setMarked('')
   }
@@ -41,14 +41,14 @@ function Markdown({ marked, setMarked, setNodes, option }) {
   }
 
   //reader and no text
-  if (marked && option === 'reader' && marked.data.text === "" || marked.data?.text === undefined) {
+  if (marked && treeMode === 'reader' && marked.data.text === "" || marked.data?.text === undefined) {
     return (
       <div></div>
     )
   }
 
   //reader and text
-  else if (marked && option === 'reader' && marked.data.text !== "") {
+  else if (marked && treeMode === 'reader' && marked.data.text !== "") {
     return (
       <>
         <div className="markdownBG" onClick={handleOnMarkDown}></div>
@@ -59,8 +59,7 @@ function Markdown({ marked, setMarked, setNodes, option }) {
     )
   }
 
-  // creator
-  else if (marked && option === 'creator') {
+  else if (marked && treeMode === 'editor') { // originally was called 'creator' but now 'editor'
     return (
       <>
         <div className="markdownBG" onClick={handleOnMarkDown}></div>
@@ -71,7 +70,7 @@ function Markdown({ marked, setMarked, setNodes, option }) {
               onChange={(e) => setText(e.target.value)}
               value={text}
               type="text"
-              disabled={option === 'reader'}
+              disabled={treeMode === 'reader'}
               ref={textAreaRef}
             ></textarea>
             <div className="markdown-buttons">

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 // import { InputContext } from '../index';
-import { InputContext } from '../../index'
+import InputContext from '../../index'
 import {
   allNodesOptions,
   CBackHandleDelNode,
@@ -26,7 +26,7 @@ function Custom({ selected, setNodes, setMarked, option }: any) {
     handleSetNode(setNodes, selected, { label: nodeName })
   }, [selected.id, nodeName, setNodes])
 
-  const inputRef = React.useContext(InputContext)
+  const inputRef = useContext(InputContext)
 
   //from Sidebar.tsx
 

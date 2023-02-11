@@ -7,7 +7,7 @@ html {
   font-family: 'Courier New', Courier, monospace;
 }
 
-.markdown > * {
+.markdown>* {
   all: revert;
 }
 
@@ -26,7 +26,8 @@ a {
   /* flex-direction: column;
   display: flex;
   flex-grow: 1;
-  height: 100%; */;
+  height: 100%; */
+  ;
 }
 
 .react-flow {
@@ -39,7 +40,8 @@ a {
   border-right: 1px solid #eee;
   padding: 15px 10px;
   font-size: 12px;
-  background: #fcfcfc; */;
+  background: #fcfcfc; */
+  ;
 }
 
 .dndflow aside .description {
@@ -54,7 +56,8 @@ a {
   height: 100%;
   border-right: 1px solid #eee;
   font-size: 12px;
-  background: #4e4e4e; */;
+  background: #4e4e4e; */
+  ;
 }
 
 input {
@@ -70,7 +73,8 @@ input {
   position: absolute;
   right: 0;
   font-size: 12px;
-  background: #ffffff; */;
+  background: #ffffff; */
+  ;
 }
 
 /* .dndflow .flex-markdown {
@@ -90,16 +94,20 @@ input {
   top: 200px;
 }
 
-.dndflow .custom {
-  @apply absolute left-0 top-52 border-solid  border-r-2 text-xs border-gray-200 py-3.5 px-2.5 w-60
+.dndflow .description-area {
+  @apply place-content-center;
+}
 
+.dndflow .custom {
+  @apply absolute left-0 top-52 border-solid border-r-2 text-xs border-gray-200 py-3.5 px-2.5 w-60
   /* border-r-2 border-solid border-gray-200 py-3.5 px-2.5 text-xs bg-white */
   /* position: absolute;
   right: 0;
   border-right: 1px solid #eee;
   padding: 15px 10px;
   font-size: 12px;
-  background: #fcfcfc; */;
+  background: #fcfcfc; */
+  ;
 }
 
 .dndflow .custom-name-input {
@@ -124,7 +132,8 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: grab; */;
+  cursor: grab; */
+  ;
 }
 
 .dndflow .dndnode.input {
@@ -145,16 +154,29 @@ input {
 
 .dndflow .selectall {
   @apply mt-3
-  /* margin-top: 10px; */;
+  /* margin-top: 10px; */
+  ;
 }
 
 @media screen and (min-width: 768px) {
   .dndflow {
     @apply flex flex-row
-    /* flex-direction: row; */;
+    /* flex-direction: row; */
+    ;
   }
 
   .dndflow aside {
     @apply w-1/5 max-w-xs mt-48 border-2 rounded-xl pl-2 pr-4;
   }
+}
+
+
+.React-Flow-Container {
+  position: relative;
+  top: 0px; /* position below the Navbar */
+  left: 0px; /* position to the right of the Sidebar */
+  height: calc(100vh - 30px); /* subtract the height of the Navbar */
+  width: calc(100vw - 75px); /* subtract the width of the Sidebar */
+  /* height: calc(100% - 80px); */ /* subtract the height of the Navbar */
+  /* width: calc(100% - 200px); */ /* subtract the width of the Sidebar */
 }

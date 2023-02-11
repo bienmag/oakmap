@@ -1,4 +1,5 @@
 module.exports = {
   reactStrictMode: true,
-  transpilePackages: ["ui"],
+  transpilePackages: ["ui", "react-draggable-bottom-sheet"],
+  experimental: { esmExternals: true },
 };

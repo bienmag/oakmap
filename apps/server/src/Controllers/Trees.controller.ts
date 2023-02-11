@@ -42,9 +42,10 @@ const TreesController = {
       //treeId should come from req.params!
       //nodeID ??????
       const { treeId } = req.params
-      const { branchId, position, branchName, markdownText, leaves } = req.body
-      const branch = await Branch.create(branchId, treeId, position, branchName, leaves, markdownText)
-      const markdown = await Markdown.create(treeId, markdownText, branchId)
+      const { branchId, position } = req.body
+      const leaves: object[] = []
+      const branch = await Branch.create(branchId, treeId, position, leaves)
+      // const markdown = await Markdown.create(treeId, branchId)
       res.status(201).json(branch)
 
       // INSERT branch into the tree 
@@ -55,6 +56,7 @@ const TreesController = {
       next(e)
     }
   },
+
 
   //create a leaf 
   async createLeaf(req: Request, res: Response, next: NextFunction) {
@@ -76,18 +78,52 @@ const TreesController = {
       await DBTree.findOneAndUpdate({ _id: id }, { $push: { unlinkedLeaves: leaf } })
 
 
-      // // INSERT leaf into the BRANCH!!!!!
-      // const id = new mongodb.ObjectId(treeId)
-      // await DBTree.findOneAndUpdate({ _id: id, "branches.branchId": branchId }, { $push: { "branches.$.leaves": leaf } })
+
     }
 
     catch (e) {
       next(e)
     }
   },
-
-
   // update a branch
+  async updateBranch(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { treeId } = req.params
+      const { branchId, position, branchName, markdown } = req.body
+
+      const branch = await Branch.update(branchId, treeId, position, branchName)
+      res.status(201).json(branch)
+
+      if (markdown) {
+        await Markdown.create(treeId, branchId)
+      }
+
+    } catch (e) {
+      next(e)
+    }
+  },
+
+  async linkUnlink(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { treeId } = req.params
+      const { branchId, leafId } = req.body
+
+      const branch = await Branch.linkUnlink(treeId, branchId, leafId)
+      const leaf = await Leaf.linkUnlink(treeId, branchId, leafId)
+
+
+      res.status(201).json(branch)
+    }
+    catch (e) {
+      next(e)
+    }
+  },
+
+  // // INSERT leaf into the BRANCH!!!!!
+  // const id = new mongodb.ObjectId(treeId)
+  // await DBTree.findOneAndUpdate({ _id: id, "branches.branchId": branchId }, { $push: { "branches.$.leaves": leaf } })
+
+
 
 
   // update a leaf
@@ -95,11 +131,10 @@ const TreesController = {
     try {
       const { treeId } = req.params
       const { leafId, position, leafName, branchId, markdown } = req.body
-      let update: { position?: object, leafName?: string, branchId?: string } = {}
 
-      if (position) update['position'] = position;
-      if (leafName) update['leafName'] = leafName;
-      if (branchId) update['branchId'] = branchId
+      const leaf = await Leaf.update(leafId, treeId, position, leafName, branchId)
+
+      res.status(201).json(leaf)
 
       if (markdown) {
         await Markdown.create(treeId, leafId)

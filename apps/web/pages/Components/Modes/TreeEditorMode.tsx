@@ -61,7 +61,6 @@ export function TreeEditorMode({ treeMode, setTreeMode, marked, setMarked }: any
     const [isDraggable, setIsDraggable] = useState(false)
     const [reactFlowInstance, setReactFlowInstance] = useState(null)
     const [selected, setSelected] = useState('')
-    // const [option, setOption] = useState('editor')
   
     // useRef for double click on node to focus on input text
     const inputRef: any = useRef(null)

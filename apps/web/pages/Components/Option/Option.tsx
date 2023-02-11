@@ -1,5 +1,11 @@
 import React, { createContext, useState } from 'react'
 
+
+//////////////////////////////////////////////////////////////////
+// OLD OPTIONS FOR TOGGLING EDITOR MODE (FORMERLY CREATOR MODE)
+//////////////////////////////////////////////////////////////////
+
+
 function Option({ option, setOption, openBottomSheet }: any) {
   return (
     <div className="  absolute inset-x-0 top-0 flex justify-center  ">
@@ -21,16 +27,16 @@ function Option({ option, setOption, openBottomSheet }: any) {
       <div className=" m-5">
         <button
           onClick={(e) => setOption(e.target.value)}
-          value={'creator'}
+          value={'editor'}
           className={
-            (option === 'creator'
+            (option === 'editor'
               ? 'bg-green-600'
               : 'bg-slate-500 hover:bg-red-800') +
             '  bg-slate-500 border-2 p-4 rounded border-black'
           }
-          disabled={option === 'creator'}
+          disabled={option === 'editor'}
         >
-          Creator
+          Editor
         </button>
       </div>
     </div>

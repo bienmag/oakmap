@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react'
 // import { InputContext } from '../index';
 import { InputContext } from '../Modes/TreeEditorMode'
 
+//////////////////////////////////////////////////////////////////
+// CUSTOM MENU ON THE LEFT SIDE FOR DRAGGING NODES
+//////////////////////////////////////////////////////////////////
+
+
 function Custom({ selected, setNodes, setMarked, treeMode }: any) {
   const [nodeName, setNodeName] = useState('')
 

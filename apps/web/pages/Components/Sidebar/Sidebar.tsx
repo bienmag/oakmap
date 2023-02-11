@@ -7,36 +7,16 @@ import React, {
     createContext,
     Fragment,
   } from 'react'
-  import ReactFlow, {
-    ReactFlowProvider,
-    addEdge,
-    useNodesState,
-    useEdgesState,
-    Background,
-    Controls,
-    MiniMap,
-    ConnectionLineType,
-  } from 'reactflow'
   import 'reactflow/dist/style.css'
   
   // import Sidebar from './Components/Sidebar/Sidebar'
-  import Custom from '../Custom/Custom'
-import Markdown from '../Markdown/Markdown'
 import DescriptionMenu from '../DescriptionMenu/DescriptionMenu'
-  import Option from '../Option/Option'
-  import {
-    leftLeafNode,
-    rightLeafNode,
-    BranchNode,
-    RootNode,
-} from '../CustomNode/CustomNodes'
 
 // Selectors
 import ModeSelector from '../Modes/ModeSelector'
 import NavModeSelector from '../Modes/NavModeSelector'
   
-      
-      /*
+/*
   This example requires some changes to your config:
   
   ```
@@ -132,6 +112,11 @@ export function Sidebar() { // removed epxort default
   }, [marked])
 
 
+  // WHICH PAGE TO RENDER
+  // const [dashboard, setDasboard] = useState(false) // set to true to view the dashboard page
+  const [renderPage, setRenderPage] = useState('tree') // dashboard, profile, tree, signin ?
+
+
 // MOSTLY TAILWIND TEMPLATE CODE BELOW
 
   return (
@@ -217,7 +202,7 @@ export function Sidebar() { // removed epxort default
 
             { /* Navigation bar selector */ }
             <div>
-              <NavModeSelector treeMode={treeMode} setTreeMode={setTreeMode} openBottomSheet={openBottomSheet} closeBottomSheet={closeBottomSheet} />
+              <NavModeSelector renderPage={renderPage} setRenderPage={setRenderPage} treeMode={treeMode} setTreeMode={setTreeMode} openBottomSheet={openBottomSheet} closeBottomSheet={closeBottomSheet} />
             </div>
 
             <div className="ml-10 flex flex-shrink-0 items-center space-x-10 pr-4">
@@ -430,7 +415,7 @@ export function Sidebar() { // removed epxort default
               </h1>
                       {/* YOUR CONTENT - render modeSelector */}
                       {/* ModeSelector(DashboardMode, TreeEditorMode) -- this was alternative as a way to pass components as props */}
-              <ModeSelector treeMode={treeMode} setTreeMode={setTreeMode} marked={marked} setMarked={setMarked} />
+              <ModeSelector renderPage={renderPage} setRenderPage={setRenderPage} treeMode={treeMode} setTreeMode={setTreeMode} marked={marked} setMarked={setMarked} />
                       {/* END YOUR CONTENT */ }
             </section>
             { /* INFO BOTTOM SHEET */ }

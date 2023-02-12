@@ -28,8 +28,8 @@ export const handleSetNode = (setNodes, selected, { text, label }) =>
         // in order to notify react flow about the change
         node.data = {
           ...node.data,
-          text: text ? text : null,
-          label: label ? label : null,
+          text: text ? text : node.data.text,
+          label: label ? label : node.data.label,
         }
       }
       return node

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 // import { InputContext } from '../index';
 import { InputContext } from '../Modes/TreeEditorMode'
 import {
@@ -13,7 +13,6 @@ import { v4 as uuidv4 } from 'uuid'
 // CUSTOM MENU ON THE LEFT SIDE FOR DRAGGING NODES
 ////////////////////////////////////////////////////
 
-
 function Custom({ selected, setNodes, setMarked, treeMode }: any) {
   const [nodeName, setNodeName] = useState('')
 
@@ -24,15 +23,15 @@ function Custom({ selected, setNodes, setMarked, treeMode }: any) {
   }
 
   useEffect(() => {
-    if (selected) setNodeName(selected?.data?.label)
+    if (selected) setNodeName(selected.data.label)
     else setNodeName('')
   }, [selected])
 
   useEffect(() => {
     handleSetNode(setNodes, selected, { label: nodeName })
-  }, [selected.id, nodeName, setNodes])
+  }, [nodeName, setNodes])
 
-  const inputRef = React.useContext(InputContext)
+  const inputRef = useContext(InputContext)
 
   //from Sidebar.tsx
 

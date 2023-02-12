@@ -88,16 +88,9 @@ export function BranchNode({ data }) {
 }
 
 export function RootNode({ data }) {
-  const rootText = data.text
-
   return (
     <div>
-      <div
-        className={
-          'px-4 py-2 shadow-md rounded-md bg-white border-2 border-green-600 bg-green-300 w-52 ' +
-          (rootText !== undefined ? 'hover:bg-green-400' : '')
-        }
-      >
+      <div className="px-4 py-2 shadow-md rounded-md  border-2 border-green-600 bg-green-300 w-52 ">
         <Text data={data} />
 
         <Handle

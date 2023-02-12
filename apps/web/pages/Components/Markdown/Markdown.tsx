@@ -15,7 +15,7 @@ function Markdown({ marked, setMarked, setNodes, treeMode }) {
   const [text, setText] = useState('')
 
   useEffect(() => {
-    handleSetNode(setNodes, marked, { text })
+    handleSetNode(setNodes, marked, { text: text })
   }, [marked.id, text, setNodes])
 
   useEffect(() => {

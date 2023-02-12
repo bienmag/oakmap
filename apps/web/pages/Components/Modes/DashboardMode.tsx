@@ -1,9 +1,11 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-// 
-// JSON SERVER PORT: http://localhost:3333/
-// yarn json-server --port 3333
+// MAKE SURE TO DO THE FOLLOWING TO RUN SERVER:
+    // yarn add axios
+    // yarn global add json-server
+    // JSON SERVER PORT: http://localhost:3333/
+    // yarn json-server --port 3333
 
 type Tree = {
   id: number

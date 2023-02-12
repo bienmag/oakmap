@@ -33,7 +33,17 @@ function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSh
                             </button>
                         </a>
                         <a href="#" className="text-sm font-medium text-gray-900">
-                            Author
+                            <button
+                                    onClick={(e) => setRenderPage(e.target.value)
+                                    }
+                                    value={renderPage === 'dashboard' ? 'tree' : 'dashboard'}
+                                    className={
+                                        ('bg-white' + '  border-2 p-4 rounded border-black'
+                                        + '  border-2 p-4 rounded border-black')
+                                    }
+                                    >
+                                    Dashboard
+                                </button>
                         </a>
                         <a href="#" className="text-sm font-medium text-gray-900">
                         <img src="" alt="Watch List" className="text-sm font-medium text-gray-900"/>
@@ -78,7 +88,17 @@ function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSh
                       Test_Dash2
                   </a>
                   <a href="#" className="text-sm font-medium text-gray-900">
-                      Test_Dash3
+                    <button
+                        onClick={(e) => setRenderPage(e.target.value)
+                        }
+                        value={renderPage === 'dashboard' ? 'tree' : 'dashboard'}
+                        className={
+                            ('bg-white' + '  border-2 p-4 rounded border-black'
+                            + '  border-2 p-4 rounded border-black')
+                        }
+                        >
+                        Tree Editor
+                    </button>
                   </a>
                   <a href="#" className="text-sm font-medium text-gray-900">
                   <img src="" alt="Watch List" className="text-sm font-medium text-gray-900"/>

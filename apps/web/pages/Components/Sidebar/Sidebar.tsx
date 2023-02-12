@@ -93,8 +93,8 @@ export function Sidebar() { // removed epxort default
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // from Tailwind UI
   
 
-  // // Toggle editor vs reader modes
-  const [treeMode, setTreeMode] = useState<string>('editor')
+  // // Toggle editor vs reader modes -- originally we named this 'option'
+  const [treeMode, setTreeMode] = useState<string>('editor') 
 
   // Bottom Sheet State
   const [isOpen, setIsOpen] = useState(false)

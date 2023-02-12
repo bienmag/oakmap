@@ -1,44 +1,26 @@
 import React, { createContext, useState } from 'react'
-
-
-//////////////////////////////////////////////////////////////////
-// OLD OPTIONS FOR TOGGLING EDITOR MODE (FORMERLY CREATOR MODE)
-//////////////////////////////////////////////////////////////////
-
-
-function Option({ option, setOption, openBottomSheet }: any) {
+import { Options } from '../../../Resources/Enums/Options'
+import { v4 as uuidv4 } from 'uuid'
+function Option({ treeMode, setTreeMode }) {
   return (
     <div className="  absolute inset-x-0 top-0 flex justify-center  ">
-      <div className=" m-5">
-        <button
-          onClick={(e) => setOption(e.target.value)}
-          value={'reader'}
-          className={
-            (option === 'reader'
-              ? 'bg-green-500'
-              : 'bg-slate-500 hover:bg-red-800') +
-            '  border-2 p-4 rounded border-black'
-          }
-          disabled={option === 'reader'}
-        >
-          Reader
-        </button>
-      </div>
-      <div className=" m-5">
-        <button
-          onClick={(e) => setOption(e.target.value)}
-          value={'editor'}
-          className={
-            (option === 'editor'
-              ? 'bg-green-600'
-              : 'bg-slate-500 hover:bg-red-800') +
-            '  bg-slate-500 border-2 p-4 rounded border-black'
-          }
-          disabled={option === 'editor'}
-        >
-          Editor
-        </button>
-      </div>
+      {Options.map((type) => (
+        <div className=" m-5" key={uuidv4()}>
+          <button
+            onClick={(e) => setTreeMode(e.target.value)}
+            value={type}
+            className={
+              (treeMode === type
+                ? 'bg-green-500'
+                : 'bg-slate-500 hover:bg-red-800') +
+              '  border-2 p-4 rounded border-black'
+            }
+            disabled={treeMode === type}
+          >
+            {type.charAt(0).toUpperCase() + type.slice(1)}
+          </button>
+        </div>
+      ))}
     </div>
   )
 }

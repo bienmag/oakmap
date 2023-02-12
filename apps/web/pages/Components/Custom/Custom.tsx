@@ -1,92 +1,64 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 // import { InputContext } from '../index';
 import { InputContext } from '../Modes/TreeEditorMode'
+import {
+  allNodesOptions,
+  CBackHandleDelNode,
+  handleOnDragStart,
+  handleSetNode,
+} from '../../../Resources/Packages/RFlow/Custom'
+import { v4 as uuidv4 } from 'uuid'
 
-//////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // CUSTOM MENU ON THE LEFT SIDE FOR DRAGGING NODES
-//////////////////////////////////////////////////////////////////
-
+////////////////////////////////////////////////////
 
 function Custom({ selected, setNodes, setMarked, treeMode }: any) {
   const [nodeName, setNodeName] = useState('')
 
-  const handleDelNode = () => {
-    setNodes((nds) =>
-      nds.filter((nd) =>
-        nd.id !== 'node_head' ? nd.id !== selected.id : nds
-      )
-    )
-  }
+  const handleDelNode = () => CBackHandleDelNode(setNodes, selected)
 
   const handleMarkdown = () => {
     setMarked(selected)
   }
 
   useEffect(() => {
-    if (selected) setNodeName(selected?.data?.label)
+    if (selected) setNodeName(selected.data.label)
     else setNodeName('')
   }, [selected])
 
   useEffect(() => {
-    setNodes((nds) =>
-      nds.map((node) => {
-        if (node.id === selected.id) {
-          // it's important that you create a new object here
-          // in order to notify react flow about the change
-          node.data = {
-            ...node.data,
-            label: nodeName,
-          }
-        }
+    handleSetNode(setNodes, selected, { label: nodeName })
+  }, [nodeName, setNodes])
 
-        return node
-      })
-    )
-  }, [selected.id, nodeName, setNodes])
+  const inputRef = useContext(InputContext)
 
-  const inputRef = React.useContext(InputContext)
+  //from Sidebar.tsx
 
-
-  //from Sidebar.tsx 
-
-  const onDragStart = (event, nodeType) => {
-    event.dataTransfer.setData('application/reactflow', nodeType)
-    if (treeMode === 'editor') event.dataTransfer.effectAllowed = 'move'
-    else event.dataTransfer.effectAllowed = 'none'
-  }
+  const onDragStart = (event, nodeType) =>
+    handleOnDragStart(event, nodeType, treeMode)
 
   return (
     <aside>
       <div className="description">
         You can drag these nodes to the pane on the right.
       </div>
-      <div
-        className="dndnode input"
-        onDragStart={(event) => onDragStart(event, 'branch')}
-        draggable
-      >
-        Branch
-      </div>
-
-      <div
-        className="dndnode output"
-        onDragStart={(event) => onDragStart(event, 'leftLeaf')}
-        draggable
-      >
-        Left Leaf
-      </div>
-      <div
-        className="dndnode output"
-        onDragStart={(event) => onDragStart(event, 'rightLeaf')}
-        draggable
-      >
-        Right Leaf
-      </div>
+      {allNodesOptions.map((option) => {
+        return (
+          <div
+            key={uuidv4()}
+            className={option.className}
+            onDragStart={(event) => onDragStart(event, option.type)}
+            draggable
+          >
+            {option.name}
+          </div>
+        )
+      })}
       {/* <div className="custom"> */}
       <div className="description">
-        <div className="description"></div>
         <h3> Selected Node: {selected === '' ? 'None' : selected.id}</h3>
-        {selected === '' ? null : (
+        {selected !== '' && (
           <div className="custom-name-input">
             <label htmlFor="name">Name</label>
             <input
@@ -100,28 +72,27 @@ function Custom({ selected, setNodes, setMarked, treeMode }: any) {
             />
             {/* className="opacity-0" */}
             <div className="custom-menu-buttons">
-              {selected.id === 'node_head' ? (<></>) : (<button
-                className="custom-button hover:bg-blue-400"
-                onClick={handleMarkdown}
-              >
-                {' '}
-                Markdown
-              </button>)}
-              {selected.id === 'node_head' ? (
-                <></>) : (<button
-                  className="custom-button hover:bg-red-400"
-
-                  onClick={handleDelNode}
-                >
-                  {' '}
-                  Delete
-                </button>)}
-
+              {selected.id !== 'node_head' && (
+                <>
+                  <button
+                    className="custom-button hover:bg-blue-400"
+                    onClick={handleMarkdown}
+                  >
+                    Markdown
+                  </button>
+                  <button
+                    className="custom-button hover:bg-red-400"
+                    onClick={handleDelNode}
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
             </div>
           </div>
         )}
       </div>
-    </aside >
+    </aside>
   )
 }
 

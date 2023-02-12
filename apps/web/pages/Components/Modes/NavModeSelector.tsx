@@ -38,7 +38,7 @@ function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSh
                                     }
                                     value={renderPage === 'dashboard' ? 'tree' : 'dashboard'}
                                     className={
-                                        ('bg-white' + '  border-2 p-4 rounded border-black'
+                                        ('bg-yellow-500' + '  border-2 p-4 rounded border-black'
                                         + '  border-2 p-4 rounded border-black')
                                     }
                                     >
@@ -46,10 +46,24 @@ function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSh
                                 </button>
                         </a>
                         <a href="#" className="text-sm font-medium text-gray-900">
-                        <img src="" alt="Watch List" className="text-sm font-medium text-gray-900"/>
+                            <button
+                                    className={
+                                        ('bg-white' + '  border-2 p-4 rounded border-black'
+                                        + '  border-2 p-4 rounded border-black')
+                                    }
+                                    >
+                                    Watch List
+                            </button>
                         </a>
                         <a href="#" className="text-sm font-medium text-gray-900">
-                        <img src="" alt="Share Link" className="text-sm font-medium text-gray-900"/>
+                            <button
+                                className={
+                                    ('bg-white' + '  border-2 p-4 rounded border-black'
+                                    + '  border-2 p-4 rounded border-black')
+                                }
+                                >
+                                Share Link
+                            </button>
                         </a>
                     </nav>
                 </div>
@@ -69,10 +83,24 @@ function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSh
                     Test_Profile3
                 </a>
                 <a href="#" className="text-sm font-medium text-gray-900">
-                <img src="" alt="Watch List" className="text-sm font-medium text-gray-900"/>
+                    <button
+                                className={
+                                    ('bg-white' + '  border-2 p-4 rounded border-black'
+                                    + '  border-2 p-4 rounded border-black')
+                                }
+                                >
+                                Watch List
+                    </button>
                 </a>
                 <a href="#" className="text-sm font-medium text-gray-900">
-                <img src="" alt="Share Link" className="text-sm font-medium text-gray-900"/>
+                    <button
+                            className={
+                                ('bg-white' + '  border-2 p-4 rounded border-black'
+                                + '  border-2 p-4 rounded border-black')
+                            }
+                            >
+                            Share Link
+                    </button>
                 </a>
             </nav>
           </div>
@@ -81,19 +109,19 @@ function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSh
             // DASHBOARD
               <div className="ml-10 flex flex-shrink-0 items-center space-x-10 pr-4">
               <nav aria-label="Global" className="flex space-x-10">
-                  <a href="#" className="text-sm font-medium text-gray-900">
+                  {/* <a href="#" className="text-sm font-medium text-gray-900">
                       Test_Dash
                   </a>
                   <a href="#" className="text-sm font-medium text-gray-900">
                       Test_Dash2
-                  </a>
+                  </a> */}
                   <a href="#" className="text-sm font-medium text-gray-900">
                     <button
                         onClick={(e) => setRenderPage(e.target.value)
                         }
                         value={renderPage === 'dashboard' ? 'tree' : 'dashboard'}
                         className={
-                            ('bg-white' + '  border-2 p-4 rounded border-black'
+                            ('bg-yellow-500' + '  border-2 p-4 rounded border-black'
                             + '  border-2 p-4 rounded border-black')
                         }
                         >
@@ -101,10 +129,24 @@ function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSh
                     </button>
                   </a>
                   <a href="#" className="text-sm font-medium text-gray-900">
-                  <img src="" alt="Watch List" className="text-sm font-medium text-gray-900"/>
+                    <button
+                            className={
+                                ('bg-white' + '  border-2 p-4 rounded border-black'
+                                + '  border-2 p-4 rounded border-black')
+                            }
+                            >
+                            Watch List
+                    </button>
                   </a>
                   <a href="#" className="text-sm font-medium text-gray-900">
-                  <img src="" alt="Share Link" className="text-sm font-medium text-gray-900"/>
+                    <button
+                            className={
+                                ('bg-white' + '  border-2 p-4 rounded border-black'
+                                + '  border-2 p-4 rounded border-black')
+                            }
+                            >
+                            Share Link
+                    </button>
                   </a>
               </nav>
             </div>

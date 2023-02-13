@@ -7,6 +7,7 @@ import TreesController from "./Controllers/Trees.controller";
 const router = express.Router()
 
 router.post('/trees', TreesController.createTree)
+router.put('/trees/:treeId', TreesController.updateTree)
 router.post('/trees/:treeId/branches', TreesController.createBranch)
 router.put('/trees/:treeId/branches', TreesController.updateBranch)
 router.post('/trees/:treeId/unlinkedLeaves', TreesController.createLeaf)

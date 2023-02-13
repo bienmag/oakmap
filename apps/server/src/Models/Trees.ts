@@ -8,11 +8,11 @@ class Tree {
   constructor(
     public _id: object,
     public treeName: string,
-    public date: object,
-    public user: string,
-    public description: string,
-    public branches: Array<object>,
-    public unlinkedLeaves: Array<object>
+    public date?: object,
+    public user?: string,
+    public branches?: Array<object>,
+    public unlinkedLeaves?: Array<object>,
+    public description?: string
   ) { }
 
 
@@ -22,7 +22,6 @@ class Tree {
     date: object,
     treeName: string,
     user: string,
-    description: string,
     branches: Array<object>,
     unlinkedLeaves: Array<object>
   ): Promise<Tree> {
@@ -32,10 +31,10 @@ class Tree {
 
     await DBTree.create({
 
-      _id, treeName, date, user, description, branches
+      _id, treeName, date, user, branches, unlinkedLeaves
     })
 
-    return new Tree(_id, treeName, date, user, description, branches, unlinkedLeaves)
+    return new Tree(_id, treeName, date, user, branches, unlinkedLeaves)
   }
 
   static async getAll(): Promise<Tree[]> {
@@ -43,10 +42,23 @@ class Tree {
   }
 
 
+  static async update(
+    treeId: string,
+    treeName: string,
+    description: string
+  ): Promise<Tree> {
+
+    const id = new mongodb.ObjectId(treeId)
+
+    let tree = await DBTree.findOne({ _id: id })
+    await DBTree.findOneAndUpdate({ _id: id }, { $set: { "treeName": treeName, "description": description } })
+    return new Tree(id, treeName, tree?.date, tree?.user, tree?.branches, tree?.unlinkedLeaves, description)
+  }
+
   static async getTreeById(treeId: string): Promise<Tree> {
     const id = new mongodb.ObjectId(treeId)
 
-    console.log(id)
+
     let record = await DBTree.findOne({ _id: id })
     if (record === null) {
       throw new Error('There is no tree with this id')

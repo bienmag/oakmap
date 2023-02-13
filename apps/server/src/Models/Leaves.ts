@@ -43,22 +43,21 @@ class Leaf {
 
 
 
-    const tree = await DBTree.findById({ _id: id, branches: { $elemMatch: { branchId: branchId, leaves: { $elemMatch: { leafId: leafId } } } } })
+    // const tree = await DBTree.findById({ _id: id, branches: { $elemMatch: { branchId: branchId, leaves: { $elemMatch: { leafId: leafId } } } } })
 
 
-    console.log(tree)
     // WORKING TO UPDAATE THE LEaF IN UNLINKED LEAVES!!!!!!!!!!!! can try to use this  { $set: update },
-    // const tree = await DBTree.findOneAndUpdate(
-    //   {
-    //     _id: id, "unlinkedLeaves.leafId": leafId
-    //   }, {
-    //   $set: {
-    //     "unlinkedLeaves.$.position": position,
-    //     "unlinkedLeaves.$.leafName": leafName,
-    //     "unlinkedLeaves.$.branchId": branchId
-    //   }
-    // },
-    //   { new: true })
+    const tree = await DBTree.findOneAndUpdate(
+      {
+        _id: id, "unlinkedLeaves.leafId": leafId
+      }, {
+      $set: {
+        "unlinkedLeaves.$.position": position,
+        "unlinkedLeaves.$.leafName": leafName,
+        "unlinkedLeaves.$.branchId": branchId
+      }
+    },
+      { new: true })
 
 
 

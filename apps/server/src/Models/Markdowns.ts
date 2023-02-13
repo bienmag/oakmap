@@ -10,28 +10,60 @@ class Markdown {
   ) { }
 
 
-  static async create(
+  static async createBranchMD(
     treeId: string,
     markdownText: string,
     branchId?: string,
-    leafId?: string,
   ) {
-
-
-
     const markdownId = new ObjectId()
 
-    leafId === undefined ? (await DBMarkdown.create({
+    await DBMarkdown.create({
       markdownId, treeId, markdownText, branchId
     })
-    ) : (await DBMarkdown.create({
+  }
+
+
+  static async createLeafMD(
+    treeId: string,
+    markdownText: string,
+    leafId?: string,
+  ) {
+    const markdownId = new ObjectId()
+
+    await DBMarkdown.create({
       markdownId, treeId, markdownText, leafId
     })
-    )
+
+  }
 
 
 
+  static async updateBranchMD(
+    treeId: string,
+    markdownText: string,
+    branchId: string
+  ) {
 
+    let markdown = await DBMarkdown.findOne({ branchId: branchId })
+    if (!markdown) {
+      await Markdown.createBranchMD(treeId, markdownText, branchId)
+    } else {
+      await DBMarkdown.findOneAndUpdate({ branchId: branchId }, { $set: { "markdownText": markdownText } })
+    }
+  }
+
+  static async updateLeafMD(
+    treeId: string,
+    markdownText: string,
+    leafId: string
+  ) {
+
+    let markdown = await DBMarkdown.findOne({ leafId: leafId })
+    if (!markdown) {
+      await Markdown.createLeafMD(treeId, markdownText, leafId)
+    } else {
+      await DBMarkdown.findOneAndUpdate({ leafId: leafId }, { $set: { "markdownText": markdownText } })
+    }
   }
 
   static async getMarkdownByNodeId(nodeId: string) {

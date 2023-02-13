@@ -15,7 +15,7 @@ const TreesController = {
   // create tree
   async createTree(req: Request, res: Response, next: NextFunction) {
     try {
-      const { treeName, description, user } = req.body
+      const { treeName, user } = req.body
       const date = new Date()
       const branches: object[] = []
       const unlinkedLeaves: object[] = []
@@ -24,13 +24,25 @@ const TreesController = {
       // @ts-ignore
       // const { user } = req.user
 
-
       const treeId = new ObjectId()
-      const tree = await Tree.create(treeId, date, treeName, user, description, branches, unlinkedLeaves)
+      const tree = await Tree.create(treeId, date, treeName, user, branches, unlinkedLeaves)
       res.status(201).json(tree)
     }
     catch (e) { next(e) }
   },
+
+  // update a tree
+  async updateTree(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { treeName, description } = req.body
+      const { treeId } = req.params
+      const tree = await Tree.update(treeId, treeName, description)
+      res.status(201).json(tree)
+    } catch (e) {
+      next(e)
+    }
+  },
+
 
   // create a branch
   async createBranch(req: Request, res: Response, next: NextFunction) {
@@ -89,13 +101,14 @@ const TreesController = {
   async updateBranch(req: Request, res: Response, next: NextFunction) {
     try {
       const { treeId } = req.params
-      const { branchId, position, branchName, markdown } = req.body
+      const { branchId, position, branchName, markdownText } = req.body
 
       const branch = await Branch.update(branchId, treeId, position, branchName)
       res.status(201).json(branch)
 
-      if (markdown) {
-        await Markdown.create(treeId, branchId)
+      if (markdownText) {
+        console.log('here', markdownText)
+        await Markdown.updateBranchMD(treeId, markdownText, branchId)
       }
 
     } catch (e) {
@@ -130,14 +143,14 @@ const TreesController = {
   async updateLeaf(req: Request, res: Response, next: NextFunction) {
     try {
       const { treeId } = req.params
-      const { leafId, position, leafName, branchId, markdown } = req.body
+      const { leafId, position, leafName, branchId, markdownText } = req.body
 
       const leaf = await Leaf.update(leafId, treeId, position, leafName, branchId)
 
       res.status(201).json(leaf)
 
-      if (markdown) {
-        await Markdown.create(treeId, leafId)
+      if (markdownText) {
+        await Markdown.updateLeafMD(treeId, markdownText, leafId)
       }
 
     }
@@ -147,10 +160,6 @@ const TreesController = {
     }
 
   },
-
-
-
-
 
 
   // get a single tree

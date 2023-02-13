@@ -30,7 +30,7 @@ import {
   RootNode,
 } from './Components/CustomNode/CustomNodes'
 
-
+import { useQuery, gql } from '@apollo/client'
 
 const nodeTypes = {
   rightLeaf: rightLeafNode,
@@ -121,8 +121,6 @@ const DnDFlow = () => {
     setDescription(marked?.data?.text)
   }, [marked])
 
-
-
   return (
     <div className="dndflow" style={{ height: '100vh' }}>
       <InputContext.Provider value={inputRef}>
@@ -150,7 +148,6 @@ const DnDFlow = () => {
                 if (option === 'creator') {
                   inputRef.current.focus()
                   inputRef.current.select()
-
                 } // setMarked(node)
               }}
               onNodeClick={(event, node) => {
@@ -159,15 +156,20 @@ const DnDFlow = () => {
               }}
               fitView
             >
-
               {option === 'creator' ? (
-                <Background />) : (<Background variant='lines' />)
-              }
+                <Background />
+              ) : (
+                <Background variant="lines" />
+              )}
               <Controls />
             </ReactFlow>
             <MiniMap />
           </div>
-          <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} />
+          <Option
+            option={option}
+            setOption={setOption}
+            openBottomSheet={openBottomSheet}
+          />
           {/* <Sidebar option={option} /> */}
           {option === 'creator' ? (
             <Custom
@@ -196,8 +198,8 @@ const DnDFlow = () => {
           description={description}
           option={option}
         />
-      </div >
-    </div >
+      </div>
+    </div>
   )
 }
 

@@ -1,0 +1,77 @@
+type Tree {
+  _id: String
+  treeName: String
+  date: String
+  user: String
+  description: String
+  branches: [Branch]
+  unlinkedLeaves: [Leaf]
+}
+input TreeArg {
+  _id: String
+  treeName: String
+  date: String
+  user: String
+  description: String
+  branches: [BranchArg]
+  unlinkedLeaves: [LeafArg]
+}
+type Branch {
+  branchId: String
+  treeId: String
+  position: String
+  branchName: String
+  leaves: [Leaf]
+}
+input BranchArg {
+  branchId: String
+  treeId: String
+  position: String
+  branchName: String
+  leaves: [LeafArg]
+}
+
+type Leaf {
+  leafId: String
+  branchId: String
+  treeId: String
+  position: String
+  leafName: String
+}
+input LeafArg {
+  leafId: String
+  branchId: String
+  treeId: String
+  position: String
+  leafName: String
+}
+
+type Markdown {
+  treeId: String
+  markdownText: String
+  branchId: String
+  leafId: String
+}
+input MarkdownArg {
+  treeId: String
+  markdownText: String
+  branchId: String
+  leafId: String
+}
+
+type Query {
+  getTrees: [Tree]
+}
+
+type Mutation {
+  createTree(Tree: TreeArg): Tree
+  getTreeById(treeId: String): Tree
+  createBranch(Branch: BranchArg): Branch
+  updateBranch(Branch: BranchArg): Branch
+  linkUnlink(treeId: String, branchId: String, leafId: String): Boolean
+  deleteBranch(branchId: String): Branch
+  createLeaf(Leaf: LeafArg): Leaf
+  updateLeaf(Leaf: LeafArg): Leaf
+  createMarkDown(Markdown: MarkdownArg): Markdown
+  getMarkdownByNodeId(nodeId: String): Markdown
+}

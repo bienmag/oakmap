@@ -1,8 +1,7 @@
-import { ObjectId } from "mongodb";
-import mongoose from "mongoose";
-import { DBTree } from "../lib/mongo"
-const mongodb = require('mongodb');
-
+import { ObjectId } from 'mongodb'
+import mongoose from 'mongoose'
+import { DBTree } from '../lib/mongo'
+import mongodb from 'mongodb'
 
 class Tree {
   constructor(
@@ -13,9 +12,7 @@ class Tree {
     public description: string,
     public branches: Array<object>,
     public unlinkedLeaves: Array<object>
-  ) { }
-
-
+  ) {}
 
   static async create(
     _id: object,
@@ -26,22 +23,31 @@ class Tree {
     branches: Array<object>,
     unlinkedLeaves: Array<object>
   ): Promise<Tree> {
-
     //@ts-ignore
 
-
     await DBTree.create({
-
-      _id, treeName, date, user, description, branches
+      _id,
+      treeName,
+      date,
+      user,
+      description,
+      branches,
     })
 
-    return new Tree(_id, treeName, date, user, description, branches, unlinkedLeaves)
+    return new Tree(
+      _id,
+      treeName,
+      date,
+      user,
+      description,
+      branches,
+      unlinkedLeaves
+    )
   }
 
   static async getAll(): Promise<Tree[]> {
     return await DBTree.find({})
   }
-
 
   static async getTreeById(treeId: string): Promise<Tree> {
     const id = new mongodb.ObjectId(treeId)
@@ -56,6 +62,5 @@ class Tree {
     return new Tree(_id, treeName, date, user, description, branches)
   }
 }
-
 
 export default Tree

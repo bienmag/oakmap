@@ -1,28 +1,26 @@
-import { DBTree } from '../lib/mongo'
-const mongodb = require('mongodb')
+// Use our automatically generated Book and AddBookMutationResponse types
+// for type safety in our data source class
+import { ObjectId } from 'mongodb'
+import mongoose from 'mongoose'
+import mongodb from 'mongodb'
+import { DBTree } from '../lib/mongo.js'
+import { Branch, Leaf } from '../__generated__/resolvers-types'
 
-class Branch {
-  constructor(
-    public branchId: string,
-    public treeId: string,
-    public position: object,
-    public branchName?: string,
-    public leaves?: Array<object>
-  ) {}
-
-  static async create(
+export class BranchDataSource {
+  async createBranch(
     branchId: string,
     treeId: string,
-    position: object,
-    leaves: Array<object>
+    position: string,
+    branchName: string,
+    leaves: Leaf[]
   ): Promise<Branch> {
-    return new Branch(branchId, treeId, position, undefined, leaves)
+    return { branchId, treeId, position, branchName, leaves }
   }
 
-  static async update(
+  async updateBranch(
     branchId: string,
     treeId: string,
-    position: object,
+    position: string,
     branchName: string
   ): Promise<Branch> {
     const id = new mongodb.ObjectId(treeId)
@@ -42,10 +40,10 @@ class Branch {
       { new: true }
     )
 
-    return new Branch(branchId, treeId, position, branchName)
+    return { branchId, treeId, position, branchName }
   }
 
-  static async linkUnlink(treeId: string, branchId: string, leafId: string) {
+  async linkUnlink(treeId: string, branchId: string, leafId: string) {
     const id = new mongodb.ObjectId(treeId)
 
     if (branchId === '') {
@@ -175,10 +173,10 @@ class Branch {
       // let tree = await DBTree.findOne({ _id: id, branchId: branchId }, { $push: { leaves: leaf } })
       // console.log("tree", tree)
     }
-    return
+    return true
   }
 
-  static async deleteBranch(branchId: string) {
+  async deleteBranch(branchId: string) {
     let tree = await DBTree.findOne({ branchId: branchId })
     //@ts-ignore
     tree.branches = tree?.branches.filter(function (branch) {
@@ -188,5 +186,3 @@ class Branch {
     return
   }
 }
-
-export default Branch

@@ -11,7 +11,7 @@ import { MarkDownDataSource } from './DataSources/MarkdownDataSource.js'
 
 // Note: this only works locally because it relies on `npm` routing
 // from the root directory of the project.
-const typeDefs = readFileSync('../schema.graphql', { encoding: 'utf-8' })
+const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' })
 
 export interface MyContext {
   dataSources: {

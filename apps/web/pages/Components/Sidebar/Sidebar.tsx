@@ -112,9 +112,9 @@ export function Sidebar() { // removed epxort default
   }, [marked])
 
 
-  // WHICH PAGE TO RENDER
+  // DECIDES WHICH PAGE TO RENDER
   // const [dashboard, setDasboard] = useState(false) // set to true to view the dashboard page
-  const [renderPage, setRenderPage] = useState('tree') // dashboard, profile, tree, signin ?
+  const [renderPage, setRenderPage] = useState('dashboard') // dashboard, profile, tree, signin ?
 
 
 // MOSTLY TAILWIND TEMPLATE CODE BELOW

@@ -112,44 +112,45 @@ class Branch {
       // looking for the leaf
       let foundLeaf
       // looking for the leaf inside unlinkedLeaves
-      for (const leaf of tree.unlinkedLeaves) {
-        if (leaf.leafId === leafId) {
-          // the leaf found in the unlinkedLeaves
-          foundLeaf = leaf
-          //delete if from there
-          await DBTree.findOneAndUpdate({ _id: id, "unlinkedLeaves": { $elemMatch: { "leafId": leafId } } }, { $pull: { "unlinkedLeaves": leaf } })
-          //push to the branch with branchId
-          foundLeaf.branchId = branchId
-          await DBTree.findOneAndUpdate({ _id: id, "branches": { $elemMatch: { "branchId": branchId } } }, { $push: { "branches.$.leaves": leaf } })
-        } else {
-          console.error('The leaf was not found in the unlinkedLeaves')
+      if (tree.unlinkedLeaves !== null) {
+        for (const leaf of tree.unlinkedLeaves) {
+          if (leaf.leafId === leafId) {
+            // the leaf found in the unlinkedLeaves
+            foundLeaf = leaf
+            //delete if from there
+            await DBTree.findOneAndUpdate({ _id: id, "unlinkedLeaves": { $elemMatch: { "leafId": leafId } } }, { $pull: { "unlinkedLeaves": leaf } })
+            //push to the branch with branchId
+            foundLeaf.branchId = branchId
+            await DBTree.findOneAndUpdate({ _id: id, "branches": { $elemMatch: { "branchId": branchId } } }, { $push: { "branches.$.leaves": leaf } })
+          } else {
+            console.error('The leaf was not found in the unlinkedLeaves')
+          }
         }
-        // means that the leaf is already inside some branch
-        for (const branch of tree.branches) {
-          console.log('am i entering here')
-          if (branch.leaves !== null) {
-            for (const leaf of branch.leaves) {
-              if (leaf.leafId === leafId) {
-                //leaf found
-                foundLeaf = leaf
-                console.log('foundleaf', foundLeaf)
-                //delete it from that branch
-                let prevBranchId = foundLeaf.branchId
-                console.log("prevBranchId", prevBranchId)
-                if (branchId !== null) {
-                  await DBTree.findOneAndUpdate({ _id: id, "branches": { $elemMatch: { "branchId": prevBranchId, "leaves": { $elemMatch: { "leafId": leafId } } } } }, { $pull: { "branches.$.leaves": leaf } })
-                  //push to the new branch and change its branchId
-                  foundLeaf.branchId = branchId
-                  await DBTree.findOneAndUpdate({ _id: id, "branches": { $elemMatch: { "branchId": branchId } } }, { $push: { "branches.$.leaves": leaf } })
-                  break
+        if (!foundLeaf) {
+          // means that the leaf is already inside some branch
+          for (const branch of tree.branches) {
+            if (branch.leaves !== null) {
+              for (const leaf of branch.leaves) {
+                if (leaf.leafId === leafId) {
+                  //leaf found
+                  foundLeaf = leaf
+                  //delete it from that branch
+                  let prevBranchId = foundLeaf.branchId
+                  if (branchId !== null) {
+                    await DBTree.findOneAndUpdate({ _id: id, "branches": { $elemMatch: { "branchId": prevBranchId, "leaves": { $elemMatch: { "leafId": leafId } } } } }, { $pull: { "branches.$.leaves": leaf } })
+                    //push to the new branch and change its branchId
+                    foundLeaf.branchId = branchId
+                    await DBTree.findOneAndUpdate({ _id: id, "branches": { $elemMatch: { "branchId": branchId } } }, { $push: { "branches.$.leaves": leaf } })
+                    break
+                  }
                 }
               }
+            } else {
+              throw new Error('Branch.leaves is null')
             }
-          } else {
-            throw new Error('Branch.leaves is null')
-          }
-          if (foundLeaf) {
-            break
+            if (foundLeaf) {
+              break
+            }
           }
         }
 
@@ -162,8 +163,6 @@ class Branch {
     }
     return
   }
-
-  // note to commit
 
   static async deleteBranch(
     branchId: string

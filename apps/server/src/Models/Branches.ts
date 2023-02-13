@@ -163,7 +163,7 @@ class Branch {
     return
   }
 
-
+  // note to commit
 
   static async deleteBranch(
     branchId: string

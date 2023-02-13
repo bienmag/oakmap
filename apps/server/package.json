@@ -5,7 +5,7 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "test": "jest ./test/index.test.js ",
+    "test": "jest",
     "dev": "nodemon src/index.ts",
     "generate": "graphql-codegen --config codegen.yml",
     "compile": "npm run generate && tsc",
@@ -14,9 +14,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@apollo/client": "^3.7.7",
     "@apollo/server": "^4.3.3",
     "@types/node": "^18.13.0",
-    "chai": "^4.3.7",
     "codegen": "^0.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

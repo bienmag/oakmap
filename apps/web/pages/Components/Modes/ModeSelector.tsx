@@ -1,20 +1,48 @@
 import React, {
-    useState,
-  } from 'react'
-  import 'reactflow/dist/style.css'
+  useState,
+} from 'react'
+import 'reactflow/dist/style.css'
 import { TreeEditorMode } from "./TreeEditorMode"
 import DashboardMode from "./DashboardMode"
 
 // dashboardMode: any,treeEditorMode: any
-function ModeSelector({ treeMode, setTreeMode, marked, setMarked, renderPage, setRenderPage }: any ){
- 
+function ModeSelector({ treeMode,
+setTreeMode,
+marked,
+setMarked,
+renderPage,
+setRenderPage,
+currentTreeId,
+setCurrentTreeId,
+nodes,
+setNodes,
+onNodesChange,
+edges,
+setEdges,
+onEdgesChange
+}: any) {
 
-  return(
-    <div> {/* Render dashboard by default */ }
-      {renderPage === 'tree' ? <TreeEditorMode treeMode={treeMode} setTreeMode={setTreeMode} marked={marked} setMarked={setMarked}  /> : renderPage === 'profile' ? <div>PROFILE PLACEHOLDER</div> : <DashboardMode />}
-    </div>
-    
-  )
+
+return(
+  <div> {/* Render dashboard by default */ }
+    {renderPage === 'tree' ? <TreeEditorMode
+      treeMode={treeMode}
+      setTreeMode={setTreeMode}
+      currentTreeId={currentTreeId}
+      setCurrentTreeId={setCurrentTreeId}
+      marked={marked}
+      setMarked={setMarked}
+      nodes={nodes}
+      setNodes={setNodes}
+      onNodesChanges={onNodesChange}
+      edges={edges}
+      setEdges={setEdges}
+      onEdgesChange={onEdgesChange}
+    /> : renderPage === 'profile' ? <div>PROFILE PLACEHOLDER</div>
+      : <DashboardMode renderPage={renderPage} setRenderPage={setRenderPage} />}
+  </div>
+  
+)
 
 }
 

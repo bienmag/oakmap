@@ -1,8 +1,44 @@
 import React, {
     useState
 } from 'react'
+import axios from 'axios'
 
-function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSheet, renderPage, setRenderPage }: any) {
+function NavModeSelector({ treeMode,
+    setTreeMode,
+    openBottomSheet,
+    closeBottomSheet,
+    renderPage,
+    setRenderPage,
+    setCurrentTreeId,
+    setNodes,
+    setEdges
+}: any) {
+
+
+    // let dummyTreeId = '63ebb297cfc76b14bf76d970'
+
+    // DUMMY TREE LOADING TEST
+    const handleClick = async (e) => {
+        e.preventDefault();
+      
+        axios.get(`http://localhost:8080/trees/63ebb297cfc76b14bf76d970`)
+            .then((response) => {
+                setCurrentTreeId(response.data.id)
+                const newNode = {
+                    id: getId(),
+                    type: response.data.id,
+                    position: {
+                        x: response.data.position.x,
+                        y: response.data.position.y
+                    },
+                    data: { label: ``, text: '' },
+                  }
+            
+                setNodes((nds) => nds.concat(newNode))
+                setEdges()
+        })
+    }
+
 
   return (
     <div>
@@ -117,16 +153,19 @@ function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSh
                   </a> */}
                   <a href="#" className="text-sm font-medium text-gray-900">
                     <button
-                        onClick={(e) => setRenderPage(e.target.value)
-                        }
-                        value={renderPage === 'dashboard' ? 'tree' : 'dashboard'}
                         className={
-                            ('bg-yellow-500' + '  border-2 p-4 rounded border-black'
+                            ('bg-white' + '  border-2 p-4 rounded border-black'
                             + '  border-2 p-4 rounded border-black')
                         }
+                        onClick={(e) => {
+                        handleClick
+                        setRenderPage(e.target.value)
+                            }
+                            }
+                            value={renderPage === 'dashboard' ? 'tree' : 'dashboard'}
                         >
-                        Tree Editor
-                    </button>
+                        Dummy Tree
+                        </button>
                   </a>
                   <a href="#" className="text-sm font-medium text-gray-900">
                     <button

@@ -11,14 +11,14 @@ import { Node } from 'reactflow'
 
 interface IMarkdownProps {
   marked: Node<INodeInfo>,
-  setMarked: React.Dispatch<React.SetStateAction<string>>
+  setMarked: React.Dispatch<React.SetStateAction<Node<INodeInfo> | null>>
   setNodes: React.Dispatch<React.SetStateAction<Node<INodeInfo>[]>>
   treeMode: TreeMode
 }
 
 function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
-  const handleOnMarkDown = (e: React.MouseEvent) => {
-    setMarked('')
+  const handleBackgroundClick = (e: React.MouseEvent) => {
+    setMarked(null)
   }
 
   const [text, setText] = useState('')
@@ -49,7 +49,7 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
   else if (marked && treeMode === READER && marked.data.text !== '') {
     return (
       <>
-        <div className="markdownBG" onClick={handleOnMarkDown}></div>
+        <div className="markdownBG" onClick={handleBackgroundClick}></div>
         <div className="markdown">
           <ReactMarkdown>{text}</ReactMarkdown>
         </div>
@@ -61,7 +61,7 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
   else if (marked && treeMode === EDITOR) {
     return (
       <>
-        <div className="markdownBG" onClick={handleOnMarkDown}></div>
+        <div className="markdownBG" onClick={handleBackgroundClick}></div>
         <div className="markdown">
           <div className="flex-markdown">
             <textarea

@@ -20,6 +20,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const cors = require('cors')
 
+
 app.use(expSession({ secret: 'cats' }))
 app.use(bodyParser());
 app.use(passport.initialize())
@@ -37,11 +38,6 @@ app.use(cors({
   origin: "*"
 }))
 
-
-app.use(cors({
-  methods: ['GET', 'POST', 'PUT'],
-  origin: "*"
-}))
 
 app.use(express.json())
 app.use(cors())

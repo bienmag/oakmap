@@ -7,6 +7,10 @@ import React, { useEffect, useState } from 'react'
     // JSON SERVER PORT: http://localhost:3333/
     // yarn json-server --port 3333
 
+    // OLD CODE:
+    // http://localhost:3333/posts
+    // http://localhost:3333/comments
+
 type Tree = {
   id: number
   author: string
@@ -25,9 +29,9 @@ type PopularTree = {
   popularity: string
 }
 
-function DashboardMode() {
+function DashboardMode({ renderPage, setRenderPage }: any) {
 
-    const [trees, setTrees] = useState<Array<Tree>>([])
+  const [trees, setTrees] = useState<Array<Tree>>([])
   const [popularTrees, setPopulartrees] = useState<PopularTree[]>([])
   
 
@@ -62,24 +66,37 @@ function DashboardMode() {
     /* Router.push(`/tree?id=${treeId}`) */
   }
 
-    /* useEffect(() => {
-    axios.get('http://localhost:3333/posts')
+
+
+  axios.get('http://localhost:8080/trees')
+  .then(function (response) {
+    console.log(response);
+  });
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/trees')
         .then((response) => {
         setTrees(response.data)
         })
-    axios.get('http://localhost:3333/comments')
+    /* axios.get('http://localhost:3333/comments')
         .then((response) => {
         setPopulartrees(response.data)
         console.log('response here', response.data)
-        })
-    }, []) */
+        }) */
+    }, []) 
 
     return (
         <div className='flex justify-items'>
     {/* //taildwind FEEDS code here */}
-    <div className='box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto'> YOUR TREES
+    <div className='box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto'> RITA TREES
           <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8'
-          onClick={handleClick}>+</button>
+            onClick={(e) => {
+              handleClick
+              setRenderPage(e.target.value)
+            }
+            }
+            value={'tree'}
+          >+</button>
       < div >
         <ul role='list' className='divide-y divide-gray-200'>
           {
@@ -109,7 +126,7 @@ function DashboardMode() {
       </div >
     </div>
     {/* //taildwind FEEDS code here */}
-    <div className='box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto'> POPULAR TREES
+    <div className='box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto'> RECENT TREES
       < div >
         <ul role='list' className='divide-y divide-gray-200'>
           {popularTrees.map((popularTree) => (

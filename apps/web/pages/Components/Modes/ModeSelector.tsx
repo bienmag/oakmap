@@ -11,7 +11,7 @@ function ModeSelector({ treeMode, setTreeMode, marked, setMarked, renderPage, se
 
   return(
     <div> {/* Render dashboard by default */ }
-      {renderPage === 'tree' ? <TreeEditorMode treeMode={treeMode} setTreeMode={setTreeMode} marked={marked} setMarked={setMarked}  /> : renderPage === 'profile' ? <div>PROFILE PLACEHOLDER</div> : <DashboardMode />}
+      {renderPage === 'tree' ? <TreeEditorMode treeMode={treeMode} setTreeMode={setTreeMode} marked={marked} setMarked={setMarked}  /> : renderPage === 'profile' ? <div>PROFILE PLACEHOLDER</div> : <DashboardMode renderPage={renderPage} setRenderPage={setRenderPage} />}
     </div>
     
   )

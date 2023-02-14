@@ -117,16 +117,19 @@ function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSh
                   </a> */}
                   <a href="#" className="text-sm font-medium text-gray-900">
                     <button
-                        onClick={(e) => setRenderPage(e.target.value)
-                        }
-                        value={renderPage === 'dashboard' ? 'tree' : 'dashboard'}
                         className={
-                            ('bg-yellow-500' + '  border-2 p-4 rounded border-black'
+                            ('bg-white' + '  border-2 p-4 rounded border-black'
                             + '  border-2 p-4 rounded border-black')
                         }
                         >
-                        Tree Editor
-                    </button>
+                        Placeholder
+                                  </button>
+                                  {/* onClick={(e) => {
+                                    handleClick
+                                    setRenderPage(e.target.value)
+                                        }
+                                        }
+                                        value={renderPage === 'dashboard' ? 'tree' : 'dashboard'} */}
                   </a>
                   <a href="#" className="text-sm font-medium text-gray-900">
                     <button

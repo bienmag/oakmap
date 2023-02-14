@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from 'react'
 import { Connection, Node, getConnectedEdges, Handle, Position, useReactFlow } from 'reactflow'
-import { INodeInfo } from '../../../Resources/Packages/RFlow/Custom'
+import { INodeInfo } from '../../Resources/Packages/RFlow/Custom'
 import Text from './Text'
 
 const useValidatorFn = () => {
@@ -8,9 +8,9 @@ const useValidatorFn = () => {
 
   return useCallback(
     (connection: Connection) => {
-      if(connection.target === null) return false
+      if (connection.target === null) return false
       const node = getNode(connection.target)
-      if(node===undefined) return false
+      if (node === undefined) return false
       const edges = getConnectedEdges([node], getEdges())
 
       return !edges.length
@@ -19,7 +19,11 @@ const useValidatorFn = () => {
   )
 }
 
-export function RightLeafNode({ data } : Node<INodeInfo>) {
+interface LeafNodeProps {
+  data: INodeInfo
+}
+
+export function RightLeafNode({ data }: LeafNodeProps) {
   const validator = useValidatorFn()
   const leafText = data.text
   return (
@@ -43,7 +47,7 @@ export function RightLeafNode({ data } : Node<INodeInfo>) {
   )
 }
 
-export function LeftLeafNode({ data }: Node<INodeInfo>) {
+export function LeftLeafNode({ data }: LeafNodeProps) {
   const validator = useValidatorFn()
   const leafText = data.text
   return (
@@ -67,7 +71,7 @@ export function LeftLeafNode({ data }: Node<INodeInfo>) {
   )
 }
 
-export function BranchNode({ data }: Node<INodeInfo>) {
+export function BranchNode({ data }: LeafNodeProps) {
   const branchText = data.text
 
   return (
@@ -94,7 +98,7 @@ export function BranchNode({ data }: Node<INodeInfo>) {
   )
 }
 
-export function RootNode({ data }: Node<INodeInfo>) {
+export function RootNode({ data }: LeafNodeProps) {
   return (
     <div>
       <div className="px-4 py-2 shadow-md rounded-md  border-2 border-green-600 bg-green-300 w-52 ">

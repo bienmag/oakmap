@@ -2,8 +2,8 @@ import { DragEvent } from "react"
 import { Node } from "reactflow"
 
 export interface INodeInfo {
-  text?: string,
-  label?: string,
+  text: string,
+  label: string,
 }
 
 export type NodeType = "branch" | "leftLeaf" | "rightLeaf" | "root"
@@ -32,7 +32,7 @@ export const handleOnDragStart = (event: DragEvent, nodeType: NodeType, treeMode
 }
 
 type NodeReducer = (nodes: Node[]) => Node[]
-type setterFunction = (handler: NodeReducer) => void
+type setterFunction = React.Dispatch<React.SetStateAction<Node<INodeInfo>[]>>
 export const CBackHandleDelNode = (setNodes: setterFunction, selected: Node) => {
   setNodes((nds) =>
     nds.filter((nd) => (nd.id !== 'node_head' ? nd.id !== selected.id : nds))
@@ -40,7 +40,7 @@ export const CBackHandleDelNode = (setNodes: setterFunction, selected: Node) => 
 }
 
 
-export const handleSetNode = (setNodes: setterFunction , selected: Node, { text, label }: INodeInfo) =>
+export const handleSetNode = (setNodes: setterFunction, selected: Node<INodeInfo>, { text, label }: Partial<INodeInfo>) =>
   setNodes((nds) =>
     nds.map((node) => {
       if (node.id === selected.id) {

@@ -7,7 +7,7 @@ import {
   handleOnDragStart,
   handleSetNode,
   NodeType,
-} from '../../../Resources/Packages/RFlow/Custom'
+} from '../../Resources/Packages/RFlow/Custom'
 import { v4 as uuidv4 } from 'uuid'
 
 /////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ function Custom({ selected, setNodes, setMarked, treeMode }: any) {
 
   //from Sidebar.tsx
 
-  const onDragStart = (event:React.DragEvent, nodeType: NodeType) =>
+  const onDragStart = (event: React.DragEvent, nodeType: NodeType) =>
     handleOnDragStart(event, nodeType, treeMode)
 
   return (

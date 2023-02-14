@@ -6,10 +6,10 @@ import React, {
   createContext,
 } from 'react'
 import 'reactflow/dist/style.css'
-import { Sidebar } from './Components/Sidebar/Sidebar'
-import { TreeEditorMode } from './Components/Modes/TreeEditorMode'
-import DashboardMode from './Components/Modes/DashboardMode'
-import ModeSelector from './Components/Modes/ModeSelector'
+import { Sidebar } from '../Components/Sidebar/Sidebar'
+import { TreeEditorMode } from '../Components/Modes/TreeEditorMode'
+import DashboardMode from '../Components/Modes/DashboardMode'
+import ModeSelector from '../Components/Modes/ModeSelector'
 
 /////////////////////////////////////////////
 // SIDEBAR STUFF ///////////////////////////

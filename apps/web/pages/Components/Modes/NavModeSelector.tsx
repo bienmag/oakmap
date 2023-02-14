@@ -30,7 +30,7 @@ function NavModeSelector({ treeMode,
                     position: {
                         x: response.data.position.x,
                         y: response.data.position.y
-                    }
+                    },
                     data: { label: ``, text: '' },
                   }
             

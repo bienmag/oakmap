@@ -111,8 +111,8 @@ const [renderPage, setRenderPage] = useState('dashboard') // dashboard, profile,
 const [currentTreeId, setCurrentTreeId] = useState('')
 
 // REACT FLOW STATE to pass to NavBar (for dummy tree) and TreeEditorMode inside ModeSelector
-const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
-const [edges, setEdges, onEdgesChange] = useEdgesState([])
+// const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
+// const [edges, setEdges, onEdgesChange] = useEdgesState([])
 
 
 // MOSTLY TAILWIND TEMPLATE CODE BELOW
@@ -206,12 +206,12 @@ return (
               setTreeMode={setTreeMode}
               openBottomSheet={openBottomSheet}
               closeBottomSheet={closeBottomSheet}
-              nodes={nodes}
+/*               nodes={nodes}
               setNodes={setNodes}
               onNodesChange={onNodesChange}
               edges={edges}
               setEdges={setEdges}
-              onEdgesChange={onEdgesChange}
+              onEdgesChange={onEdgesChange} */
             />
           </div>
 
@@ -434,8 +434,8 @@ return (
               setTreeMode={setTreeMode}
               marked={marked}
               setMarked={setMarked}
-              setNodes={setNodes}
-              setEdges={setEdges}
+/*               setNodes={setNodes}
+              setEdges={setEdges}  */
             />
                     {/* END YOUR CONTENT */ }
           </section>

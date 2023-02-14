@@ -67,7 +67,7 @@ export function TreeEditorMode({
   // moved nodes and edges state up to Sidebar for now
   const [isDraggable, setIsDraggable] = useState(false)
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null)
-  const [selected, setSelected] = useState('')
+  const [selected, setSelected] = useState<Node<INodeInfo> | null>(null)
 
   // useRef for double click on node to focus on input text
   const inputRef = useRef<HTMLInputElement>(null)
@@ -156,7 +156,7 @@ export function TreeEditorMode({
                 deleteKeyCode={null}
                 onDragOver={onDragOver}
                 onPaneClick={() => {
-                  setSelected('')
+                  setSelected(null)
                 }}
                 onNodeDoubleClick={(event, node) => {
                   if (treeMode === 'editor') {
@@ -166,7 +166,7 @@ export function TreeEditorMode({
                 }}
                 onNodeClick={(event, node) => {
                   if (treeMode === 'reader') setMarked(node)
-                  setSelected(node.id)
+                  setSelected(node)
                 }}
                 fitView
               >

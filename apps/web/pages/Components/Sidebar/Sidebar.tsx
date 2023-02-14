@@ -16,21 +16,6 @@ import DescriptionMenu from '../DescriptionMenu/DescriptionMenu'
 import ModeSelector from '../Modes/ModeSelector'
 import NavModeSelector from '../Modes/NavModeSelector'
   
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-
 ////////////////////////////////////////////
 //////// TAILWIND TEMPLATE CODE ////////////////////
 ///////////////////////////////////////////
@@ -434,6 +419,22 @@ export function Sidebar() { // removed epxort default
     </>
   )
 }
+
+
+/*
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+*/
 
 
   // {/* Secondary column (hidden on smaller screens) */}

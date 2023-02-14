@@ -14,7 +14,6 @@ import DescriptionMenu from '../DescriptionMenu/DescriptionMenu'
 // Selectors
 import ModeSelector from '../Modes/ModeSelector'
 import NavModeSelector from '../Modes/NavModeSelector'
-
 ////////////////////////////////////////////
 //////// TAILWIND TEMPLATE CODE ////////////////////
 ///////////////////////////////////////////

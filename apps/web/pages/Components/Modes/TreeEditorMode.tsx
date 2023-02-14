@@ -35,6 +35,78 @@ const getId = () => `node_${id++}`
 
 export const InputContext = createContext(null)
 
+/* SERVER SIDE DATA:
+    {
+        "_id": "63ebb297cfc76b14bf76d970",
+        "treeName": "DummyTree",
+        "date": "2023-02-14T16:11:03.045Z",
+        "user": "Dumbo",
+        "branches": [
+            {
+                "branchId": "node_000",
+                "treeId": "63ebb297cfc76b14bf76d970",
+                "position": {
+                    "x": "0",
+                    "y": "100"
+                },
+                "branchName": null,
+                "leaves": []
+            }
+        ],
+        "unlinkedLeaves": [
+            {
+                "leafId": "node_001",
+                "treeId": "63ebb297cfc76b14bf76d970",
+                "position": {
+                    "x": "0",
+                    "y": "200"
+                },
+                "leafName": null,
+                "branchId": null
+            }
+        ]
+    }
+
+
+
+    EXAMPLE OF REACT FLOW DATA:
+    Object { id: "node_1", type: "leftLeaf", width: 144, … }
+​​
+    data: Object { label: "hello", text: "" }
+    ​​​
+    label: "hello"   ****************
+    ​​​
+    text: ""   ***************
+    ​​
+    ​​
+    dragging: false
+    ​​
+    height: 40
+    ​​
+    id: "node_1"  *************
+    ​​
+    position: Object { x: 0.2512756289281697, y: 195.53476157101872 }  **************
+    ​​​
+    x: 0.2512756289281697   ******************
+    ​​​
+    y: 195.53476157101872  *******************
+    ​​​
+
+    ​​
+    positionAbsolute: Object { x: 0.2512756289281697, y: 195.53476157101872 } ************
+    ​​​
+    x: 0.2512756289281697   *************
+    ​​​
+    y: 195.53476157101872   ************
+
+    ​​
+    selected: false
+    ​​
+    type: "leftLeaf"  *************
+    ​​
+    width: 144
+*/
+
 export function TreeEditorMode({
   treeMode,
   setTreeMode,
@@ -50,6 +122,9 @@ export function TreeEditorMode({
 
   // useRef for double click on node to focus on input text
   const inputRef: any = useRef(null)
+
+  console.log('nodes: ', nodes)
+  console.log('edges: ', edges)
 
 
   // ROUTER

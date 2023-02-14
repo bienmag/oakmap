@@ -1,14 +1,14 @@
 import {
-  leftLeafNode,
-  rightLeafNode,
+  LeftLeafNode,
+  RightLeafNode,
   BranchNode,
   RootNode,
 } from '../../../pages/Components/CustomNode/CustomNodes'
 
 
 export const nodeTypes = {
-  rightLeaf: rightLeafNode,
-  leftLeaf: leftLeafNode,
+  rightLeaf: RightLeafNode,
+  leftLeaf: LeftLeafNode,
   branch: BranchNode,
   root: RootNode,
 }

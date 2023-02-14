@@ -117,7 +117,9 @@ export function TreeEditorMode({
   nodes,
   setNodes,
   onNodesChange,
-  setEdges
+  edges,
+  setEdges,
+  onEdgesChange
 }: any) {
   const reactFlowWrapper = useRef(null)
   // moved nodes and edges state up to Sidebar for now

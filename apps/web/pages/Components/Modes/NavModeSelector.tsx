@@ -1,6 +1,7 @@
 import React, {
     useState
 } from 'react'
+import axios from 'axios'
 
 function NavModeSelector({ treeMode,
     setTreeMode,
@@ -13,14 +14,27 @@ function NavModeSelector({ treeMode,
     setEdges
 }: any) {
 
+
+    // let dummyTreeId = '63ebb297cfc76b14bf76d970'
+
     // DUMMY TREE LOADING TEST
     const handleClick = async (e) => {
         e.preventDefault();
       
-        axios.get('http://localhost:8080/trees/63ebb297cfc76b14bf76d970')
+        axios.get(`http://localhost:8080/trees/63ebb297cfc76b14bf76d970`)
             .then((response) => {
                 setCurrentTreeId(response.data.id)
-                setNodes()
+                const newNode = {
+                    id: getId(),
+                    type: response.data.id,
+                    position: {
+                        x: response.data.position.x,
+                        y: response.data.position.y
+                    }
+                    data: { label: ``, text: '' },
+                  }
+            
+                setNodes((nds) => nds.concat(newNode))
                 setEdges()
         })
     }

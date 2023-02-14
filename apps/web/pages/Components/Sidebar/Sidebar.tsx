@@ -211,7 +211,9 @@ export function Sidebar() { // removed epxort default
                 nodes={nodes}
                 setNodes={setNodes}
                 onNodesChange={onNodesChange}
+                edges={edges}
                 setEdges={setEdges}
+                onEdgesChange={onEdgesChange}
               />
             </div>
 

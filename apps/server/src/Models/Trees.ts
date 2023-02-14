@@ -63,9 +63,9 @@ class Tree {
     if (record === null) {
       throw new Error('There is no tree with this id')
     }
-    const { _id, treeName, date, user, description, branches } = record
+    const { _id, treeName, date, user, description, branches, unlinkedLeaves } = record
     //@ts-ignore
-    return new Tree(_id, treeName, date, user, description, branches)
+    return new Tree(_id, treeName, date, user, branches, unlinkedLeaves, description)
   }
 }
 

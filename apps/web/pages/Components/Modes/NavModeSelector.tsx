@@ -10,23 +10,22 @@ function NavModeSelector({ treeMode,
     renderPage,
     setRenderPage,
     setCurrentTreeId,
-    setNodes,
-    setEdges
+    /* setNodes,
+    setEdges */
 }: any) {
-
 
     // let dummyTreeId = '63ebb297cfc76b14bf76d970'
 
     // DUMMY TREE LOADING TEST
-    const handleClick = async (e) => {
+/*      const handleClick = async (e) => {
         e.preventDefault();
       
         axios.get(`http://localhost:8080/trees/63ebb297cfc76b14bf76d970`)
             .then((response) => {
                 setCurrentTreeId(response.data.id)
                 const newNode = {
-                    id: getId(),
-                    type: response.data.id,
+                    id: response.data.id,
+                    type: response.data.leafId ? 'leftLeaf' : 'branch', // could also be rightLeaf, we need to specify type
                     position: {
                         x: response.data.position.x,
                         y: response.data.position.y
@@ -37,7 +36,7 @@ function NavModeSelector({ treeMode,
                 setNodes((nds) => nds.concat(newNode))
                 setEdges()
         })
-    }
+    } */
 
 
   return (
@@ -158,7 +157,7 @@ function NavModeSelector({ treeMode,
                             + '  border-2 p-4 rounded border-black')
                         }
                         onClick={(e) => {
-                        handleClick
+                        // handleClick
                         setRenderPage(e.target.value)
                             }
                             }

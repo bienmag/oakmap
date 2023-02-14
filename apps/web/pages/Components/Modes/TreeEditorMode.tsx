@@ -66,9 +66,6 @@ export const InputContext = createContext(null)
             }
         ]
     }
-
-
-
     EXAMPLE OF REACT FLOW DATA:
     Object { id: "node_1", type: "leftLeaf", width: 144, … }
 ​​
@@ -91,14 +88,12 @@ export const InputContext = createContext(null)
     ​​​
     y: 195.53476157101872  *******************
     ​​​
-
     ​​
     positionAbsolute: Object { x: 0.2512756289281697, y: 195.53476157101872 } ************
     ​​​
     x: 0.2512756289281697   *************
     ​​​
     y: 195.53476157101872   ************
-
     ​​
     selected: false
     ​​
@@ -272,14 +267,12 @@ import {
   BranchNode,
   RootNode,
 } from '../CustomNode/CustomNodes'
-
 const nodeTypes = {
   rightLeaf: rightLeafNode,
   leftLeaf: leftLeafNode,
   branch: BranchNode,
   root: RootNode,
 } 
-
 const initialNodes = [
   {
     id: 'node_head',
@@ -288,5 +281,3 @@ const initialNodes = [
     type: 'root',
   },
 ] */
-
-

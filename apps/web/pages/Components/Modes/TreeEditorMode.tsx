@@ -109,12 +109,12 @@ export function TreeEditorMode({
   setMarked,
   currentTreeId,
   setCurrentTreeId,
-  nodes,
+/*   nodes,
   setNodes,
   onNodesChange,
   edges,
   setEdges,
-  onEdgesChange
+  onEdgesChange */
 }: any) {
   const reactFlowWrapper = useRef(null)
   // moved nodes and edges state up to Sidebar for now
@@ -124,6 +124,13 @@ export function TreeEditorMode({
 
   // useRef for double click on node to focus on input text
   const inputRef: any = useRef(null)
+
+
+
+
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]) 
+  
 
   console.log('nodes: ', nodes)
   console.log('edges: ', edges)

@@ -116,5 +116,4 @@ const TreeList = ({ trees }: TreeListProps) => {
         </li>
       ))}
     </ul>)
-
 }

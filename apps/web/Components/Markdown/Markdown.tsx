@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Node } from 'reactflow'
 
 interface IMarkdownProps {
-  marked: Node<INodeInfo>,
+  marked: Node<INodeInfo> | null,
   setMarked: React.Dispatch<React.SetStateAction<Node<INodeInfo> | null>>
   setNodes: React.Dispatch<React.SetStateAction<Node<INodeInfo>[]>>
   treeMode: TreeMode
@@ -24,11 +24,12 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
   const [text, setText] = useState('')
 
   useEffect(() => {
+    if (marked === null) return
     handleSetNode(setNodes, marked, { text: text })
-  }, [marked.id, text, setNodes])
+  }, [marked, text, setNodes])
 
   useEffect(() => {
-    setText(marked?.data?.text)
+    setText(marked === null ? '' : marked.data.text)
   }, [marked])
 
   // Text Formatting Buttons function
@@ -39,6 +40,7 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
 
   //reader and no text
   if (
+    marked === null ||
     (marked && treeMode === READER && marked.data.text === '') ||
     marked.data?.text === undefined
   ) {

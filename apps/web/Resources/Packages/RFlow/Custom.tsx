@@ -43,6 +43,7 @@ export const CBackHandleDelNode = (setNodes: setterFunction, selected: Node) => 
 export const handleSetNode = (setNodes: setterFunction, selected: Node<INodeInfo>, { text, label }: Partial<INodeInfo>) =>
   setNodes((nds) =>
     nds.map((node) => {
+
       if (node.id === selected.id) {
         // it's important that you create a new object here
         // in order to notify react flow about the change

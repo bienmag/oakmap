@@ -2,7 +2,6 @@
 import express from "express";
 import dotenv from 'dotenv'
 import mongoose from "mongoose";
-import TreesController from "./Controllers/Trees.controller";
 import router from "./router";
 import { Server } from 'http'
 import Logger from "./lib/logger";
@@ -12,12 +11,12 @@ import Logger from "./lib/logger";
 dotenv.config()
 
 const app = express()
-
+const cors = require('cors')
 
 //change to dotenv later
 
 
-
+app.use(cors())
 app.use(express.json())
 app.use(router)
 

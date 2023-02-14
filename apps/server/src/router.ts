@@ -1,8 +1,6 @@
 import express from "express";
-// import BranchesController from "./Controllers/Branches.controller";
-// import LeavesController from "./Controllers/Leaves.controller";
 import TreesController from "./Controllers/Trees.controller";
-// import MarkdownsController from "./Controllers/Markdowns.controller";
+
 
 const router = express.Router()
 

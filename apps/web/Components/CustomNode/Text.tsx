@@ -1,8 +1,10 @@
 import React from 'react'
-import { Node } from 'reactflow'
-import { INodeInfo } from '../../../Resources/Packages/RFlow/Custom'
+import { INodeInfo } from '../../Resources/Packages/RFlow/Custom'
 
-function Text({ data }: Node<INodeInfo>) {
+interface TextProps {
+  data: INodeInfo
+}
+function Text({ data }: TextProps) {
   return (
     <div className="flex justify-center text-center">
       <div className="ml-2">

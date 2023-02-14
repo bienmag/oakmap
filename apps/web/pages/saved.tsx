@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
-import View from './Components/View/View'
-import Option from './Components/Option/Option'
+import View from '../Components/View/View'
+import Option from '../Components/Option/Option'
 
 export const optionContext = createContext('')
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <optionContext.Provider value={option}>
-        {!option ? <Option /> : <View />}
+        {/* {!option ? <Option  /> : <View />} */}
       </optionContext.Provider>
     </>
   )

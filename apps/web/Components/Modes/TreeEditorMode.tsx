@@ -15,6 +15,11 @@ import ReactFlow, {
   Controls,
   MiniMap,
   ConnectionLineType,
+  OnConnect,
+  ReactFlowInstance,
+  Node,
+  XYPosition,
+  BackgroundVariant,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 
@@ -25,9 +30,10 @@ import Markdown from '../Markdown/Markdown'
 import {
   initialNodes,
   nodeTypes,
-} from '../../../Resources/Packages/RFlow/RFlow'
+} from '../../Resources/Packages/RFlow/RFlow'
 
 import { useRouter } from 'next/router';
+import { INodeInfo } from '../../Resources/Packages/RFlow/Custom'
 
 
 let id = 0
@@ -35,72 +41,6 @@ const getId = () => `node_${id++}`
 
 export const InputContext = createContext(null)
 
-/* SERVER SIDE DATA:
-    {
-        "_id": "63ebb297cfc76b14bf76d970",
-        "treeName": "DummyTree",
-        "date": "2023-02-14T16:11:03.045Z",
-        "user": "Dumbo",
-        "branches": [
-            {
-                "branchId": "node_000",
-                "treeId": "63ebb297cfc76b14bf76d970",
-                "position": {
-                    "x": "0",
-                    "y": "100"
-                },
-                "branchName": null,
-                "leaves": []
-            }
-        ],
-        "unlinkedLeaves": [
-            {
-                "leafId": "node_001",
-                "treeId": "63ebb297cfc76b14bf76d970",
-                "position": {
-                    "x": "0",
-                    "y": "200"
-                },
-                "leafName": null,
-                "branchId": null
-            }
-        ]
-    }
-    EXAMPLE OF REACT FLOW DATA:
-    Object { id: "node_1", type: "leftLeaf", width: 144, … }
-​​
-    data: Object { label: "hello", text: "" }
-    ​​​
-    label: "hello"   ****************
-    ​​​
-    text: ""   ***************
-    ​​
-    ​​
-    dragging: false
-    ​​
-    height: 40
-    ​​
-    id: "node_1"  *************
-    ​​
-    position: Object { x: 0.2512756289281697, y: 195.53476157101872 }  **************
-    ​​​
-    x: 0.2512756289281697   ******************
-    ​​​
-    y: 195.53476157101872  *******************
-    ​​​
-    ​​
-    positionAbsolute: Object { x: 0.2512756289281697, y: 195.53476157101872 } ************
-    ​​​
-    x: 0.2512756289281697   *************
-    ​​​
-    y: 195.53476157101872   ************
-    ​​
-    selected: false
-    ​​
-    type: "leftLeaf"  *************
-    ​​
-    width: 144
-*/
 
 export function TreeEditorMode({
   treeMode,
@@ -109,17 +49,17 @@ export function TreeEditorMode({
   setMarked,
   currentTreeId,
   setCurrentTreeId,
-/*   nodes,
+  /*   nodes,
   setNodes,
   onNodesChange,
   edges,
   setEdges,
   onEdgesChange */
 }: any) {
-  const reactFlowWrapper = useRef(null)
+  const reactFlowWrapper = useRef<HTMLDivElement>(null)
   // moved nodes and edges state up to Sidebar for now
   const [isDraggable, setIsDraggable] = useState(false)
-  const [reactFlowInstance, setReactFlowInstance] = useState(null)
+  const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null)
   const [selected, setSelected] = useState('')
 
   // useRef for double click on node to focus on input text
@@ -128,9 +68,9 @@ export function TreeEditorMode({
 
 
 
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]) 
-  
+  const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
+  const [edges, setEdges, onEdgesChange] = useEdgesState([])
+
 
   console.log('nodes: ', nodes)
   console.log('edges: ', edges)
@@ -140,12 +80,12 @@ export function TreeEditorMode({
   const router = useRouter()
   const { idRouter } = router.query
 
-  
+
   useEffect(() => {
     setIsDraggable(treeMode === 'editor')
   }, [treeMode])
 
-  const onConnect = useCallback(
+  const onConnect: OnConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     []
   )
@@ -153,15 +93,15 @@ export function TreeEditorMode({
   // const onDragOver = useCallback(CBackOnDragOver, []);
   // const onDrop = useCallback(CBackOnDrop, [reactFlowInstance, setNodes])
 
-  const onDragOver = useCallback((event) => {
+  const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback((event) => {
     event.preventDefault()
     event.dataTransfer.dropEffect = 'move'
   }, [])
 
-  const onDrop = useCallback(
+  const onDrop: React.DragEventHandler<HTMLDivElement> = useCallback(
     (event) => {
       event.preventDefault()
-
+      if (reactFlowWrapper.current === null) return
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
       const type = event.dataTransfer.getData('application/reactflow')
 
@@ -170,11 +110,12 @@ export function TreeEditorMode({
         return
       }
 
-      const position = reactFlowInstance.project({
+      if (reactFlowInstance === null) return
+      const position: XYPosition = reactFlowInstance.project({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       })
-      const newNode = {
+      const newNode: Node = {
         id: getId(),
         type,
         position,
@@ -218,14 +159,14 @@ export function TreeEditorMode({
                 }}
                 onNodeClick={(event, node) => {
                   if (treeMode === 'reader') setMarked(node)
-                  setSelected(node)
+                  setSelected(node.id)
                 }}
                 fitView
               >
                 {treeMode === 'editor' ? (
                   <Background />
                 ) : (
-                  <Background variant="lines" />
+                  <Background variant={BackgroundVariant.Lines} />
                 )}
                 <Controls />
               </ReactFlow>
@@ -288,3 +229,69 @@ const initialNodes = [
     type: 'root',
   },
 ] */
+/* SERVER SIDE DATA:
+    {
+        "_id": "63ebb297cfc76b14bf76d970",
+        "treeName": "DummyTree",
+        "date": "2023-02-14T16:11:03.045Z",
+        "user": "Dumbo",
+        "branches": [
+            {
+                "branchId": "node_000",
+                "treeId": "63ebb297cfc76b14bf76d970",
+                "position": {
+                    "x": "0",
+                    "y": "100"
+                },
+                "branchName": null,
+                "leaves": []
+            }
+        ],
+        "unlinkedLeaves": [
+            {
+                "leafId": "node_001",
+                "treeId": "63ebb297cfc76b14bf76d970",
+                "position": {
+                    "x": "0",
+                    "y": "200"
+                },
+                "leafName": null,
+                "branchId": null
+            }
+        ]
+    }
+    EXAMPLE OF REACT FLOW DATA:
+    Object { id: "node_1", type: "leftLeaf", width: 144, … }
+ ​
+    data: Object { label: "hello", text: "" }
+      ​
+    label: "hello"   ****************
+      ​
+    text: ""   ***************
+     ​
+     ​
+    dragging: false
+     ​
+    height: 40
+     ​
+    id: "node_1"  *************
+     ​
+    position: Object { x: 0.2512756289281697, y: 195.53476157101872 }  **************
+      ​
+    x: 0.2512756289281697   ******************
+      ​
+    y: 195.53476157101872  *******************
+      ​
+     ​
+    positionAbsolute: Object { x: 0.2512756289281697, y: 195.53476157101872 } ************
+      ​
+    x: 0.2512756289281697   *************
+      ​
+    y: 195.53476157101872   ************
+     ​
+    selected: false
+     ​
+    type: "leftLeaf"  *************
+     ​
+    width: 144
+*/

@@ -28,9 +28,41 @@ type PopularTree = {
 function DashboardMode() {
 
     const [trees, setTrees] = useState<Array<Tree>>([])
-    const [popularTrees, setPopulartrees] = useState<PopularTree[]>([])
+  const [popularTrees, setPopulartrees] = useState<PopularTree[]>([])
+  
 
-    useEffect(() => {
+  const handleClick = async (e) => {
+    e.preventDefault();
+  
+    // Make the POST request to create the tree
+    /* const response = await axios.post('http://localhost:8080/trees', {
+      treeName: 'New Tree',
+      user: 'Rita'
+    })
+ */
+  
+    axios.post('http://localhost:8080/trees', {
+      treeName: 'Hi',
+      user: 'ManelAndCory'
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  
+    // Get the unique ID of the tree
+    /* const treeId = response.data.id
+
+    console.log('response', response)
+    console.log('treeId: ', treeId) */
+  
+    // Navigate to the TreeEditorMode component and pass the tree ID as a query parameter
+    /* Router.push(`/tree?id=${treeId}`) */
+  }
+
+    /* useEffect(() => {
     axios.get('http://localhost:3333/posts')
         .then((response) => {
         setTrees(response.data)
@@ -40,13 +72,14 @@ function DashboardMode() {
         setPopulartrees(response.data)
         console.log('response here', response.data)
         })
-    }, [])
+    }, []) */
 
     return (
         <div className='flex justify-items'>
     {/* //taildwind FEEDS code here */}
     <div className='box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto'> YOUR TREES
-      <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8' >+</button>
+          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8'
+          onClick={handleClick}>+</button>
       < div >
         <ul role='list' className='divide-y divide-gray-200'>
           {

@@ -12,11 +12,15 @@ import Logger from "./lib/logger";
 dotenv.config()
 
 const app = express()
-
-
+const cors = require('cors')
 //change to dotenv later
 
 
+
+app.use(cors({
+  methods: ['GET', 'POST', 'PUT'],
+  origin: "*"
+}))
 
 app.use(express.json())
 app.use(router)

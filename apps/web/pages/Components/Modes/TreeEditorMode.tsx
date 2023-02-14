@@ -25,36 +25,10 @@ import Markdown from '../Markdown/Markdown'
 import {
   initialNodes,
   nodeTypes,
-  allNodesOptions,
-  CBackHandleDelNode,
-  handleOnDragStart,
-  handleSetNode,
-  CBackOnDragOver,
-  CBackOnDrop,
 } from '../../../Resources/Packages/RFlow/RFlow'
 
-/* import {
-  leftLeafNode,
-  rightLeafNode,
-  BranchNode,
-  RootNode,
-} from '../CustomNode/CustomNodes'
+import { useRouter } from 'next/router';
 
-const nodeTypes = {
-  rightLeaf: rightLeafNode,
-  leftLeaf: leftLeafNode,
-  branch: BranchNode,
-  root: RootNode,
-} 
-
-const initialNodes = [
-  {
-    id: 'node_head',
-    data: { label: 'Root' },
-    position: { x: 0, y: 0 },
-    type: 'root',
-  },
-]  */
 
 let id = 0
 const getId = () => `node_${id++}`
@@ -77,6 +51,12 @@ export function TreeEditorMode({
   // useRef for double click on node to focus on input text
   const inputRef: any = useRef(null)
 
+
+  // ROUTER
+  const router = useRouter()
+  const { idRouter } = router.query
+
+  
   useEffect(() => {
     setIsDraggable(treeMode === 'editor')
   }, [treeMode])
@@ -226,3 +206,5 @@ const initialNodes = [
     type: 'root',
   },
 ] */
+
+

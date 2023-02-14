@@ -33,15 +33,22 @@ import {
 } from '../../Resources/Packages/RFlow/RFlow'
 
 import { useRouter } from 'next/router';
-import { INodeInfo } from '../../Resources/Packages/RFlow/Custom'
+import { INodeInfo, TreeMode } from '../../Resources/Packages/RFlow/Custom'
 
 
 let id = 0
 const getId = () => `node_${id++}`
 
-export const InputContext = createContext(null)
+export const InputContext = createContext<React.RefObject<HTMLInputElement> | null>(null)
 
-
+interface ITreeEditorModeProps {
+  treeMode: TreeMode,
+  setTreeMode: React.Dispatch<React.SetStateAction<TreeMode>>
+  marked: Node<INodeInfo>,
+  setMarked: React.Dispatch<React.SetStateAction<Node<INodeInfo> | null>>
+  currentTreeId: string,
+  setCurrentTreeId: React.Dispatch<React.SetStateAction<string>>
+}
 export function TreeEditorMode({
   treeMode,
   setTreeMode,
@@ -55,7 +62,7 @@ export function TreeEditorMode({
   edges,
   setEdges,
   onEdgesChange */
-}: any) {
+}: ITreeEditorModeProps) {
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
   // moved nodes and edges state up to Sidebar for now
   const [isDraggable, setIsDraggable] = useState(false)
@@ -63,7 +70,7 @@ export function TreeEditorMode({
   const [selected, setSelected] = useState('')
 
   // useRef for double click on node to focus on input text
-  const inputRef: any = useRef(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
 
 
@@ -153,8 +160,8 @@ export function TreeEditorMode({
                 }}
                 onNodeDoubleClick={(event, node) => {
                   if (treeMode === 'editor') {
-                    inputRef.current.focus()
-                    inputRef.current.select()
+                    inputRef.current?.focus()
+                    inputRef.current?.select()
                   } // setMarked(node)
                 }}
                 onNodeClick={(event, node) => {

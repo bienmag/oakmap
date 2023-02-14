@@ -113,11 +113,14 @@ export function TreeEditorMode({
   marked,
   setMarked,
   currentTreeId,
-  setCurrentTreeId
+  setCurrentTreeId,
+  nodes,
+  setNodes,
+  onNodesChange,
+  setEdges
 }: any) {
   const reactFlowWrapper = useRef(null)
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
-  const [edges, setEdges, onEdgesChange] = useEdgesState([])
+  // moved nodes and edges state up to Sidebar for now
   const [isDraggable, setIsDraggable] = useState(false)
   const [reactFlowInstance, setReactFlowInstance] = useState(null)
   const [selected, setSelected] = useState('')

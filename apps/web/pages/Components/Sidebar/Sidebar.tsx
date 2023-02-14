@@ -101,6 +101,8 @@ export function Sidebar() { // removed epxort default
   // const [dashboard, setDasboard] = useState(false) // set to true to view the dashboard page
   const [renderPage, setRenderPage] = useState('dashboard') // dashboard, profile, tree, signin ?
 
+  const [currentTreeId, setCurrentTreeId] = useState('')
+
 
 // MOSTLY TAILWIND TEMPLATE CODE BELOW
 
@@ -187,7 +189,7 @@ export function Sidebar() { // removed epxort default
 
             { /* Navigation bar selector */ }
             <div>
-              <NavModeSelector renderPage={renderPage} setRenderPage={setRenderPage} treeMode={treeMode} setTreeMode={setTreeMode} openBottomSheet={openBottomSheet} closeBottomSheet={closeBottomSheet} />
+              <NavModeSelector renderPage={renderPage} setRenderPage={setRenderPage} setCurrentTreeId={setCurrentTreeId} treeMode={treeMode} setTreeMode={setTreeMode} openBottomSheet={openBottomSheet} closeBottomSheet={closeBottomSheet} />
             </div>
 
             <div className="ml-10 flex flex-shrink-0 items-center space-x-10 pr-4">
@@ -400,7 +402,7 @@ export function Sidebar() { // removed epxort default
               </h1>
                       {/* YOUR CONTENT - render modeSelector */}
                       {/* ModeSelector(DashboardMode, TreeEditorMode) -- this was alternative as a way to pass components as props */}
-              <ModeSelector renderPage={renderPage} setRenderPage={setRenderPage} treeMode={treeMode} setTreeMode={setTreeMode} marked={marked} setMarked={setMarked} />
+              <ModeSelector renderPage={renderPage} setRenderPage={setRenderPage} currentTreeId={currentTreeId} setCurrentTreeId={setCurrentTreeId} treeMode={treeMode} setTreeMode={setTreeMode} marked={marked} setMarked={setMarked} />
                       {/* END YOUR CONTENT */ }
             </section>
             { /* INFO BOTTOM SHEET */ }

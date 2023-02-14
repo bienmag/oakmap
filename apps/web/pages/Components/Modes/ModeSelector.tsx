@@ -17,7 +17,9 @@ function ModeSelector({ treeMode,
   nodes,
   setNodes,
   onNodesChange,
-  setEdges
+  edges,
+  setEdges,
+  onEdgesChange
 }: any) {
  
 
@@ -33,7 +35,9 @@ function ModeSelector({ treeMode,
         nodes={nodes}
         setNodes={setNodes}
         onNodesChanges={onNodesChange}
+        edges={edges}
         setEdges={setEdges}
+        onEdgesChange={onEdgesChange}
       /> : renderPage === 'profile' ? <div>PROFILE PLACEHOLDER</div>
         : <DashboardMode renderPage={renderPage} setRenderPage={setRenderPage} />}
     </div>

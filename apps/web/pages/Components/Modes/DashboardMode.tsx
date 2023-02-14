@@ -31,7 +31,9 @@ type PopularTree = {
 
 function DashboardMode({ renderPage, setRenderPage }: any) {
 
+
   const [trees, setTrees] = useState<Array<Tree>>([])
+
   const [popularTrees, setPopulartrees] = useState<PopularTree[]>([])
   
 
@@ -66,6 +68,7 @@ function DashboardMode({ renderPage, setRenderPage }: any) {
     /* Router.push(`/tree?id=${treeId}`) */
   }
 
+<<<<<<< HEAD
 
 
   axios.get('http://localhost:8080/trees')
@@ -75,6 +78,10 @@ function DashboardMode({ renderPage, setRenderPage }: any) {
 
   useEffect(() => {
     axios.get('http://localhost:8080/trees')
+=======
+    /* useEffect(() => {
+    axios.get('http://localhost:3333/posts')
+>>>>>>> 234b2c2 (First successful POST request)
         .then((response) => {
         setTrees(response.data)
         })
@@ -82,12 +89,18 @@ function DashboardMode({ renderPage, setRenderPage }: any) {
         .then((response) => {
         setPopulartrees(response.data)
         console.log('response here', response.data)
+<<<<<<< HEAD
         }) */
     }, []) 
+=======
+        })
+    }, []) */
+>>>>>>> 234b2c2 (First successful POST request)
 
     return (
         <div className='flex justify-items'>
     {/* //taildwind FEEDS code here */}
+<<<<<<< HEAD
     <div className='box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto'> RITA TREES
           <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8'
             onClick={(e) => {
@@ -97,6 +110,11 @@ function DashboardMode({ renderPage, setRenderPage }: any) {
             }
             value={'tree'}
           >+</button>
+=======
+    <div className='box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto'> YOUR TREES
+          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8'
+          onClick={handleClick}>+</button>
+>>>>>>> 234b2c2 (First successful POST request)
       < div >
         <ul role='list' className='divide-y divide-gray-200'>
           {

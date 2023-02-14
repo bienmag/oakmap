@@ -2909,7 +2909,19 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
 
+<<<<<<< HEAD
 depd@2.0.0:
+=======
+<<<<<<< HEAD
+depd@2.0.0, depd@~2.0.0:
+=======
+<<<<<<< HEAD
+depd@2.0.0:
+=======
+depd@2.0.0, depd@~2.0.0:
+>>>>>>> 1c50e8f (fix: get a tree by id)
+>>>>>>> e67bd15 (fix: get a tree by id)
+>>>>>>> 19346f2 (fix: get a tree by id)
   version "2.0.0"
   resolved "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz"
   integrity sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==

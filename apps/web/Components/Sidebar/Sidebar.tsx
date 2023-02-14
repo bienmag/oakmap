@@ -15,7 +15,6 @@ import DescriptionMenu from '../DescriptionMenu/DescriptionMenu'
 import ModeSelector from '../Modes/ModeSelector'
 import NavModeSelector from '../Modes/NavModeSelector'
 
-
 ////////////////////////////////////////////
 //////// TAILWIND TEMPLATE CODE ////////////////////
 ///////////////////////////////////////////
@@ -467,29 +466,17 @@ export function Sidebar({ children }: SidebarProps) {
 /*
 This example requires some changes to your config:
 
-/*
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
+```
+// tailwind.config.js
+module.exports = {
+  // ...
+  plugins: [
     // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
+    require('@tailwindcss/forms'),
+  ],
+}
+```
 */
-
-
-  // {/* Secondary column (hidden on smaller screens) */}
-  // <aside className="hidden lg:order-first lg:block lg:flex-shrink-0">
-  //   <div className="relative flex h-full w-96 flex-col overflow-y-auto border-r border-gray-200 bg-gray-100">
-  //     {/* Your content */}
-  //   </div>
-  // </aside>
-
 
 // {/* Secondary column (hidden on smaller screens) */}
 // <aside className="hidden lg:order-first lg:block lg:flex-shrink-0">

@@ -2,7 +2,17 @@ import React, {
     useState
 } from 'react'
 
-function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSheet, renderPage, setRenderPage }: any) {
+function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSheet, renderPage, setRenderPage, setCurrentTreeId }: any) {
+
+    const handleClick = async (e) => {
+        e.preventDefault();
+      
+        axios.get('http://localhost:8080/trees/63ebb297cfc76b14bf76d970')
+            .then((response) => {
+            setCurrentTreeId(response.data.id)
+        })
+    }
+
 
   return (
     <div>
@@ -121,15 +131,15 @@ function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSh
                             ('bg-white' + '  border-2 p-4 rounded border-black'
                             + '  border-2 p-4 rounded border-black')
                         }
+                        onClick={(e) => {
+                        handleClick
+                        setRenderPage(e.target.value)
+                            }
+                            }
+                            value={renderPage === 'dashboard' ? 'tree' : 'dashboard'}
                         >
-                        Placeholder
-                                  </button>
-                                  {/* onClick={(e) => {
-                                    handleClick
-                                    setRenderPage(e.target.value)
-                                        }
-                                        }
-                                        value={renderPage === 'dashboard' ? 'tree' : 'dashboard'} */}
+                        Dummy Tree
+                        </button>
                   </a>
                   <a href="#" className="text-sm font-medium text-gray-900">
                     <button

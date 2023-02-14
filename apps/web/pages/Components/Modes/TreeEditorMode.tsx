@@ -112,6 +112,8 @@ export function TreeEditorMode({
   setTreeMode,
   marked,
   setMarked,
+  currentTreeId,
+  setCurrentTreeId
 }: any) {
   const reactFlowWrapper = useRef(null)
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)

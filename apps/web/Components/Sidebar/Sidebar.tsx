@@ -15,6 +15,7 @@ import DescriptionMenu from '../DescriptionMenu/DescriptionMenu'
 import ModeSelector from '../Modes/ModeSelector'
 import NavModeSelector from '../Modes/NavModeSelector'
 
+
 ////////////////////////////////////////////
 //////// TAILWIND TEMPLATE CODE ////////////////////
 ///////////////////////////////////////////
@@ -80,7 +81,7 @@ interface SidebarProps {
 }
 
 // { TreeEditorMode, DashboardMode, ModeSelector }: any
-export function Sidebar({children}: SidebarProps) {
+export function Sidebar({ children }: SidebarProps) {
   // removed epxort default
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // from Tailwind UI
 
@@ -99,8 +100,8 @@ export function Sidebar({children}: SidebarProps) {
   const [currentTreeId, setCurrentTreeId] = useState('')
 
   // REACT FLOW STATE is now located in the NodesContext.tsx file
-/*   const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]) */
+  /*   const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
+    const [edges, setEdges, onEdgesChange] = useEdgesState([]) */
 
   // MOSTLY TAILWIND TEMPLATE CODE BELOW
 
@@ -466,17 +467,29 @@ export function Sidebar({children}: SidebarProps) {
 /*
 This example requires some changes to your config:
 
-```
-// tailwind.config.js
-module.exports = {
-  // ...
-  plugins: [
+/*
+  This example requires some changes to your config:
+
+  ```
+  // tailwind.config.js
+  module.exports = {
     // ...
-    require('@tailwindcss/forms'),
-  ],
-}
-```
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
 */
+
+
+  // {/* Secondary column (hidden on smaller screens) */}
+  // <aside className="hidden lg:order-first lg:block lg:flex-shrink-0">
+  //   <div className="relative flex h-full w-96 flex-col overflow-y-auto border-r border-gray-200 bg-gray-100">
+  //     {/* Your content */}
+  //   </div>
+  // </aside>
+
 
 // {/* Secondary column (hidden on smaller screens) */}
 // <aside className="hidden lg:order-first lg:block lg:flex-shrink-0">

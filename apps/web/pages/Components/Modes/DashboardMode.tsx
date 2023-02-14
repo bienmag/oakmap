@@ -91,8 +91,8 @@ function DashboardMode({ renderPage, setRenderPage }: any) {
     <div className='box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto'> RITA TREES
           <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8'
             onClick={(e) => {
-              handleClick
-              setRenderPage(e.target.value)
+              handleClick // handle server request to create tree
+              setRenderPage(e.target.value) // switch frontend to tree editor mode
             }
             }
             value={'tree'}

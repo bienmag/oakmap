@@ -2,14 +2,26 @@ import React, {
     useState
 } from 'react'
 
-function NavModeSelector({ treeMode, setTreeMode, openBottomSheet, closeBottomSheet, renderPage, setRenderPage, setCurrentTreeId }: any) {
+function NavModeSelector({ treeMode,
+    setTreeMode,
+    openBottomSheet,
+    closeBottomSheet,
+    renderPage,
+    setRenderPage,
+    setCurrentTreeId,
+    setNodes,
+    setEdges
+}: any) {
 
+    // DUMMY TREE LOADING TEST
     const handleClick = async (e) => {
         e.preventDefault();
       
         axios.get('http://localhost:8080/trees/63ebb297cfc76b14bf76d970')
             .then((response) => {
-            setCurrentTreeId(response.data.id)
+                setCurrentTreeId(response.data.id)
+                setNodes()
+                setEdges()
         })
     }
 

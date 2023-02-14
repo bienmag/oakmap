@@ -3288,6 +3288,7 @@ delayed-stream@~1.0.0:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 depd@2.0.0:
 =======
 =======
@@ -3306,6 +3307,8 @@ depd@2.0.0:
 >>>>>>> c669b59 (refactor: fix typescript types on all files)
 =======
 >>>>>>> cc359bf (test setup)
+=======
+>>>>>>> fdcd47e (fix: get a tree by id)
 <<<<<<< HEAD
 depd@2.0.0, depd@~2.0.0:
 =======
@@ -3371,7 +3374,24 @@ depd@2.0.0, depd@~2.0.0:
 =======
 depd@2.0.0:
 >>>>>>> 54b85d8 (test setup)
+<<<<<<< HEAD
 >>>>>>> cc359bf (test setup)
+=======
+=======
+depd@2.0.0:
+=======
+<<<<<<< HEAD
+depd@2.0.0, depd@~2.0.0:
+=======
+<<<<<<< HEAD
+depd@2.0.0:
+=======
+depd@2.0.0, depd@~2.0.0:
+>>>>>>> 1c50e8f (fix: get a tree by id)
+>>>>>>> e67bd15 (fix: get a tree by id)
+>>>>>>> 19346f2 (fix: get a tree by id)
+>>>>>>> 0e09ebd (fix: get a tree by id)
+>>>>>>> fdcd47e (fix: get a tree by id)
   version "2.0.0"
   resolved "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz"
   integrity sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==

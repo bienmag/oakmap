@@ -20,15 +20,16 @@ function DescriptionMenu({ isOpen, closeBottomSheet, treeMode }: any) {
               value={description}
               style={{ minHeight: '100px', minWidth: '1100px' }}
             ></textarea>
-          </div>
+          </div >
         ) : (
           <div>
             <h3>Description</h3>
             <ReactMarkdown>{description}</ReactMarkdown>
           </div>
-        )}
-      </div>
-    </Draggable>
+        )
+        }
+      </div >
+    </Draggable >
   )
 }
 

@@ -2,6 +2,8 @@ import React, {
   useState
 } from 'react'
 import axios from 'axios'
+import { NodesContext } from '../../Resources/Packages/RFlow/NodesContext'
+import { useContext } from 'react'
 
 function NavModeSelector({ treeMode,
   setTreeMode,
@@ -9,12 +11,12 @@ function NavModeSelector({ treeMode,
   closeBottomSheet,
   renderPage,
   setRenderPage,
-  setCurrentTreeId,
-  setNodes,
-  setEdges
+  setCurrentTreeId
 }: any) {
 
   // let dummyTreeId = '63ebb297cfc76b14bf76d970'
+
+  const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } = useContext(NodesContext)
 
   // DUMMY TREE LOADING TEST
   const handleClick = async (e: React.MouseEvent) => {

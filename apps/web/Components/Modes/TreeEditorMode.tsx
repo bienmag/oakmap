@@ -33,7 +33,7 @@ import {
 } from '../../Resources/Packages/RFlow/RFlow'
 
 import { useRouter } from 'next/router';
-import { INodeInfo, TreeMode } from '../../Resources/Packages/RFlow/Custom'
+import { IEdgeInfo, INodeInfo, INode, TreeMode } from '../../Resources/Packages/RFlow/Custom'
 
 // CONTEXT FOR REACT FLOW NODES
 import { NodesContext } from '../../Resources/Packages/RFlow/NodesContext'
@@ -61,6 +61,7 @@ export function TreeEditorMode({
   currentTreeId,
   setCurrentTreeId
 }: ITreeEditorModeProps) {
+
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
   // moved nodes and edges state up to Sidebar for now
   const [isDraggable, setIsDraggable] = useState(false)
@@ -92,7 +93,7 @@ export function TreeEditorMode({
   }, [treeMode])
 
   const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) => setEdges((eds: IEdgeInfo[]) => addEdge(params, eds)),
     []
   )
 
@@ -121,14 +122,14 @@ export function TreeEditorMode({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       })
-      const newNode: Node = {
+      const newNode: INode = {
         id: getId(),
         type,
         position,
         data: { label: ``, text: '' },
       }
 
-      setNodes((nds) => nds.concat(newNode))
+      setNodes((nds: INode[]) => nds.concat(newNode))
     },
     [reactFlowInstance, setNodes]
   )

@@ -5,6 +5,8 @@ import axios from 'axios'
 import { NodesContext } from '../../Resources/Packages/RFlow/NodesContext'
 import { useContext } from 'react'
 
+import { INode, IBranch, ILeaf, IEdgeInfo } from '../../Resources/Packages/RFlow/Custom'
+
 function NavModeSelector({ treeMode,
   setTreeMode,
   openBottomSheet,
@@ -16,32 +18,12 @@ function NavModeSelector({ treeMode,
 
   // let dummyTreeId = '63ebb297cfc76b14bf76d970'
 
+  // DUMMY TREE LOADING INTERFACES
   const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } = useContext(NodesContext)
 
-  interface INode { // Generic Node data structure for nodes state
-    id: string
-    type: string
-    position: { x: number; y: number }
-    data: { label: string; text: string }
-  }
 
-  interface IBranch { // Branch Data from server response
-    branchId: string
-    branchName: string
-    leaves: []
-    position: { x: number; y: number }
-    treeId: string
-  }
 
-  interface ILeaf { // Branch Data from server response
-    branchId: string
-    leafId: string
-    leafName: string
-    position: { x: number; y: number }
-    treeId: string
-  }
-
-  // DUMMY TREE LOADING TEST
+  // DUMMY TREE GET REQUEST
   const handleClick = async (e: React.MouseEvent) => {
           e.preventDefault()
         

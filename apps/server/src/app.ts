@@ -1,6 +1,4 @@
-
 import express from "express";
-import dotenv from 'dotenv'
 import mongoose from "mongoose";
 import router from "./router";
 import { Server } from 'http'
@@ -9,8 +7,13 @@ import passport = require("passport");
 const expSession = require('express-session')
 const bodyParser = require('body-parser')
 
+import dotenv from 'dotenv'
 dotenv.config()
 require("./passport")
+
+import { MONGODB_DB, MONGODB_URL } from "./lib/constants";
+
+
 const app = express()
 const cors = require('cors')
 
@@ -54,9 +57,10 @@ app.get("/google/callback",
 export function startServer(): Server {
   const port = 8080
 
-  mongoose.connect("mongodb+srv://bienmag:12345@oakmap.kjrgfwk.mongodb.net/?retryWrites=true&w=majority").then(() =>
-    console.log("✅ Database connection successful")).catch(() => console.log("database connection error")
-    )
+  console.log('Connecting to database', MONGODB_URL, '...')
+  mongoose.connect(MONGODB_URL, { dbName: MONGODB_DB })
+    .then(() => console.log("✅ Database connection successful"))
+    .catch((error) => console.error(error))
 
   const server = app.listen(port, () => {
     Logger.info(
@@ -69,11 +73,8 @@ export function startServer(): Server {
   return server
 }
 
-<<<<<<< HEAD
 
 
 
 
-=======
->>>>>>> c905883 (feat: create tree, branch, leaf,get a tree, get trees, get markdown)
 export default app

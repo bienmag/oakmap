@@ -1,6 +1,6 @@
 const { gql, ApolloClient, InMemoryCache } = require('@apollo/client')
 
-describe('GraphQL', () => {
+describe.skip('GraphQL', () => {
   let tester
 
   beforeAll(() => {

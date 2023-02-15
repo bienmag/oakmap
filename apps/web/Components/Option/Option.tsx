@@ -1,14 +1,18 @@
 import React, { createContext, useState } from 'react'
-import { Options } from '../../../Resources/Enums/Options'
+import { TREEMODES } from '../../Resources/Enums/Options'
 import { v4 as uuidv4 } from 'uuid'
-function Option({ treeMode, setTreeMode }) {
+import { TreeMode } from '../../Resources/Packages/RFlow/Custom'
+interface IOptionProps {
+  treeMode: TreeMode
+  setTreeMode: React.Dispatch<React.SetStateAction<string>>
+}
+function Option({ treeMode, setTreeMode }: IOptionProps) {
   return (
     <div className="  absolute inset-x-0 top-0 flex justify-center  ">
-      {Options.map((type) => (
+      {TREEMODES.map((type) => (
         <div className=" m-5" key={uuidv4()}>
           <button
-            onClick={(e) => setTreeMode(e.target.value)}
-            value={type}
+            onClick={(e) => setTreeMode(type)}
             className={
               (treeMode === type
                 ? 'bg-green-500'

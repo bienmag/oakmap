@@ -6,17 +6,31 @@ import {
   CBackHandleDelNode,
   handleOnDragStart,
   handleSetNode,
-} from '../../../Resources/Packages/RFlow/Custom'
+  INodeInfo,
+  NodeType,
+  TreeMode,
+} from '../../Resources/Packages/RFlow/Custom'
 import { v4 as uuidv4 } from 'uuid'
+import { Node } from 'reactflow'
 
 /////////////////////////////////////////////////////
 // CUSTOM MENU ON THE LEFT SIDE FOR DRAGGING NODES
 ////////////////////////////////////////////////////
 
-function Custom({ selected, setNodes, setMarked, treeMode }: any) {
+interface ICustomProps {
+  selected: Node<INodeInfo> | null
+  setNodes: React.Dispatch<React.SetStateAction<Node<INodeInfo>[]>>
+  setMarked: React.Dispatch<React.SetStateAction<Node<INodeInfo> | null>>
+  treeMode: TreeMode
+}
+
+function Custom({ selected, setNodes, setMarked, treeMode }: ICustomProps) {
   const [nodeName, setNodeName] = useState('')
 
-  const handleDelNode = () => CBackHandleDelNode(setNodes, selected)
+  const handleDelNode = () => {
+    if (selected === null) return
+    CBackHandleDelNode(setNodes, selected)
+  }
 
   const handleMarkdown = () => {
     setMarked(selected)
@@ -28,14 +42,16 @@ function Custom({ selected, setNodes, setMarked, treeMode }: any) {
   }, [selected])
 
   useEffect(() => {
+    if (selected === null) return
     handleSetNode(setNodes, selected, { label: nodeName })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodeName, setNodes])
 
   const inputRef = useContext(InputContext)
 
   //from Sidebar.tsx
 
-  const onDragStart = (event, nodeType) =>
+  const onDragStart = (event: React.DragEvent, nodeType: NodeType) =>
     handleOnDragStart(event, nodeType, treeMode)
 
   return (
@@ -57,8 +73,8 @@ function Custom({ selected, setNodes, setMarked, treeMode }: any) {
       })}
       {/* <div className="custom"> */}
       <div className="description">
-        <h3> Selected Node: {selected === '' ? 'None' : selected.id}</h3>
-        {selected !== '' && (
+        <h3> Selected Node: {selected === null ? 'None' : selected.id}</h3>
+        {selected !== null && (
           <div className="custom-name-input">
             <label htmlFor="name">Name</label>
             <input
@@ -67,7 +83,7 @@ function Custom({ selected, setNodes, setMarked, treeMode }: any) {
               className="pl-2"
               type="text"
               name="name"
-              disabled={selected === '' ? true : false}
+              disabled={false}
               ref={inputRef}
             />
             {/* className="opacity-0" */}

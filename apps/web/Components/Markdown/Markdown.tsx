@@ -1,25 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { EDITOR, READER } from '../../../Resources/Enums/Options'
-import { handleSetNode } from '../../../Resources/Packages/RFlow/Custom'
+import { EDITOR, READER } from '../../Resources/Enums/Options'
+import { handleSetNode, INodeInfo, TreeMode } from '../../Resources/Packages/RFlow/Custom'
 import {
-  allbuttonTypes,
+  allButtonTypes,
   CBackInsertText,
-} from '../../../Resources/Packages/RFlow/Markdown'
+} from '../../Resources/Packages/RFlow/Markdown'
 import { v4 as uuidv4 } from 'uuid'
-function Markdown({ marked, setMarked, setNodes, treeMode }) {
-  const handleOnMarkDown = (e) => {
-    setMarked('')
+import { Node } from 'reactflow'
+
+interface IMarkdownProps {
+  marked: Node<INodeInfo> | null,
+  setMarked: React.Dispatch<React.SetStateAction<Node<INodeInfo> | null>>
+  setNodes: React.Dispatch<React.SetStateAction<Node<INodeInfo>[]>>
+  treeMode: TreeMode
+}
+
+function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
+  const handleBackgroundClick = (e: React.MouseEvent) => {
+    setMarked(null)
   }
 
   const [text, setText] = useState('')
 
   useEffect(() => {
+    if (marked === null) return
     handleSetNode(setNodes, marked, { text: text })
-  }, [marked.id, text, setNodes])
+  }, [marked, text, setNodes])
 
   useEffect(() => {
-    setText(marked?.data?.text)
+    setText(marked === null ? '' : marked.data.text)
   }, [marked])
 
   // Text Formatting Buttons function
@@ -30,6 +40,7 @@ function Markdown({ marked, setMarked, setNodes, treeMode }) {
 
   //reader and no text
   if (
+    marked === null ||
     (marked && treeMode === READER && marked.data.text === '') ||
     marked.data?.text === undefined
   ) {
@@ -40,7 +51,7 @@ function Markdown({ marked, setMarked, setNodes, treeMode }) {
   else if (marked && treeMode === READER && marked.data.text !== '') {
     return (
       <>
-        <div className="markdownBG" onClick={handleOnMarkDown}></div>
+        <div className="markdownBG" onClick={handleBackgroundClick}></div>
         <div className="markdown">
           <ReactMarkdown>{text}</ReactMarkdown>
         </div>
@@ -52,19 +63,18 @@ function Markdown({ marked, setMarked, setNodes, treeMode }) {
   else if (marked && treeMode === EDITOR) {
     return (
       <>
-        <div className="markdownBG" onClick={handleOnMarkDown}></div>
+        <div className="markdownBG" onClick={handleBackgroundClick}></div>
         <div className="markdown">
           <div className="flex-markdown">
             <textarea
               className="text-area-style"
               onChange={(e) => setText(e.target.value)}
               value={text}
-              type="text"
-              disabled={treeMode === READER}
+              disabled={false}
               ref={textAreaRef}
             ></textarea>
             <div className="markdown-buttons">
-              {allbuttonTypes.map((btn) => (
+              {allButtonTypes.map((btn) => (
                 <button
                   key={uuidv4()}
                   className="custom-button hover:bg-blue-400"
@@ -77,6 +87,12 @@ function Markdown({ marked, setMarked, setNodes, treeMode }) {
             </div>
           </div>
         </div>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <p>This thing crashed terribly. Our devs are in panic and running to their homes to their moms. Brace yourselves.</p>
       </>
     )
   }

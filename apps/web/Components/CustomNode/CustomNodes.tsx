@@ -1,12 +1,17 @@
 import React, { memo, useCallback } from 'react'
-import { getConnectedEdges, Handle, Position, useReactFlow } from 'reactflow'
+import { Connection, Node, getConnectedEdges, Handle, Position, useReactFlow } from 'reactflow'
+import { INodeInfo } from '../../Resources/Packages/RFlow/Custom'
 import Text from './Text'
+
 const useValidatorFn = () => {
   const { getNode, getEdges } = useReactFlow()
 
   return useCallback(
-    (connection) => {
-      const edges = getConnectedEdges([getNode(connection.target)], getEdges())
+    (connection: Connection) => {
+      if (connection.target === null) return false
+      const node = getNode(connection.target)
+      if (node === undefined) return false
+      const edges = getConnectedEdges([node], getEdges())
 
       return !edges.length
     },
@@ -14,7 +19,12 @@ const useValidatorFn = () => {
   )
 }
 
-export function rightLeafNode({ data }) {
+interface LeafNodeProps {
+  data: INodeInfo
+}
+
+export function RightLeafNode({ data }: LeafNodeProps) {
+  const validator = useValidatorFn()
   const leafText = data.text
   return (
     <div>
@@ -29,7 +39,7 @@ export function rightLeafNode({ data }) {
         <Handle
           type="target"
           position={Position.Left}
-          isValidConnection={useValidatorFn()}
+          isValidConnection={validator}
           className="w-16 !bg-green-700"
         />
       </div>
@@ -37,7 +47,8 @@ export function rightLeafNode({ data }) {
   )
 }
 
-export function leftLeafNode({ data }) {
+export function LeftLeafNode({ data }: LeafNodeProps) {
+  const validator = useValidatorFn()
   const leafText = data.text
   return (
     <div>
@@ -52,7 +63,7 @@ export function leftLeafNode({ data }) {
         <Handle
           type="target"
           position={Position.Right}
-          isValidConnection={useValidatorFn()}
+          isValidConnection={validator}
           className="w-16 !bg-green-700"
         />
       </div>
@@ -60,7 +71,7 @@ export function leftLeafNode({ data }) {
   )
 }
 
-export function BranchNode({ data }) {
+export function BranchNode({ data }: LeafNodeProps) {
   const branchText = data.text
 
   return (
@@ -87,7 +98,7 @@ export function BranchNode({ data }) {
   )
 }
 
-export function RootNode({ data }) {
+export function RootNode({ data }: LeafNodeProps) {
   return (
     <div>
       <div className="px-4 py-2 shadow-md rounded-md  border-2 border-green-600 bg-green-300 w-52 ">

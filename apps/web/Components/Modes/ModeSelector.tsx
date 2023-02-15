@@ -14,30 +14,31 @@ renderPage,
 setRenderPage,
 currentTreeId,
 setCurrentTreeId,
-nodes,
+/* nodes,
 setNodes,
 onNodesChange,
 edges,
 setEdges,
-onEdgesChange
+onEdgesChange */
 }: any) {
 
 
 return(
   <div> {/* Render dashboard by default */ }
-    {renderPage === 'tree' ? <TreeEditorMode
+    {renderPage === 'tree' ?
+    <TreeEditorMode
       treeMode={treeMode}
       setTreeMode={setTreeMode}
       currentTreeId={currentTreeId}
       setCurrentTreeId={setCurrentTreeId}
       marked={marked}
       setMarked={setMarked}
-      nodes={nodes}
+/*    nodes={nodes}
       setNodes={setNodes}
       onNodesChanges={onNodesChange}
       edges={edges}
       setEdges={setEdges}
-      onEdgesChange={onEdgesChange}
+      onEdgesChange={onEdgesChange} */
     /> : renderPage === 'profile' ? <div>PROFILE PLACEHOLDER</div>
       : <DashboardMode renderPage={renderPage} setRenderPage={setRenderPage} />}
   </div>

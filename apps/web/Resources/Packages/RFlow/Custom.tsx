@@ -6,6 +6,35 @@ export interface INodeInfo {
   label: string,
 }
 
+export interface IEdgeInfo { // Generic Edge data structure for nodes state
+  id: string,
+  source: string,
+  target: string,
+}
+
+export interface INode { // Generic Node data structure for nodes state
+  id: string
+  type: string
+  position: { x: number; y: number }
+  data: { label: string; text: string }
+}
+
+export interface IBranch { // Branch Data from server response
+  branchId: string
+  branchName: string
+  leaves: []
+  position: { x: number; y: number }
+  treeId: string
+}
+
+export interface ILeaf { // Branch Data from server response
+  branchId: string
+  leafId: string
+  leafName: string
+  position: { x: number; y: number }
+  treeId: string
+}
+
 export type NodeType = "branch" | "leftLeaf" | "rightLeaf" | "root"
 export type TreeMode = "reader" | "editor"
 

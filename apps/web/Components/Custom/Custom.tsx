@@ -44,7 +44,8 @@ function Custom({ selected, setNodes, setMarked, treeMode }: ICustomProps) {
   useEffect(() => {
     if (selected === null) return
     handleSetNode(setNodes, selected, { label: nodeName })
-  }, [selected, nodeName, setNodes])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nodeName, setNodes])
 
   const inputRef = useContext(InputContext)
 

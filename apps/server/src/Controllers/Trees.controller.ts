@@ -57,7 +57,6 @@ const TreesController = {
       const { branchId, position } = req.body
       const leaves: object[] = []
       const branch = await Branch.create(branchId, treeId, position, leaves)
-      // const markdown = await Markdown.create(treeId, branchId)
       res.status(201).json(branch)
 
       // INSERT branch into the tree 
@@ -88,9 +87,6 @@ const TreesController = {
       // insert the leaf into the tree
       const id = new mongodb.ObjectId(treeId)
       await DBTree.findOneAndUpdate({ _id: id }, { $push: { unlinkedLeaves: leaf } })
-
-
-
     }
 
     catch (e) {

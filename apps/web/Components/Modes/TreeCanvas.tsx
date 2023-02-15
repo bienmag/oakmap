@@ -33,11 +33,15 @@ import {
 } from '../../Resources/Packages/RFlow/RFlow'
 
 import { useRouter } from 'next/router';
-import { IEdgeInfo, INodeInfo, INode, TreeMode } from '../../Resources/Packages/RFlow/Custom'
+import { IEdgeInfo, INodeInfo, INode, TreeMode, IBranch, ILeaf, ITree } from '../../Resources/Packages/RFlow/Custom'
 
 // CONTEXT FOR REACT FLOW NODES
 import { NodesContext } from '../../Resources/Packages/RFlow/NodesContext'
 import { useContext } from 'react'
+import axios from 'axios'
+import { TREE_MODE } from '../../Resources/Enums/Options'
+import { setegid } from 'process'
+// import { TreeMode } from '../../Resources/Enums/Options'
 
 
 let id = 0
@@ -45,33 +49,24 @@ const getId = () => `node_${id++}`
 
 export const InputContext = createContext<React.RefObject<HTMLInputElement> | null>(null)
 
-interface ITreeEditorModeProps {
-  treeMode: TreeMode,
-  setTreeMode: React.Dispatch<React.SetStateAction<TreeMode>>
-  marked: Node<INodeInfo>,
-  setMarked: React.Dispatch<React.SetStateAction<Node<INodeInfo> | null>>
-  currentTreeId: string,
-  setCurrentTreeId: React.Dispatch<React.SetStateAction<string>>,
+interface TreeCanvasProps {
+  tree: ITree,
 }
-export function TreeEditorMode({
-  treeMode,
-  setTreeMode,
-  marked,
-  setMarked,
-  currentTreeId,
-  setCurrentTreeId
-}: ITreeEditorModeProps) {
+export function TreeCanvas({
+  tree
+}: TreeCanvasProps) {
 
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
   // moved nodes and edges state up to Sidebar for now
   const [isDraggable, setIsDraggable] = useState(false)
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null)
   const [selected, setSelected] = useState<Node<INodeInfo> | null>(null)
+  const [marked, setMarked] = useState<Node<INodeInfo> | null>(null)
 
   // useRef for double click on node to focus on input text
   const inputRef = useRef<HTMLInputElement>(null)
 
-
+  const [treeMode, setTreeMode] = useState(TREE_MODE.Editor)
 
   const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } = useContext(NodesContext)
 
@@ -82,11 +77,55 @@ export function TreeEditorMode({
   console.log('nodes: ', nodes)
   console.log('edges: ', edges)
 
+  useEffect(() => {
+    const allNodes: INode[] = []
+    const branchesFromServer: IBranch[] = tree.branches
+    const branchNodes: INode[] = branchesFromServer.map((branch) => {
+      const newNode: INode = {
+        id: branch.branchId,
+        type: 'branch',
+        position: {
+          x: branch.position.x,
+          y: branch.position.y
+        },
+        data: {
+          label: branch.branchName,
+          text: '' 
+        }
+      }
 
-  // ROUTER
-  const router = useRouter()
-  const { idRouter } = router.query
+      allNodes.push(newNode)
 
+      return newNode
+
+      })
+      console.log('branchNodes: ', branchNodes)
+
+    const unlinkedLeaves: ILeaf[] = tree.unlinkedLeaves    
+    const unlinkedLeafNodes: INode[] = unlinkedLeaves.map((leaf) => {
+      const newNode: INode = {
+        id: leaf.leafId,
+        type: 'leftLeaf', // could also be rightLeaf, we need to specify type
+        position: {
+          x: leaf.position.x,
+          y: leaf.position.y
+        },
+        data: {
+          label: leaf.leafName,
+          text: ''
+        }
+      }
+
+      allNodes.push(newNode)
+
+      return newNode
+
+    })
+    setNodes(allNodes)
+    console.log('allNodes', allNodes)
+    
+    console.log('unlinkedLeafNodes: ', unlinkedLeafNodes)
+  }, [tree, setNodes])
 
   useEffect(() => {
     setIsDraggable(treeMode === 'editor')
@@ -159,18 +198,18 @@ export function TreeEditorMode({
                   setSelected(null)
                 }}
                 onNodeDoubleClick={(event, node) => {
-                  if (treeMode === 'editor') {
+                  if (treeMode === TREE_MODE.Editor) {
                     inputRef.current?.focus()
                     inputRef.current?.select()
                   } // setMarked(node)
                 }}
                 onNodeClick={(event, node) => {
-                  if (treeMode === 'reader') setMarked(node)
+                  if (treeMode === TREE_MODE.Reader) setMarked(node)
                   setSelected(node)
                 }}
                 fitView
               >
-                {treeMode === 'editor' ? (
+                {treeMode === TREE_MODE.Editor ? (
                   <Background />
                 ) : (
                   <Background variant={BackgroundVariant.Lines} />
@@ -183,7 +222,7 @@ export function TreeEditorMode({
 
             {/* <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} /> */}
 
-            {treeMode === 'editor' ? (
+            {treeMode === TREE_MODE.Editor ? (
               <Custom
                 selected={selected}
                 setNodes={setNodes}

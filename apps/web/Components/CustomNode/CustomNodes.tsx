@@ -40,7 +40,7 @@ export function RightLeafNode({ data }: LeafNodeProps) {
           type="target"
           position={Position.Left}
           isValidConnection={validator}
-          className="w-16 !bg-green-700"
+          className="!bg-green-700"
         />
       </div>
     </div>
@@ -64,7 +64,7 @@ export function LeftLeafNode({ data }: LeafNodeProps) {
           type="target"
           position={Position.Right}
           isValidConnection={validator}
-          className="w-16 !bg-green-700"
+          className="!bg-green-700"
         />
       </div>
     </div>
@@ -86,12 +86,12 @@ export function BranchNode({ data }: LeafNodeProps) {
         <Handle
           type="target"
           position={Position.Top}
-          className="w-16 h-16 !bg-green-700"
+          className="!bg-green-700"
         />
         <Handle
           type="source"
           position={Position.Bottom}
-          className="w-16 !bg-green-700"
+          className="!bg-green-700"
         />
       </div>
     </div>

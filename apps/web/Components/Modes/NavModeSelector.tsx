@@ -28,8 +28,9 @@ function NavModeSelector({ treeMode,
                 console.log('response from GET request: ', response)
                 console.log('response.data: ', response.data)
 
-                const nodesFromServer = response.data.branches
-                const branchNodes = nodesFromServer.map((branch) => {
+                const allNodes=[]
+                const branchesFromServer = response.data.branches
+                const branchNodes = branchesFromServer.map((branch) => {
                   const newNode = {
                     id: branch.branchId,
                     type: 'branch',
@@ -42,14 +43,51 @@ function NavModeSelector({ treeMode,
                       text: ''
                     }
                   }
-                  return newNode
+
+                allNodes.push(newNode)
+
+                return newNode
+
                 })
                 console.log('branchNodes: ', branchNodes)
 
-                setNodes((nodes) => nodes.concat(branchNodes))
+
+
+
+              const unlinkedLeaves = response.data.unlinkedLeaves    
+              const unlinkedLeafNodes = unlinkedLeaves.map((leaf) => {
+                const newNode = {
+                  id: leaf.leafId,
+                  type: 'leftLeaf',
+                  position: {
+                    x: leaf.position.x,
+                    y: leaf.position.y
+                  },
+                  data: {
+                    label: leaf.leafName,
+                    text: ''
+                  }
+                }
+
+                allNodes.push(newNode)
+
+                return newNode
+
               })
+              console.log('unlinkedLeafNodes: ', unlinkedLeafNodes)
+ 
+            
+            
+              setNodes((nodes) => nodes.concat(allNodes))
+            
+
+
+
+
               setEdges()
 
+
+  
 
 
                   /* const newNode = {
@@ -64,7 +102,7 @@ function NavModeSelector({ treeMode,
               
                   setNodes((nds) => nds.concat(newNode)) */
       }
-
+              )}
 
   return (
     <div>

@@ -19,7 +19,6 @@ import NavModeSelector from '../Modes/NavModeSelector'
 //////// TAILWIND TEMPLATE CODE ////////////////////
 ///////////////////////////////////////////
 
-
 // import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
@@ -36,16 +35,9 @@ import {
 } from '@heroicons/react/24/outline'
 
 // REACT FLOW
-import ReactFlow, {
-  useNodesState,
-  useEdgesState,
-  Node,
-} from 'reactflow'
-import {
-  initialNodes,
-} from '../../Resources/Packages/RFlow/RFlow'
+import ReactFlow, { useNodesState, useEdgesState, Node } from 'reactflow'
+import { initialNodes } from '../../Resources/Packages/RFlow/RFlow'
 import { INodeInfo } from '../../Resources/Packages/RFlow/Custom'
-
 
 const user = {
   name: 'Whitney Francis',
@@ -84,9 +76,9 @@ function classNames(...classes: string[]) {
 }
 
 // { TreeEditorMode, DashboardMode, ModeSelector }: any
-export function Sidebar() { // removed epxort default
+export function Sidebar() {
+  // removed epxort default
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // from Tailwind UI
-
 
   // // Toggle editor vs reader modes -- originally we named this 'option'
   const [treeMode, setTreeMode] = useState<string>('editor')
@@ -97,15 +89,7 @@ export function Sidebar() { // removed epxort default
   const openBottomSheet = () => setIsOpen(true)
   const closeBottomSheet = () => setIsOpen(false)
 
-  // Description Menu markdown
-  const [description, setDescription] = useState<string | undefined>('')
-
   const [marked, setMarked] = useState<Node<INodeInfo> | null>(null)
-
-  useEffect(() => {
-    setDescription(marked?.data?.text)
-  }, [marked])
-
 
   // DECIDES WHICH PAGE TO RENDER
   const [renderPage, setRenderPage] = useState('dashboard') // dashboard, profile, tree, signin ?
@@ -115,7 +99,6 @@ export function Sidebar() { // removed epxort default
   // REACT FLOW STATE to pass to NavBar (for dummy tree) and TreeEditorMode inside ModeSelector
   // const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   // const [edges, setEdges, onEdgesChange] = useEdgesState([])
-
 
   // MOSTLY TAILWIND TEMPLATE CODE BELOW
 
@@ -154,14 +137,19 @@ export function Sidebar() { // removed epxort default
               <select
                 id="inbox-select"
                 className="rounded-md border-0 bg-none pl-3 pr-8 text-base font-medium text-gray-900 focus:ring-2 focus:ring-indigo-600"
-                defaultValue={sidebarNavigation.find((item) => item.current)?.name}
+                defaultValue={
+                  sidebarNavigation.find((item) => item.current)?.name
+                }
               >
                 {sidebarNavigation.map((item) => (
                   <option key={item.name}>{item.name}</option>
                 ))}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center pr-2">
-                <ChevronDownIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
+                <ChevronDownIcon
+                  className="h-5 w-5 text-gray-500"
+                  aria-hidden="true"
+                />
               </div>
             </div>
           </div>
@@ -199,16 +187,17 @@ export function Sidebar() { // removed epxort default
               </div>
             </div>
 
-            { /* Navigation bar selector */}
+            {/* Navigation bar selector */}
             <div>
-              <NavModeSelector renderPage={renderPage}
+              <NavModeSelector
+                renderPage={renderPage}
                 setRenderPage={setRenderPage}
                 setCurrentTreeId={setCurrentTreeId}
                 treeMode={treeMode}
                 setTreeMode={setTreeMode}
                 openBottomSheet={openBottomSheet}
                 closeBottomSheet={closeBottomSheet}
-              /*               nodes={nodes}
+                /*               nodes={nodes}
                             setNodes={setNodes}
                             onNodesChange={onNodesChange}
                             edges={edges}
@@ -220,7 +209,10 @@ export function Sidebar() { // removed epxort default
             <div className="ml-10 flex flex-shrink-0 items-center space-x-10 pr-4">
               <div className="flex items-center space-x-8">
                 <span className="inline-flex">
-                  <a href="#" className="-mx-1 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500">
+                  <a
+                    href="#"
+                    className="-mx-1 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500"
+                  >
                     <span className="sr-only">View notifications</span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </a>
@@ -229,7 +221,11 @@ export function Sidebar() { // removed epxort default
                 <Menu as="div" className="relative inline-block text-left">
                   <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2">
                     <span className="sr-only">Open user menu</span>
-                    <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                    <img
+                      className="h-8 w-8 rounded-full"
+                      src={user.imageUrl}
+                      alt=""
+                    />
                   </Menu.Button>
 
                   <Transition
@@ -280,7 +276,11 @@ export function Sidebar() { // removed epxort default
           {/* Mobile menu, show/hide this `div` based on menu open/closed state */}
 
           <Transition.Root show={mobileMenuOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-40 md:hidden" onClose={setMobileMenuOpen}>
+            <Dialog
+              as="div"
+              className="relative z-40 md:hidden"
+              onClose={setMobileMenuOpen}
+            >
               <Transition.Child
                 as={Fragment}
                 enter="transition-opacity ease-linear duration-300"
@@ -321,7 +321,10 @@ export function Sidebar() { // removed epxort default
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <span className="sr-only">Close main menu</span>
-                        <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                        <XMarkIcon
+                          className="block h-6 w-6"
+                          aria-hidden="true"
+                        />
                       </button>
                     </div>
                     <div className="max-w-8xl mx-auto mt-2 px-4 sm:px-6">
@@ -336,7 +339,10 @@ export function Sidebar() { // removed epxort default
                           className="block w-full rounded-md border-gray-300 pl-10 placeholder-gray-500 focus:border-indigo-600 focus:ring-indigo-600"
                         />
                         <div className="absolute inset-y-0 left-0 flex items-center justify-center pl-3">
-                          <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />
+                          <MagnifyingGlassIcon
+                            className="h-5 w-5"
+                            aria-hidden="true"
+                          />
                         </div>
                       </div>
                     </div>
@@ -364,13 +370,24 @@ export function Sidebar() { // removed epxort default
                     <div className="border-t border-gray-200 pt-4 pb-3">
                       <div className="max-w-8xl mx-auto flex items-center px-4 sm:px-6">
                         <div className="flex-shrink-0">
-                          <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                          <img
+                            className="h-10 w-10 rounded-full"
+                            src={user.imageUrl}
+                            alt=""
+                          />
                         </div>
                         <div className="ml-3 min-w-0 flex-1">
-                          <div className="truncate text-base font-medium text-gray-800">{user.name}</div>
-                          <div className="truncate text-sm font-medium text-gray-500">{user.email}</div>
+                          <div className="truncate text-base font-medium text-gray-800">
+                            {user.name}
+                          </div>
+                          <div className="truncate text-sm font-medium text-gray-500">
+                            {user.email}
+                          </div>
                         </div>
-                        <a href="#" className="ml-auto flex-shrink-0 bg-white p-2 text-gray-400 hover:text-gray-500">
+                        <a
+                          href="#"
+                          className="ml-auto flex-shrink-0 bg-white p-2 text-gray-400 hover:text-gray-500"
+                        >
                           <span className="sr-only">View notifications</span>
                           <BellIcon className="h-6 w-6" aria-hidden="true" />
                         </a>
@@ -397,14 +414,19 @@ export function Sidebar() { // removed epxort default
         {/* Bottom section */}
         <div className="flex min-h-0 flex-1 overflow-hidden">
           {/* Narrow sidebar*/}
-          <nav aria-label="Sidebar" className="hidden md:block md:flex-shrink-0 md:overflow-y-auto md:bg-gray-800">
+          <nav
+            aria-label="Sidebar"
+            className="hidden md:block md:flex-shrink-0 md:overflow-y-auto md:bg-gray-800"
+          >
             <div className="relative flex w-20 flex-col space-y-3 p-3">
               {sidebarNavigation.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-400 hover:bg-gray-700',
+                    item.current
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-400 hover:bg-gray-700',
                     'flex-shrink-0 inline-flex items-center justify-center h-14 w-14 rounded-lg'
                   )}
                 >
@@ -436,28 +458,25 @@ export function Sidebar() { // removed epxort default
                 setTreeMode={setTreeMode}
                 marked={marked}
                 setMarked={setMarked}
-              /*               setNodes={setNodes}
+                /*               setNodes={setNodes}
                             setEdges={setEdges}  */
               />
               {/* END YOUR CONTENT */}
             </section>
-            { /* INFO BOTTOM SHEET */}
+            {/* INFO BOTTOM SHEET */}
             <div>
               <DescriptionMenu
                 isOpen={isOpen}
                 closeBottomSheet={closeBottomSheet}
-                setDescription={setDescription}
-                description={description}
                 treeMode={treeMode}
               />
-            </div >
+            </div>
           </main>
         </div>
       </div>
     </>
   )
 }
-
 
 /*
 This example requires some changes to your config:
@@ -474,15 +493,12 @@ module.exports = {
 ```
 */
 
-
 // {/* Secondary column (hidden on smaller screens) */}
 // <aside className="hidden lg:order-first lg:block lg:flex-shrink-0">
 //   <div className="relative flex h-full w-96 flex-col overflow-y-auto border-r border-gray-200 bg-gray-100">
 //     {/* Your content */}
 //   </div>
 // </aside>
-
-
 
 // OLD DRAG NODE MENU CODE:
 

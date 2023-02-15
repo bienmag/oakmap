@@ -52,12 +52,6 @@ interface ITreeEditorModeProps {
   setMarked: React.Dispatch<React.SetStateAction<Node<INodeInfo> | null>>
   currentTreeId: string,
   setCurrentTreeId: React.Dispatch<React.SetStateAction<string>>,
-/*   nodes: <INodeInfo>,
-  setNodes: <INodeInfo>,
-  onNodesChange,
-  edges,
-  setEdges,
-  onEdgesChange */
 }
 export function TreeEditorMode({
   treeMode,
@@ -272,6 +266,7 @@ const initialNodes = [
             }
         ]
     }
+
     EXAMPLE OF REACT FLOW DATA:
     Object { id: "node_1", type: "leftLeaf", width: 144, … }
  ​

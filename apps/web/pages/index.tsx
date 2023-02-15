@@ -11,6 +11,7 @@ import { TreeEditorMode } from '../Components/Modes/TreeEditorMode'
 import DashboardMode from '../Components/Modes/DashboardMode'
 import ModeSelector from '../Components/Modes/ModeSelector'
 import { NodesContextProvider } from '../Resources/Packages/RFlow/NodesContext'
+import Link from 'next/link'
 
 /////////////////////////////////////////////
 // SIDEBAR STUFF ///////////////////////////
@@ -25,7 +26,11 @@ const DnDFlow = () => {
         <Sidebar />
       </NodesContextProvider>
     </div>
-
+    // <ul>
+    //   {trees.map(tree => (
+    //     <li><Link href={`/trees/${tree}`}>{tree.name}</Link></li>
+    //   ))}
+    // </ul>
   )
 }
 

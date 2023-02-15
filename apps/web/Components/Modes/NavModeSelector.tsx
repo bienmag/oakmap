@@ -10,20 +10,47 @@ function NavModeSelector({ treeMode,
   renderPage,
   setRenderPage,
   setCurrentTreeId,
-  /* setNodes,
-  setEdges */
+  setNodes,
+  setEdges
 }: any) {
 
   // let dummyTreeId = '63ebb297cfc76b14bf76d970'
 
   // DUMMY TREE LOADING TEST
-  /*      const handleClick = async (e) => {
+  const handleClick = async (e: React.MouseEvent) => {
           e.preventDefault();
         
           axios.get(`http://localhost:8080/trees/63ebb297cfc76b14bf76d970`)
               .then((response) => {
-                  setCurrentTreeId(response.data.id)
+                setCurrentTreeId(response.data.id)
+                console.log('response from GET request: ', response)
+                console.log('response.data: ', response.data)
+
+                const nodesFromServer = response.data.branches
+                const branchNodes = nodesFromServer.map((branch) => {
                   const newNode = {
+                    id: branch.branchId,
+                    type: 'branch',
+                    position: {
+                      x: branch.position.x,
+                      y: branch.position.y
+                    },
+                    data: {
+                      label: branch.branchName,
+                      text: ''
+                    }
+                  }
+                  return newNode
+                })
+                console.log('branchNodes: ', branchNodes)
+
+                setNodes((nodes) => nodes.concat(branchNodes))
+              })
+              setEdges()
+
+
+
+                  /* const newNode = {
                       id: response.data.id,
                       type: response.data.leafId ? 'leftLeaf' : 'branch', // could also be rightLeaf, we need to specify type
                       position: {
@@ -33,10 +60,8 @@ function NavModeSelector({ treeMode,
                       data: { label: ``, text: '' },
                     }
               
-                  setNodes((nds) => nds.concat(newNode))
-                  setEdges()
-          })
-      } */
+                  setNodes((nds) => nds.concat(newNode)) */
+      }
 
 
   return (
@@ -154,7 +179,7 @@ function NavModeSelector({ treeMode,
                     + '  border-2 p-4 rounded border-black')
                 }
                 onClick={(e) => {
-                  // handleClick
+                  handleClick(e)
                   setRenderPage(renderPage === 'dashboard' ? 'tree' : 'dashboard')
                 }}
               >

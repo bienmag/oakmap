@@ -97,8 +97,8 @@ export function Sidebar() {
   const [currentTreeId, setCurrentTreeId] = useState('')
 
   // REACT FLOW STATE to pass to NavBar (for dummy tree) and TreeEditorMode inside ModeSelector
-  // const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
-  // const [edges, setEdges, onEdgesChange] = useEdgesState([])
+  const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
+  const [edges, setEdges, onEdgesChange] = useEdgesState([])
 
   // MOSTLY TAILWIND TEMPLATE CODE BELOW
 
@@ -197,12 +197,12 @@ export function Sidebar() {
                 setTreeMode={setTreeMode}
                 openBottomSheet={openBottomSheet}
                 closeBottomSheet={closeBottomSheet}
-                /*               nodes={nodes}
-                            setNodes={setNodes}
-                            onNodesChange={onNodesChange}
-                            edges={edges}
-                            setEdges={setEdges}
-                            onEdgesChange={onEdgesChange} */
+                nodes={nodes}
+                setNodes={setNodes}
+                onNodesChange={onNodesChange}
+                edges={edges}
+                setEdges={setEdges}
+                onEdgesChange={onEdgesChange}
               />
             </div>
 
@@ -458,8 +458,9 @@ export function Sidebar() {
                 setTreeMode={setTreeMode}
                 marked={marked}
                 setMarked={setMarked}
-                /*               setNodes={setNodes}
-                            setEdges={setEdges}  */
+                nodes={nodes}
+                setNodes={setNodes}
+                setEdges={setEdges}
               />
               {/* END YOUR CONTENT */}
             </section>

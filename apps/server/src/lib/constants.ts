@@ -1,3 +1,4 @@
+
 require('dotenv').config()
 
 
@@ -18,6 +19,7 @@ if (process.env.JWT_SECRET === undefined) {
   throw new Error('JWT_SECRET must be defined as an env variable')
 }
 export const JWT_SECRET = process.env.GOOGLE_CLIENT_ID
+
 
 if (process.env.MONGODB_URL === undefined) {
   throw new Error('MONGODB_URL must be defined as an env variable')

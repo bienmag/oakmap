@@ -1,13 +1,15 @@
 import passport from "passport";
-import { Strategy as GoogleStrategy, Strategy } from "passport-google-oauth2"
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, JWT_SECRET } from "./lib/constants";
-const mongodb = require('mongodb');
+import { Strategy as GoogleStrategy } from "passport-google-oauth2"
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "./lib/constants";
+import { DBUser } from "./lib/mongo";
+import jwt from "jsonwebtoken"
+import User from "./Models/Users";
 
 
 
 
 
-
+const GOOGLE_CB = "http://localhost:3000/google/callback"
 
 
 

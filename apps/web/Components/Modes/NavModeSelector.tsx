@@ -26,68 +26,7 @@ function NavModeSelector({ treeMode,
   // DUMMY TREE GET REQUEST
   const handleClick = async (e: React.MouseEvent) => {
           e.preventDefault()
-        
-          axios.get(`http://localhost:8080/trees/63ebb297cfc76b14bf76d970`)
-            .then((response) => {
-                
-              setCurrentTreeId(response.data.id)
-              
-              console.log('response from GET request: ', response)
-              console.log('response.data: ', response.data)
-
-              const allNodes: INode[] = []
-              
-              const branchesFromServer: IBranch[] = response.data.branches
-              const branchNodes: INode[] = branchesFromServer.map((branch) => {
-                const newNode: INode = {
-                  id: branch.branchId,
-                  type: 'branch',
-                  position: {
-                    x: branch.position.x,
-                    y: branch.position.y
-                  },
-                  data: {
-                    label: branch.branchName,
-                    text: ''
-                  }
-                }
-
-                allNodes.push(newNode)
-
-                return newNode
-
-                })
-                console.log('branchNodes: ', branchNodes)
-
-              const unlinkedLeaves: ILeaf[] = response.data.unlinkedLeaves    
-              const unlinkedLeafNodes: INode[] = unlinkedLeaves.map((leaf) => {
-                const newNode: INode = {
-                  id: leaf.leafId,
-                  type: 'leftLeaf', // could also be rightLeaf, we need to specify type
-                  position: {
-                    x: leaf.position.x,
-                    y: leaf.position.y
-                  },
-                  data: {
-                    label: leaf.leafName,
-                    text: ''
-                  }
-                }
-
-                allNodes.push(newNode)
-
-                return newNode
-
-              })
-              console.log('unlinkedLeafNodes: ', unlinkedLeafNodes)
- 
-          
-              setNodes((nodes: INode[]) => nodes.concat(allNodes))
-          
-              setEdges()
-
-      }
-              )}
+  }
 
   return (
     <div>

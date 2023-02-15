@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 // import { InputContext } from '../index';
-import { InputContext } from '../Modes/TreeEditorMode'
+import { InputContext } from '../Modes/TreeCanvas'
 import {
   allNodesOptions,
   CBackHandleDelNode,

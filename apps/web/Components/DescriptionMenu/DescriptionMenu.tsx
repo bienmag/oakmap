@@ -26,10 +26,9 @@ function DescriptionMenu({ isOpen, closeBottomSheet, treeMode }: any) {
             <h3>Description</h3>
             <ReactMarkdown>{description}</ReactMarkdown>
           </div>
-        )
-        }
-      </div >
-    </Draggable >
+        )}
+      </div>
+    </Draggable>
   )
 }
 

@@ -72,24 +72,18 @@ class Leaf {
   }
 
 
-  static async linkUnlink(
+
+  static async deleteLeaf(
     treeId: string,
-    branchId: string,
-    leafId: string) {
+    leafId: string
+  ) {
 
-    if (branchId === null) {
-      // i have to unlink the leaf and push it to unlinkedLeaves
-    } else {
-
-      // link leaf to the branch
-    }
-
-
-  }
-
-
-  static async deleteLeaf(leafId: string) {
+    const id = new mongodb.ObjectId(treeId)
+// find the leaf
+// 1) unlinkedLeaves
+// 2) treeId => branchhes (no branchId)
     let tree = await DBTree.findOne({ leafId: leafId })
+
     tree?.branches
   }
 }

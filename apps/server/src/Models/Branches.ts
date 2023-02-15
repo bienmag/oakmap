@@ -165,10 +165,17 @@ class Branch {
   }
 
   static async deleteBranch(
+    treeId: string,
     branchId: string
   ) {
-    let tree = await DBTree.findOne({ branchId: branchId })
-    //@ts-ignore
+
+    const id = new mongodb.ObjectId(treeId)
+
+    let tree = await DBTree.findOne({ _id: id, "branches": { $elemMatch: { "branchId": branchId } } })
+    console.log('this is tree', tree)
+    if (tree === null) {
+      throw new Error('The branch is not found in this tree')
+    }
     tree.branches = tree?.branches.filter(function (branch) {
       return branch.branchId !== branchId
     })

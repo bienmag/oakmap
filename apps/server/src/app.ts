@@ -14,8 +14,9 @@ import passport = require("passport");
 const expSession = require('express-session')
 const bodyParser = require('body-parser')
 
-dotenv.config()
-require("./passport")
+
+
+
 const app = express()
 const cors = require('cors')
 
@@ -78,7 +79,6 @@ export function startServer(): Server {
   })
   return server
 }
-
 
 
 

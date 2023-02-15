@@ -5,7 +5,6 @@ const mongodb = require('mongodb');
 import { DBTree } from "../lib/mongo";
 import Markdown from "../Models/Markdowns";
 import Leaf from "../Models/Leaves";
-import mongoose from "mongoose";
 import { ObjectId } from "mongodb";
 
 
@@ -117,11 +116,10 @@ const TreesController = {
       const { treeId } = req.params
       const { branchId, leafId } = req.body
 
-      const branch = await Branch.linkUnlink(treeId, branchId, leafId)
-      const leaf = await Leaf.linkUnlink(treeId, branchId, leafId)
+      const result = await Branch.linkUnlink(treeId, branchId, leafId)
 
 
-      res.status(201).json(branch)
+      res.status(201).json(result)
     }
     catch (e) {
       next(e)
@@ -196,21 +194,23 @@ const TreesController = {
   // delete a branch 
   async deleteBranch(req: Request, res: Response, next: NextFunction) {
     try {
-      const { branchId } = req.params
-      await Branch.deleteBranch(branchId)
-      res.json('The branch has been sucsessfully deleted')
+      const { treeId, branchId } = req.params
+      await Branch.deleteBranch(treeId, branchId)
+      res.json('The branch was deleted successfully')
     }
     catch (e) {
       next(e)
     }
   },
 
-  // // delete a leaf 
+  // delete a leaf 
   // async deleteLeaf(req: Request, res: Response, next: NextFunction) {
   //   try {
-  //     const { leafId } = req.params
-  //     await Leaf.deleteLead(leafId)
+  //     const { treeId, leafId } = req.params
+  //     await Leaf.deleteLeaf(leafId)
   //     res.json('The leaf has been sucsessfully deleted')
+  //   } catch (e) {
+  //     next(e)
   //   }
   // }
 

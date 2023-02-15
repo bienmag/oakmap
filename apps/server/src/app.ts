@@ -1,12 +1,14 @@
-
 import express from "express";
-import dotenv from 'dotenv'
 import mongoose from "mongoose";
 import router from "./router";
 import { Server } from 'http'
 import Logger from "./lib/logger";
 
+import dotenv from 'dotenv'
 dotenv.config()
+
+import { MONGODB_DB, MONGODB_URL } from "./lib/constants";
+
 
 const app = express()
 const cors = require('cors')
@@ -25,9 +27,10 @@ app.use(router)
 export function startServer(): Server {
   const port = 8080
 
-  mongoose.connect("mongodb+srv://bienmag:12345@oakmap.kjrgfwk.mongodb.net/?retryWrites=true&w=majority").then(() =>
-    console.log("✅ Database connection successful")).catch(() => console.log("database connection error")
-    )
+  console.log('Connecting to database', MONGODB_URL, '...')
+  mongoose.connect(MONGODB_URL, {dbName: MONGODB_DB})
+  .then(() => console.log("✅ Database connection successful"))
+  .catch((error) => console.error(error))
 
   const server = app.listen(port, () => {
     Logger.info(

@@ -19,8 +19,13 @@ const bodyParser = require('body-parser')
 
 
 
+import dotenv from 'dotenv'
 dotenv.config()
 require("./passport")
+
+import { MONGODB_DB, MONGODB_URL } from "./lib/constants";
+
+
 const app = express()
 const cors = require('cors')
 
@@ -85,11 +90,8 @@ export function startServer(): Server {
   return server
 }
 
-<<<<<<< HEAD
 
 
 
 
-=======
->>>>>>> c905883 (feat: create tree, branch, leaf,get a tree, get trees, get markdown)
 export default app

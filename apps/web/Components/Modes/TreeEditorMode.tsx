@@ -56,12 +56,12 @@ export function TreeEditorMode({
   setMarked,
   currentTreeId,
   setCurrentTreeId,
-  /*   nodes,
+  nodes,
   setNodes,
   onNodesChange,
   edges,
   setEdges,
-  onEdgesChange */
+  onEdgesChange
 }: ITreeEditorModeProps) {
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
   // moved nodes and edges state up to Sidebar for now
@@ -75,8 +75,8 @@ export function TreeEditorMode({
 
 
 
-  const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
-  const [edges, setEdges, onEdgesChange] = useEdgesState([])
+/* const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
+   const [edges, setEdges, onEdgesChange] = useEdgesState([]) */
 
 
   console.log('nodes: ', nodes)

@@ -10,6 +10,7 @@ import { Sidebar } from '../Components/Sidebar/Sidebar'
 import { TreeEditorMode } from '../Components/Modes/TreeEditorMode'
 import DashboardMode from '../Components/Modes/DashboardMode'
 import ModeSelector from '../Components/Modes/ModeSelector'
+import { NodesContextProvider } from '../Resources/Packages/RFlow/NodesContext'
 
 /////////////////////////////////////////////
 // SIDEBAR STUFF ///////////////////////////
@@ -20,8 +21,9 @@ const DnDFlow = () => {
 
   return (
     <div>
-      {/* <Sidebar TreeEditorMode={TreeEditorMode} DashboardMode={DashboardMode} ModeSelector={ModeSelector} /> */}
-      <Sidebar />
+      <NodesContextProvider>
+        <Sidebar />
+      </NodesContextProvider>
     </div>
 
   )

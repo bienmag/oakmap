@@ -35,6 +35,10 @@ import {
 import { useRouter } from 'next/router';
 import { INodeInfo, TreeMode } from '../../Resources/Packages/RFlow/Custom'
 
+// CONTEXT FOR REACT FLOW NODES
+import { NodesContext } from '../../Resources/Packages/RFlow/NodesContext'
+import { useContext } from 'react'
+
 
 let id = 0
 const getId = () => `node_${id++}`
@@ -47,7 +51,13 @@ interface ITreeEditorModeProps {
   marked: Node<INodeInfo>,
   setMarked: React.Dispatch<React.SetStateAction<Node<INodeInfo> | null>>
   currentTreeId: string,
-  setCurrentTreeId: React.Dispatch<React.SetStateAction<string>>
+  setCurrentTreeId: React.Dispatch<React.SetStateAction<string>>,
+/*   nodes: <INodeInfo>,
+  setNodes: <INodeInfo>,
+  onNodesChange,
+  edges,
+  setEdges,
+  onEdgesChange */
 }
 export function TreeEditorMode({
   treeMode,
@@ -55,13 +65,7 @@ export function TreeEditorMode({
   marked,
   setMarked,
   currentTreeId,
-  setCurrentTreeId,
-  nodes,
-  setNodes,
-  onNodesChange,
-  edges,
-  setEdges,
-  onEdgesChange
+  setCurrentTreeId
 }: ITreeEditorModeProps) {
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
   // moved nodes and edges state up to Sidebar for now
@@ -74,6 +78,7 @@ export function TreeEditorMode({
 
 
 
+  const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } = useContext(NodesContext)
 
 /* const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
    const [edges, setEdges, onEdgesChange] = useEdgesState([]) */

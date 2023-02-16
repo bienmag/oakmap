@@ -24,7 +24,7 @@ interface DashboardPageProps {
   trees: ITree[],
   popularTrees: ITree[],
 }
-const DashboardPage: NextPage<DashboardPageProps> = ({trees, popularTrees}) => {
+const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees }) => {
 
   const handleCreateTree = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -54,8 +54,8 @@ const DashboardPage: NextPage<DashboardPageProps> = ({trees, popularTrees}) => {
           }}
         >+</button>
         < div >
-          {trees.length > 0 
-            ? <TreeList trees={trees} /> 
+          {trees.length > 0
+            ? <TreeList trees={trees} />
             : (
               <p className='text-sm text-gray-500'>
                 Sing in for create more trees
@@ -94,26 +94,26 @@ export default DashboardPage
 interface TreeListProps {
   trees: ITree[]
 }
-const TreeList = ({trees}: TreeListProps) => {
+const TreeList = ({ trees }: TreeListProps) => {
   return (
-  <ul role='list' className='divide-y divide-gray-200'>
-    {trees.map((tree) => (
-      <li key={tree._id} className='py-4'>
-        <Link href={`/trees/${tree._id}`}>
-          <div className='flex space-x-3'>
-            <img className='h-8 w-8 rounded-full bg-cyan-700'  alt='' />
-            <div className='flex-1 space-y-1'>
-              <div className='flex items-center justify-between'>
-                <h3 className='text-sm font-medium'>{tree.treeName}</h3>
-                {/* <p className='text-sm text-gray-500'>{tree.popularity}</p> */}
+    <ul role='list' className='divide-y divide-gray-200'>
+      {trees.map((tree) => (
+        <li key={tree._id} className='py-4'>
+          <Link href={`/trees/${tree._id}`}>
+            <div className='flex space-x-3'>
+              <img className='h-8 w-8 rounded-full bg-cyan-700' alt='' />
+              <div className='flex-1 space-y-1'>
+                <div className='flex items-center justify-between'>
+                  <h3 className='text-sm font-medium'>{tree.treeName}</h3>
+                  {/* <p className='text-sm text-gray-500'>{tree.popularity}</p> */}
+                </div>
+                <p className='text-sm text-gray-500'>
+                  {tree.description}
+                </p>
               </div>
-              <p className='text-sm text-gray-500'>
-                {tree.description}
-              </p>
             </div>
-          </div>
-        </Link>
-      </li>
-    ))}
-  </ul>)
+          </Link>
+        </li>
+      ))}
+    </ul>)
 }

@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
   user: String,
   email: String,
   password: String,
-  token: Array,
+  tokens: Array,
   treeName: Array
 
 }, { versionKey: false })

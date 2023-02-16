@@ -1,11 +1,11 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2"
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "./lib/constants";
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, JWT_SECRET } from "./lib/constants";
 import { DBUser } from "./lib/mongo";
 import jwt from "jsonwebtoken"
 import User from "./Models/Users";
-
-
+import { ObjectId } from "mongodb"
+const mongodb = require('mongodb');
 
 
 
@@ -28,19 +28,30 @@ passport.use(
 
       if (!user) {
         // create new user
-        const newUser = new User({
-          id: new ObjectId(),
-          user: profile.displayName,
-          email: profile.email,
-          accessToken
-        })
+        const _id = new ObjectId()
+        const tokens: string[] = []
+        const newUser: User = await User.create(_id, profile.displayName, profile.email, accessToken, tokens)
+        if (newUser === null) { return }
 
-        // await create new user in DB
-
-        const token = 
+        const token = await jwt.sign({ id: newUser._id, created: Date.now().toString() }, JWT_SECRET)
+        console.log(newUser)
+        // need to update
+        newUser.tokens.push(token)
+        const id = mongodb.Object(newUser._id)
+        const currrentUser = await DBUser.findById({ _id: id })
+        currrentUser?.save()
+        //@ts-ignore
+        done(null, newUser, { message: "Auth successful", token })
 
       } else {
         //user exists, sign in 
+        const token = await jwt.sign({ id: user._id, created: Date.now().toString() }, JWT_SECRET)
+        user.tokens.push(token)
+        const id = mongodb.Object(user._id)
+        const currrentUser = await DBUser.findById({ _id: id })
+        currrentUser?.save()
+        //@ts-ignore
+        done(null, user, { message: "Auth successful", token })
       }
 
 

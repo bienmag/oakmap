@@ -16,10 +16,10 @@ import { MONGODB_DB, MONGODB_URL } from "./lib/constants";
 
 
 
-
+dotenv.config()
+require("./passport")
 const app = express()
 const cors = require('cors')
-
 
 app.use(expSession({ secret: 'cats' }))
 app.use(bodyParser());

@@ -19,10 +19,10 @@ const bodyParser = require('body-parser')
 
 
 
-
+dotenv.config()
+require("./passport")
 const app = express()
 const cors = require('cors')
-
 
 app.use(expSession({ secret: 'cats' }))
 app.use(bodyParser());

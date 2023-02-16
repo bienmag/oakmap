@@ -14,8 +14,8 @@ import ModeSelector from './Components/Modes/ModeSelector'
 /////////////////////////////////////////////
 // SIDEBAR STUFF ///////////////////////////
 ////////////////////////////////////////////
-  
-  
+
+
 const DnDFlow = () => {
 
   return (
@@ -23,13 +23,11 @@ const DnDFlow = () => {
       {/* <Sidebar TreeEditorMode={TreeEditorMode} DashboardMode={DashboardMode} ModeSelector={ModeSelector} /> */}
       <Sidebar />
     </div>
-    
+
   )
 }
 
 export default DnDFlow
-
-
 
 
 
@@ -113,4 +111,3 @@ export default DnDFlow
 //     </div >
 //   )
 
-  

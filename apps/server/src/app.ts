@@ -5,20 +5,44 @@ import mongoose from "mongoose";
 import router from "./router";
 import { Server } from 'http'
 import Logger from "./lib/logger";
-
-
+import passport = require("passport");
+const expSession = require('express-session')
+const bodyParser = require('body-parser')
 
 dotenv.config()
-
+require("./passport")
 const app = express()
 const cors = require('cors')
 
-//change to dotenv later
+app.use(expSession({ secret: 'cats' }))
+app.use(bodyParser());
+app.use(passport.initialize())
+app.use(passport.session())
 
 
-app.use(cors())
+
+
 app.use(express.json())
+app.use(cors())
+
 app.use(router)
+
+
+app.get("/fail", (req, res) => res.send("You failed log in"))
+app.get("/success", (req, res) => res.send("Welcome  mr dev"))
+
+app.get("/google",
+  passport.authenticate('google', { scope: ['email', 'profile'] })
+)
+
+
+app.get("/google/callback",
+  passport.authenticate('google',
+    {
+      successRedirect: '/success',
+      failureRedirect: '/failed'
+    })
+)
 
 
 export function startServer(): Server {
@@ -39,10 +63,7 @@ export function startServer(): Server {
   return server
 }
 
-// app.listen(port, () => {
-//   TreesController.createTree
-//   console.log(`🦸🏽 [server]: Server is running at ${port}`)
-// })
+
 
 
 

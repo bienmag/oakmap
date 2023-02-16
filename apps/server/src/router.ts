@@ -15,6 +15,9 @@ router.get('/trees/:id', TreesController.getTree)
 router.get('/trees', TreesController.getAll)
 router.get('/markdown/:nodeId', TreesController.getMarkdown)
 router.delete('/trees/:treeId/branches/:branchId', TreesController.deleteBranch)
-router.delete('/trees/:treeId/leaves/:leafId', TreesController.deleteLeaf)
+// router.delete('/trees/:treeId/leaves/:leafId', TreesController.deleteLeaf)
+
+
+
 
 export default router;

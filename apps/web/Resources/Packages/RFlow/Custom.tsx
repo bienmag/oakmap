@@ -1,6 +1,16 @@
 import { DragEvent } from "react"
 import { Node } from "reactflow"
 
+export interface ITree {
+  _id: string
+  treeName: string
+  user: string
+  description: string
+  branches: IBranch[]
+  unlinkedLeaves: ILeaf[]
+  markdown?: string
+}
+
 export interface INodeInfo {
   text: string,
   label: string,

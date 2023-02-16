@@ -75,8 +75,12 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
+interface SidebarProps {
+  children: React.ReactNode | React.ReactNode[] | null
+}
+
 // { TreeEditorMode, DashboardMode, ModeSelector }: any
-export function Sidebar() {
+export function Sidebar({children}: SidebarProps) {
   // removed epxort default
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // from Tailwind UI
 
@@ -89,10 +93,8 @@ export function Sidebar() {
   const openBottomSheet = () => setIsOpen(true)
   const closeBottomSheet = () => setIsOpen(false)
 
-  const [marked, setMarked] = useState<Node<INodeInfo> | null>(null)
+  const [renderPage, setRenderPage] = useState('tree')
 
-  // DECIDES WHICH PAGE TO RENDER
-  const [renderPage, setRenderPage] = useState('dashboard') // dashboard, profile, tree, signin ?
 
   const [currentTreeId, setCurrentTreeId] = useState('')
 
@@ -443,16 +445,7 @@ export function Sidebar() {
               </h1>
               {/* YOUR CONTENT - render modeSelector */}
               {/* ModeSelector(DashboardMode, TreeEditorMode) -- this was alternative as a way to pass components as props */}
-              <ModeSelector
-                renderPage={renderPage}
-                setRenderPage={setRenderPage}
-                currentTreeId={currentTreeId}
-                setCurrentTreeId={setCurrentTreeId}
-                treeMode={treeMode}
-                setTreeMode={setTreeMode}
-                marked={marked}
-                setMarked={setMarked}
-              />
+              {children}
               {/* END YOUR CONTENT */}
             </section>
             {/* INFO BOTTOM SHEET */}

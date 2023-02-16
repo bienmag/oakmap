@@ -2,7 +2,7 @@ import React, {
   useState,
 } from 'react'
 import 'reactflow/dist/style.css'
-import { TreeEditorMode } from "./TreeCanvas"
+// import { TreeEditorMode } from "./TreeCanvas"
 import DashboardMode from "./DashboardMode"
 import { NodesContextProvider } from '../../Resources/Packages/RFlow/NodesContext'
 
@@ -20,9 +20,9 @@ setCurrentTreeId,
 
 return(
   <div> {/* Render dashboard by default */ }
-    {renderPage === 'tree' ?
+    {/* renderPage === 'tree' ?
      : renderPage === 'profile' ? <div>PROFILE PLACEHOLDER</div>
-      : <DashboardMode renderPage={renderPage} setRenderPage={setRenderPage} />}
+      : <DashboardMode renderPage={renderPage} setRenderPage={setRenderPage} /> */}
   </div>
   
 )

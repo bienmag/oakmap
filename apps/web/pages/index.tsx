@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import 'reactflow/dist/style.css'
 import { Sidebar } from '../Components/Sidebar/Sidebar'
-import { TreeEditorMode } from '../Components/Modes/TreeCanvas'
+// import { TreeEditorMode } from '../Components/Modes/TreeCanvas'
 import DashboardMode from '../Components/Modes/DashboardMode'
 import ModeSelector from '../Components/Modes/ModeSelector'
 import { NodesContextProvider } from '../Resources/Packages/RFlow/NodesContext'

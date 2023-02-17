@@ -139,7 +139,7 @@ export function TreeCanvas({
 
   useEffect(() => {
     const allEdges: IEdge[] = []
-    const edgesFromServer: IEdgeServer[] = tree.edges
+    const edgesFromServer: IEdgeServer[] = (tree.edges as unknown as IEdgeServer[])
     const edgeNodes: IEdge[] = edgesFromServer.map((edge) => {
 
       const newEdge: IEdge = {

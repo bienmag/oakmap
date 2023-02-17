@@ -7,23 +7,6 @@ import passport = require("passport");
 const expSession = require('express-session')
 const bodyParser = require('body-parser')
 
-import dotenv from 'dotenv'
-dotenv.config()
-require("./passport")
-
-import { MONGODB_DB, MONGODB_URL } from "./lib/constants";
-
-
-import dotenv from 'dotenv'
-dotenv.config()
-
-import { MONGODB_DB, MONGODB_URL } from "./lib/constants";
-
-
-import passport = require("passport");
-const expSession = require('express-session')
-const bodyParser = require('body-parser')
-
 
 
 import dotenv from 'dotenv'

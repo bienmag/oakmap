@@ -20,6 +20,7 @@ import ReactFlow, {
   Node,
   XYPosition,
   BackgroundVariant,
+  updateEdge
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 
@@ -157,7 +158,9 @@ export function TreeCanvas({
 
       })
     
+    // setEdges(allEdges)
     setEdges(allEdges)
+
     console.log('allEdges', allEdges)
   
   }, [tree, setEdges])

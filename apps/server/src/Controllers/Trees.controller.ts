@@ -53,9 +53,9 @@ const TreesController = {
       //treeId should come from req.params!
       //nodeID ??????
       const { treeId } = req.params
-      const { branchId, position } = req.body
+      const { branchId, position, type } = req.body
       const leaves: object[] = []
-      const branch = await Branch.create(branchId, treeId, position, leaves)
+      const branch = await Branch.create(branchId, treeId, position, type, leaves)
       res.status(201).json(branch)
 
       // INSERT branch into the tree 
@@ -72,9 +72,9 @@ const TreesController = {
   async createLeaf(req: Request, res: Response, next: NextFunction) {
     try {
       const { treeId } = req.params
-      const { leafId, position } = req.body
+      const { leafId, position, type } = req.body
       //create leaf in db
-      const leaf = await Leaf.create(leafId, treeId, position)
+      const leaf = await Leaf.create(leafId, treeId, position, type)
 
 
       // //create markdown in db
@@ -96,9 +96,9 @@ const TreesController = {
   async updateBranch(req: Request, res: Response, next: NextFunction) {
     try {
       const { treeId } = req.params
-      const { branchId, position, branchName, markdownText } = req.body
+      const { branchId, position, branchName, markdownText, type } = req.body
 
-      const branch = await Branch.update(branchId, treeId, position, branchName)
+      const branch = await Branch.update(branchId, treeId, position, type, branchName)
       res.status(201).json(branch)
 
       if (markdownText) {
@@ -137,9 +137,9 @@ const TreesController = {
   async updateLeaf(req: Request, res: Response, next: NextFunction) {
     try {
       const { treeId } = req.params
-      const { leafId, position, leafName, branchId, markdownText } = req.body
+      const { leafId, position, leafName, branchId, markdownText, type } = req.body
 
-      const leaf = await Leaf.update(leafId, treeId, position, leafName, branchId)
+      const leaf = await Leaf.update(leafId, treeId, position, type, leafName, branchId)
 
       res.status(201).json(leaf)
 
@@ -194,7 +194,8 @@ const TreesController = {
   // delete a branch 
   async deleteBranch(req: Request, res: Response, next: NextFunction) {
     try {
-      const { treeId, branchId } = req.params
+      const { treeId } = req.params
+      const { branchId } = req.body
       await Branch.deleteBranch(treeId, branchId)
       res.json('The branch was deleted successfully')
     }
@@ -204,15 +205,16 @@ const TreesController = {
   },
 
   // delete a leaf 
-  // async deleteLeaf(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const { treeId, leafId } = req.params
-  //     await Leaf.deleteLeaf(leafId)
-  //     res.json('The leaf has been sucsessfully deleted')
-  //   } catch (e) {
-  //     next(e)
-  //   }
-  // }
+  async deleteLeaf(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { treeId } = req.params
+      const { leafId } = req.body
+      await Leaf.deleteLeaf(treeId, leafId)
+      res.json('The leaf has been sucsessfully deleted')
+    } catch (e) {
+      next(e)
+    }
+  }
 
 
 }

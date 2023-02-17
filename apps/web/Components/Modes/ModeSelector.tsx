@@ -23,7 +23,8 @@ function ModeSelector({ treeMode,
       {/* renderPage === 'tree' ?
      : renderPage === 'profile' ? <div>PROFILE PLACEHOLDER</div>
       : <DashboardMode renderPage={renderPage} setRenderPage={setRenderPage} /> */}
-    </div >
+    </div>
+ 
 
   )
 

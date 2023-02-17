@@ -447,18 +447,21 @@ export function Sidebar({ children }: SidebarProps) {
               {/* ModeSelector(DashboardMode, TreeEditorMode) -- this was alternative as a way to pass components as props */}
               {children}
               {/* END YOUR CONTENT */}
+ 
             </section >
             {/* INFO BOTTOM SHEET */}
             < div >
+ 
               <DescriptionMenu
                 isOpen={isOpen}
                 closeBottomSheet={closeBottomSheet}
                 treeMode={treeMode}
               />
-            </ >
-          </main >
-        </div >
-      </div >
+ 
+            </div>
+          </main>
+        </div>
+      </div>
     </>
   )
 }

@@ -3,19 +3,9 @@ import mongoose from "mongoose";
 import router from "./router";
 import { Server } from 'http'
 import Logger from "./lib/logger";
-
-import dotenv from 'dotenv'
-dotenv.config()
-
-import { MONGODB_DB, MONGODB_URL } from "./lib/constants";
-
-
 import passport = require("passport");
 const expSession = require('express-session')
 const bodyParser = require('body-parser')
-
-
-
 
 
 
@@ -35,11 +25,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 
-
-app.use(cors({
-  methods: ['GET', 'POST', 'PUT'],
-  origin: "*"
-}))
 
 app.use(cors({
   methods: ['GET', 'POST', 'PUT'],

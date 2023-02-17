@@ -7,6 +7,7 @@ import Markdown from "../Models/Markdowns";
 import Leaf from "../Models/Leaves";
 import { ObjectId } from "mongodb";
 import Edge from "../Models/Edges";
+import { mongo } from "mongoose";
 
 
 const TreesController = {
@@ -20,13 +21,21 @@ const TreesController = {
       const branches: object[] = []
       const unlinkedLeaves: object[] = []
       const edges: object[] = []
-
       //user should be from req.user but since we don't have it yet it will come from req.body
       // @ts-ignore
       // const { user } = req.user
 
       const treeId = new ObjectId()
-      const tree = await Tree.create(treeId, date, treeName, user, branches, unlinkedLeaves, edges)
+      const root = {
+        id: "root",
+        treeId: `${treeId}`,
+        position: {
+          x: 0, y: 0
+        },
+        type: 'root',
+        label: 'root'
+      }
+      const tree = await Tree.create(treeId, treeName, root, date, user, branches, unlinkedLeaves, edges)
       res.status(201).json(tree)
     }
     catch (e) { next(e) }

@@ -9,7 +9,7 @@ export const NodesContext = React.createContext<any>({})
 export const NodesContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
-  const [edges, setEdges, onEdgesChange] = useEdgesState<IEdgeInfo[]>([])
+  const [edges, setEdges, onEdgesChange] = useEdgesState<IEdgeInfo[]>([])  // useEdgesState<IEdgeInfo[]>(initialedges)
 
   return (
     <NodesContext.Provider value={{ nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange }}>

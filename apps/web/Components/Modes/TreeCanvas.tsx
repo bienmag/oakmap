@@ -73,6 +73,7 @@ export function TreeCanvas({
 
   const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } = useContext(NodesContext)
 
+
 /* const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
    const [edges, setEdges, onEdgesChange] = useEdgesState([]) */
 
@@ -139,8 +140,11 @@ export function TreeCanvas({
   // SET EDGES
 
   useEffect(() => {
+
     const allEdges: IEdge[] = []
+
     const edgesFromServer: IEdgeServer[] = (tree.edges as unknown as IEdgeServer[])
+    
     const edgeNodes: IEdge[] = edgesFromServer.map((edge) => {
 
       const newEdge: IEdge = {
@@ -159,12 +163,14 @@ export function TreeCanvas({
       })
     
     // setEdges(allEdges)
-    setEdges(allEdges)
+
+    allEdges.map((element) => {
+      setEdges((eds: IEdgeInfo[]) => addEdge(element, eds))
+    })
 
     console.log('allEdges', allEdges)
   
-  }, [tree, setEdges])
-  
+  }, [reactFlowInstance, tree, setEdges, edges, onEdgesChange])
   
   
   useEffect(() => {

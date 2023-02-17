@@ -14,7 +14,7 @@ export default function TreePage ({ tree }: TreePageProps) {
     return (
       <NodesContextProvider>
         <TreeCanvas tree={tree} />
-      </NodesContextProvider>
+      </NodesContextProvider> 
     )
 }
 

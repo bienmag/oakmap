@@ -21,6 +21,7 @@ function DescriptionMenu({ isOpen, closeBottomSheet, treeMode }: any) {
               style={{ minHeight: '100px', minWidth: '1100px' }}
             ></textarea>
           </div>
+ 
         ) : (
           <div>
             <h3>Description</h3>

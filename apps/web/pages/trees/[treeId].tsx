@@ -6,6 +6,7 @@ import { TreeCanvas } from '../../Components/Modes/TreeCanvas'
 import { ITree } from "../../Resources/Packages/RFlow/Custom"
 
 interface TreePageProps {
+ 
   tree: ITree,
 }
 
@@ -18,6 +19,7 @@ export default function TreePage ({ tree }: TreePageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<TreePageProps> = async function getServerSideProps(context){
+ 
     const treeId = context.query.treeId
 
 
@@ -42,3 +44,4 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> = async funct
 //         </div>
 //     )
 // }
+ 

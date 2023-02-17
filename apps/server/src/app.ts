@@ -14,6 +14,16 @@ require("./passport")
 import { MONGODB_DB, MONGODB_URL } from "./lib/constants";
 
 
+import dotenv from 'dotenv'
+dotenv.config()
+
+import { MONGODB_DB, MONGODB_URL } from "./lib/constants";
+
+
+import passport = require("passport");
+const expSession = require('express-session')
+const bodyParser = require('body-parser')
+
 
 
 import dotenv from 'dotenv'
@@ -30,7 +40,6 @@ app.use(expSession({ secret: 'cats' }))
 app.use(bodyParser());
 app.use(passport.initialize())
 app.use(passport.session())
-
 
 
 

@@ -6,6 +6,7 @@ import { DBTree } from "../lib/mongo";
 import Markdown from "../Models/Markdowns";
 import Leaf from "../Models/Leaves";
 import { ObjectId } from "mongodb";
+import Edge from "../Models/Edges";
 
 
 const TreesController = {
@@ -18,13 +19,14 @@ const TreesController = {
       const date = new Date()
       const branches: object[] = []
       const unlinkedLeaves: object[] = []
+      const edges: object[] = []
 
       //user should be from req.user but since we don't have it yet it will come from req.body
       // @ts-ignore
       // const { user } = req.user
 
       const treeId = new ObjectId()
-      const tree = await Tree.create(treeId, date, treeName, user, branches, unlinkedLeaves)
+      const tree = await Tree.create(treeId, date, treeName, user, branches, unlinkedLeaves, edges)
       res.status(201).json(tree)
     }
     catch (e) { next(e) }
@@ -33,9 +35,9 @@ const TreesController = {
   // update a tree
   async updateTree(req: Request, res: Response, next: NextFunction) {
     try {
-      const { treeName, description } = req.body
+      const { treeName, description, edges } = req.body
       const { treeId } = req.params
-      const tree = await Tree.update(treeId, treeName, description)
+      const tree = await Tree.update(treeId, treeName, description, edges)
       res.status(201).json(tree)
     } catch (e) {
       next(e)
@@ -214,9 +216,58 @@ const TreesController = {
     } catch (e) {
       next(e)
     }
+  },
+
+  // create an edge
+  async createEdge(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { treeId } = req.params
+      const { edgeId, source, sourceHandle, target, targetHandle, type } = req.body
+      const edge = await Edge.create(edgeId, source, sourceHandle, target, targetHandle, type)
+      res.status(201).json(edge)
+
+      const id = new mongodb.ObjectId(treeId)
+      await DBTree.findOneAndUpdate({ _id: id }, { $push: { edges: edge } })
+    }
+    catch (e) {
+      next(e)
+    }
+  },
+
+  // update an edge
+  async updateEdge(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { treeId } = req.params
+      const { edgeId, source, sourceHandle, target, targetHandle, type } = req.body
+      const edge = await Edge.update(treeId, edgeId, source, sourceHandle, target, targetHandle, type)
+      res.status(201).json(edge)
+    } catch (e) {
+      next(e)
+    }
+  },
+
+  // delete an edge
+
+  async deleteEdge(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { treeId } = req.params
+      const { edgeId, source, sourceHandle, target, targetHandle, type } = req.body
+      const edge = await Edge.delete(treeId, edgeId, source, sourceHandle, target, targetHandle, type)
+      res.status(201).json(edge)
+    } catch (e) {
+      next(e)
+    }
+  },
+
+  async getEdges(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { treeId } = req.params
+      const edges = await Edge.getAll(treeId)
+      res.status(201).json(edges)
+    } catch (e) {
+      next(e)
+    }
   }
-
-
 }
 
 

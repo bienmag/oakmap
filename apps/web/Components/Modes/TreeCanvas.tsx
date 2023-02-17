@@ -33,7 +33,7 @@ import {
 } from '../../Resources/Packages/RFlow/RFlow'
 
 import { useRouter } from 'next/router';
-import { IEdgeInfo, INodeInfo, INode, TreeMode, IBranch, ILeaf, ITree } from '../../Resources/Packages/RFlow/Custom'
+import { IEdgeInfo, INodeInfo, INode, TreeMode, IBranch, ILeaf, ITree, IEdge, IEdgeServer } from '../../Resources/Packages/RFlow/Custom'
 
 // CONTEXT FOR REACT FLOW NODES
 import { NodesContext } from '../../Resources/Packages/RFlow/NodesContext'
@@ -57,7 +57,9 @@ export function TreeCanvas({
 }: TreeCanvasProps) {
 
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
-  // moved nodes and edges state up to Sidebar for now
+
+  
+  // NOTE: We moved nodes and edges state to the NodesContext file
   const [isDraggable, setIsDraggable] = useState(false)
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null)
   const [selected, setSelected] = useState<Node<INodeInfo> | null>(null)
@@ -76,6 +78,9 @@ export function TreeCanvas({
 
   console.log('nodes: ', nodes)
   console.log('edges: ', edges)
+
+
+  // SET NODES
 
   useEffect(() => {
     const allNodes: INode[] = []
@@ -121,12 +126,44 @@ export function TreeCanvas({
       return newNode
 
     })
+
     setNodes(allNodes)
     console.log('allNodes', allNodes)
-    
     console.log('unlinkedLeafNodes: ', unlinkedLeafNodes)
+
   }, [tree, setNodes])
 
+  // END THE USEEFFECT HOOK FOR GETTING NODES
+  
+  // SET EDGES
+
+  useEffect(() => {
+    const allEdges: IEdge[] = []
+    const edgesFromServer: IEdgeServer[] = tree.edges
+    const edgeNodes: IEdge[] = edgesFromServer.map((edge) => {
+
+      const newEdge: IEdge = {
+        id: edge.edgeId,
+        source: edge.source,
+        sourceHandle: null,
+        target: edge.target,
+        targetHandle: null,
+        type: edge.type
+      }
+
+      allEdges.push(newEdge)
+
+      return newEdge
+
+      })
+    
+    setEdges(allEdges)
+    console.log('allEdges', allEdges)
+  
+  }, [tree, setEdges])
+  
+  
+  
   useEffect(() => {
     setIsDraggable(treeMode === 'editor')
   }, [treeMode])

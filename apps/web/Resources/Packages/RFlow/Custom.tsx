@@ -8,6 +8,7 @@ export interface ITree {
   description: string
   branches: IBranch[]
   unlinkedLeaves: ILeaf[]
+  edges: IEdge[]
   markdown?: string
 }
 
@@ -20,6 +21,24 @@ export interface IEdgeInfo { // Generic Edge data structure for nodes state
   id: string,
   source: string,
   target: string,
+}
+
+export interface IEdge {  // Generic info for Edge data for edges state
+  id: string,
+  source: string,
+  sourceHandle: null
+  target: string,
+  targetHandle: null
+  type:  string
+}
+
+export interface IEdgeServer { // Edge data from the server
+  edgeId: string,
+  source: string,
+  sourceHandle: null
+  target: string,
+  targetHandle: null
+  type:  string
 }
 
 export interface INode { // Generic Node data structure for nodes state

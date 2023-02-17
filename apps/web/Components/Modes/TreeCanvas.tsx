@@ -188,6 +188,7 @@ export function TreeCanvas({
   const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback((event) => {
     event.preventDefault()
     event.dataTransfer.dropEffect = 'move'
+
   }, [])
 
   const onDrop: React.DragEventHandler<HTMLDivElement> = useCallback(
@@ -214,7 +215,39 @@ export function TreeCanvas({
         data: { label: ``, text: '' },
       }
 
-      setNodes((nds: INode[]) => nds.concat(newNode))
+      // POST REQUEST FOR CREATING A NEW NODE
+
+      if (type === 'branch') {
+
+        axios.post(`http://localhost:8080/trees/{$tree._id}/branch`)
+          .then((response) => {
+            /*
+              GET DATA AND ORGANIZE AND THEN SET NODES
+            "branchId" : "node_000",
+            "position": {"x":"0","y": "100"},
+            "branchName": "A Branch", 
+            "leaves": []
+
+            */
+            setNodes(response.data)
+          })
+      }
+      if (type === 'leftLeaf' || type === 'rightLeaf') {
+
+        axios.post(`http://localhost:8080/trees/{$tree._id}/unlinkedLeaves`)
+          .then((response) => {
+            /* 
+                GET DATA AND ORGANIZE AND THEN SET NODES
+              "leafId" : "node_001",
+              "position" : {"x":"0", "y": "200"}
+
+            */
+            setNodes(response.data)
+          })
+      }
+
+      // POSSIBLY USE THE CONCAT AS WELL ^^^^^^^^^^
+      /* setNodes((nds: INode[]) => nds.concat(newNode)) */
     },
     [reactFlowInstance, setNodes]
   )

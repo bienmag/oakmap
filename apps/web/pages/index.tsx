@@ -53,6 +53,8 @@ const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees }) =>
             handleCreateTree(e) // handle server request to create tree
           }}
         >+</button>
+
+        <a href="/api/login"> Login with google</a>
         < div >
           {trees.length > 0
             ? <TreeList trees={trees} />
@@ -117,3 +119,5 @@ const TreeList = ({ trees }: TreeListProps) => {
       ))}
     </ul>)
 }
+
+

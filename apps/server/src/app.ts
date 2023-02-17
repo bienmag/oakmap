@@ -21,8 +21,8 @@ const cors = require('cors')
 
 app.use(expSession({ secret: 'cats' }))
 app.use(bodyParser());
-app.use(passport.initialize())
-app.use(passport.session())
+// app.use(passport.initialize())
+// app.use(passport.session())
 
 
 
@@ -39,21 +39,21 @@ app.use(cors())
 app.use(router)
 
 
-app.get("/fail", (req, res) => res.send("You failed log in"))
-app.get("/success", (req, res) => res.send("Welcome  mr dev"))
+// app.get("/fail", (req, res) => res.send("You failed log in"))
+// app.get("/success", (req, res) => res.send("Welcome  mr dev"))
 
-app.get("/google",
-  passport.authenticate('google', { scope: ['email', 'profile'] })
-)
+// app.get("/google",
+//   passport.authenticate('google', { scope: ['email', 'profile'] })
+// )
 
 
-app.get("/google/callback",
-  passport.authenticate('google',
-    {
-      successRedirect: '/success',
-      failureRedirect: '/failed'
-    })
-)
+// app.get("/google/callback",
+//   passport.authenticate('google',
+//     {
+//       successRedirect: '/success',
+//       failureRedirect: '/failed'
+//     })
+// )
 
 
 export function startServer(): Server {

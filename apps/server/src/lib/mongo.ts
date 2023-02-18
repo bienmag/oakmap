@@ -7,7 +7,8 @@ const TreeSchema = new mongoose.Schema({
   user: String,
   description: String,
   branches: Array,
-  unlinkedLeaves: Array
+  unlinkedLeaves: Array,
+  edges: Array
 }, { versionKey: false })
 
 
@@ -20,8 +21,13 @@ export const DBTree = mongoose.model(
 )
 
 const UserSchema = new mongoose.Schema({
+  _id: Object,
   user: String,
+  email: String,
+  password: String,
+  tokens: Array,
   treeName: Array
+
 }, { versionKey: false })
 
 

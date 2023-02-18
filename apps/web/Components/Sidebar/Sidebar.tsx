@@ -80,7 +80,7 @@ interface SidebarProps {
 }
 
 // { TreeEditorMode, DashboardMode, ModeSelector }: any
-export function Sidebar({children}: SidebarProps) {
+export function Sidebar({ children }: SidebarProps) {
   // removed epxort default
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // from Tailwind UI
 
@@ -99,8 +99,8 @@ export function Sidebar({children}: SidebarProps) {
   const [currentTreeId, setCurrentTreeId] = useState('')
 
   // REACT FLOW STATE is now located in the NodesContext.tsx file
-/*   const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]) */
+  /*   const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
+    const [edges, setEdges, onEdgesChange] = useEdgesState([]) */
 
   // MOSTLY TAILWIND TEMPLATE CODE BELOW
 
@@ -447,14 +447,17 @@ export function Sidebar({children}: SidebarProps) {
               {/* ModeSelector(DashboardMode, TreeEditorMode) -- this was alternative as a way to pass components as props */}
               {children}
               {/* END YOUR CONTENT */}
-            </section>
+ 
+            </section >
             {/* INFO BOTTOM SHEET */}
-            <div>
+            < div >
+ 
               <DescriptionMenu
                 isOpen={isOpen}
                 closeBottomSheet={closeBottomSheet}
                 treeMode={treeMode}
               />
+ 
             </div>
           </main>
         </div>

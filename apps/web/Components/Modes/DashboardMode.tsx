@@ -35,11 +35,11 @@ function DashboardMode({ renderPage, setRenderPage }: any) {
   const [popularTrees, setPopulartrees] = useState<PopularTree[]>([])
 
 
-  
 
 
 
-  
+
+
 
   useEffect(() => {
     axios.get('http://localhost:8080/trees')
@@ -53,9 +53,7 @@ function DashboardMode({ renderPage, setRenderPage }: any) {
         }) */
   }, [])
 
-  return (
-    
-  )
+  return
 }
 
 export default DashboardMode

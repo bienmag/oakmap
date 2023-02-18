@@ -25,7 +25,7 @@ function NavModeSelector({ treeMode,
 
   // DUMMY TREE GET REQUEST
   const handleClick = async (e: React.MouseEvent) => {
-          e.preventDefault()
+    e.preventDefault()
   }
 
   return (

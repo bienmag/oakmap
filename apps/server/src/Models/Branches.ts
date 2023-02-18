@@ -7,6 +7,7 @@ class Branch {
     public branchId: string,
     public treeId: string,
     public position: object,
+    public type: string,
     public branchName?: string,
     public leaves?: Array<object>,
   ) { }
@@ -15,17 +16,19 @@ class Branch {
     branchId: string,
     treeId: string,
     position: object,
+    type: string,
     leaves: Array<object>
   ): Promise<Branch> {
 
 
-    return new Branch(branchId, treeId, position, undefined, leaves)
+    return new Branch(branchId, treeId, position, type, undefined, leaves)
   }
 
   static async update(
     branchId: string,
     treeId: string,
     position: object,
+    type: string,
     branchName: string
   ): Promise<Branch> {
 
@@ -44,7 +47,7 @@ class Branch {
       }, { new: true })
 
 
-    return new Branch(branchId, treeId, position, branchName)
+    return new Branch(branchId, treeId, position, type, branchName)
   }
 
 
@@ -165,14 +168,21 @@ class Branch {
   }
 
   static async deleteBranch(
+    treeId: string,
     branchId: string
   ) {
-    let tree = await DBTree.findOne({ branchId: branchId })
-    //@ts-ignore
-    tree.branches = tree?.branches.filter(function (branch) {
+
+    const id = new mongodb.ObjectId(treeId)
+
+    let tree = await DBTree.findOne({ _id: id, "branches": { $elemMatch: { "branchId": branchId } } })
+
+    if (tree === null) {
+      throw new Error('The branch is not found in this tree')
+    }
+    tree.branches = tree.branches.filter(function (branch) {
       return branch.branchId !== branchId
     })
-    await tree?.save()
+    await tree.save()
     return
   }
 

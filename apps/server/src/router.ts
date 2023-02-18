@@ -2,6 +2,7 @@ import express from "express";
 import TreesController from "./Controllers/Trees.controller";
 
 
+
 const router = express.Router()
 
 router.post('/trees', TreesController.createTree)
@@ -14,6 +15,13 @@ router.put('/trees/:treeId/leaves/', TreesController.linkUnlink)
 router.get('/trees/:id', TreesController.getTree)
 router.get('/trees', TreesController.getAll)
 router.get('/markdown/:nodeId', TreesController.getMarkdown)
-router.delete('/trees/:id/branches/:branchId', TreesController.deleteBranch)
+router.delete('/trees/:treeId/branches/', TreesController.deleteBranch)
+router.delete('/trees/:treeId/leaves/', TreesController.deleteLeaf)
+router.post('/trees/:treeId/edges', TreesController.createEdge)
+router.get('/trees/:treeId/edges', TreesController.getEdges)
+router.put('/trees/:treeId/edges', TreesController.updateEdge)
+router.delete('/trees/:treeId/edges', TreesController.deleteEdge)
+
+
 
 export default router

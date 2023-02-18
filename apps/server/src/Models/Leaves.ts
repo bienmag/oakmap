@@ -6,6 +6,7 @@ class Leaf {
     public leafId: string,
     public treeId: string,
     public position: object,
+    public type: string,
     public leafName?: string,
     public branchId?: string,
   ) { }
@@ -14,78 +15,81 @@ class Leaf {
     leafId: string,
     treeId: string,
     position: object,
+    type: string
   ): Promise<Leaf> {
 
-    return new Leaf(leafId, treeId, position)
+    return new Leaf(leafId, treeId, position, type)
   }
 
   static async update(
     leafId: string,
     treeId: string,
     position: object,
+    type: string,
     leafName?: string,
     branchId?: string
   ): Promise<Leaf> {
 
-    let update: { position?: object, leafName?: string, branchId?: string } = {}
-
-    if (position) update['position'] = position;
-    if (leafName) update['leafName'] = leafName;
-    if (branchId) update['branchId'] = branchId
 
     const id = new mongodb.ObjectId(treeId)
 
-
-
-    // let tree = await DBTree.findById({ _id: id, "unlinkedLeaves.leafId": leafId })
-    // if (!tree) {
-    //   throw new Error("There is no leaf with this leafId in the tree")
-
-
-
-    // const tree = await DBTree.findById({ _id: id, branches: { $elemMatch: { branchId: branchId, leaves: { $elemMatch: { leafId: leafId } } } } })
-
-
-    // WORKING TO UPDAATE THE LEaF IN UNLINKED LEAVES!!!!!!!!!!!! can try to use this  { $set: update },
     const tree = await DBTree.findOneAndUpdate(
       {
         _id: id, "unlinkedLeaves.leafId": leafId
       }, {
-        $set: {
-          "unlinkedLeaves.$.position": position,
-          "unlinkedLeaves.$.leafName": leafName,
-          "unlinkedLeaves.$.branchId": branchId
-        }
-      },
+      $set: {
+        "unlinkedLeaves.$.position": position,
+        "unlinkedLeaves.$.leafName": leafName,
+        "unlinkedLeaves.$.branchId": branchId
+      }
+    },
       { new: true }
     )
 
-    return new Leaf(leafId, treeId, position, leafName, branchId)
+    return new Leaf(leafId, treeId, position, type, leafName, branchId)
   }
 
 
-  static async linkUnlink(
+
+  static async deleteLeaf(
     treeId: string,
-    branchId: string,
-    leafId: string) {
+    leafId: string
+  ) {
 
-    if (branchId === null) {
-      // i have to unlink the leaf and push it to unlinkedLeaves
-    } else {
+    const id = new mongodb.ObjectId(treeId)
 
-      // link leaf to the branch
+    let foundLeaf = await DBTree.find({ _id: id, "unlinkedLeaves": { $elemMatch: { "leafId": leafId } } })    // looking for the leaf in unlinked leaves
+    let empty = Object.keys(foundLeaf).length === 0
+    if (!empty) {
+      let tree = await DBTree.findOne({ _id: id, "unlinkedLeaves": { $elemMatch: { "leafId": leafId } } })
+      if (tree === null) {
+        throw new Error('The branch is not found in this tree')
+      }
+      tree.unlinkedLeaves = tree?.unlinkedLeaves.filter(function (leaf) {
+        return leaf.leafId !== leafId
+      })
+      await tree?.save()
+      return
+    } else {    // the leaf was not found in unlinkedLeaves -> means it's in a branch
+      let foundLeaf
+      let tree = await DBTree.findOne({ _id: id })
+      if (tree === null) {
+        throw new Error('The tree is not found')
+      }
+      for (const branch of tree.branches) {
+        if (branch.leaves !== null) {
+          for (const leaf of branch.leaves) {
+            if (leaf.leafId === leafId) {
+              foundLeaf = leaf    //leaf found
+              await DBTree.findOneAndUpdate({ _id: id, "branches": { $elemMatch: { "branchId": foundLeaf.branchId } } }, { $pull: { "branches.$.leaves": foundLeaf } })
+
+            }
+          }
+        }
+      }
     }
-
-
-  }
-
-
-  static async deleteLeaf(leafId: string) {
-    let tree = await DBTree.findOne({ leafId: leafId })
-    tree?.branches
   }
 }
-
 
 
 export default Leaf

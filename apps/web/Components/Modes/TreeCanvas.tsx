@@ -67,6 +67,8 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
 
   // NOTE: We moved nodes and edges state to the NodesContext file
+  // NOTE: TreeContext is used for passing the initialNodes and initialEdges data to NodesContext
+
   const [isDraggable, setIsDraggable] = useState(false)
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null)
@@ -81,9 +83,6 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } =
     useContext(NodesContext)
 
-  /* const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
-   const [edges, setEdges, onEdgesChange] = useEdgesState([]) */
-
   console.log('nodes: ', nodes)
   console.log('edges: ', edges)
 
@@ -95,9 +94,6 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
     (params) => setEdges((eds: IEdgeInfo[]) => addEdge(params, eds)),
     []
   )
-
-  // const onDragOver = useCallback(CBackOnDragOver, []);
-  // const onDrop = useCallback(CBackOnDrop, [reactFlowInstance, setNodes])
 
   const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback(
     (event) => {
@@ -233,9 +229,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                     <Controls />
                   </ReactFlow>
                 ) : (
-                  <div>
-                    <h1>NODES AND/OR EDGES STATE IS EMPTY</h1>
-                  </div>
+                  <div></div>
                 )}
               </div>
               <MiniMap />

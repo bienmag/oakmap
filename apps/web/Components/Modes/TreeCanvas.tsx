@@ -20,7 +20,8 @@ import ReactFlow, {
   Node,
   XYPosition,
   BackgroundVariant,
-  updateEdge
+  updateEdge,
+  SmoothStepEdge,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 
@@ -28,13 +29,20 @@ import Custom from '../Custom/Custom'
 import Markdown from '../Markdown/Markdown'
 
 // TESTING IMPORT FROM RESOURCES
-import {
-  initialNodes,
-  nodeTypes,
-} from '../../Resources/Packages/RFlow/RFlow'
+import { initialNodes, nodeTypes } from '../../Resources/Packages/RFlow/RFlow'
 
-import { useRouter } from 'next/router';
-import { IEdgeInfo, INodeInfo, INode, TreeMode, IBranch, ILeaf, ITree, IEdge, IEdgeServer } from '../../Resources/Packages/RFlow/Custom'
+import { useRouter } from 'next/router'
+import {
+  IEdgeInfo,
+  INodeInfo,
+  INode,
+  TreeMode,
+  IBranch,
+  ILeaf,
+  ITree,
+  IEdge,
+  IEdgeServer,
+} from '../../Resources/Packages/RFlow/Custom'
 
 // CONTEXT FOR REACT FLOW NODES
 import { NodesContext } from '../../Resources/Packages/RFlow/NodesContext'
@@ -44,25 +52,22 @@ import { TREE_MODE } from '../../Resources/Enums/Options'
 import { setegid } from 'process'
 // import { TreeMode } from '../../Resources/Enums/Options'
 
-
 let id = 0
 const getId = () => `node_${id++}`
 
-export const InputContext = createContext<React.RefObject<HTMLInputElement> | null>(null)
+export const InputContext =
+  createContext<React.RefObject<HTMLInputElement> | null>(null)
 
 interface TreeCanvasProps {
-  tree: ITree,
+  tree: ITree
 }
-export function TreeCanvas({
-  tree
-}: TreeCanvasProps) {
-
+export function TreeCanvas({ tree }: TreeCanvasProps) {
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
 
-  
   // NOTE: We moved nodes and edges state to the NodesContext file
   const [isDraggable, setIsDraggable] = useState(false)
-  const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null)
+  const [reactFlowInstance, setReactFlowInstance] =
+    useState<ReactFlowInstance | null>(null)
   const [selected, setSelected] = useState<Node<INodeInfo> | null>(null)
   const [marked, setMarked] = useState<Node<INodeInfo> | null>(null)
 
@@ -71,16 +76,14 @@ export function TreeCanvas({
 
   const [treeMode, setTreeMode] = useState(TREE_MODE.Editor)
 
-  const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } = useContext(NodesContext)
+  const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } =
+    useContext(NodesContext)
 
-
-/* const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
+  /* const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
    const [edges, setEdges, onEdgesChange] = useEdgesState([]) */
-
 
   console.log('nodes: ', nodes)
   console.log('edges: ', edges)
-
 
   // SET NODES
 
@@ -93,75 +96,69 @@ export function TreeCanvas({
         type: 'branch',
         position: {
           x: branch.position.x,
-          y: branch.position.y
+          y: branch.position.y,
         },
         data: {
           label: branch.branchName,
-          text: '' 
-        }
+          text: '',
+        },
       }
 
       allNodes.push(newNode)
 
       return newNode
+    })
+    console.log('branchNodes: ', branchNodes)
 
-      })
-      console.log('branchNodes: ', branchNodes)
-
-    const unlinkedLeaves: ILeaf[] = tree.unlinkedLeaves    
+    const unlinkedLeaves: ILeaf[] = tree.unlinkedLeaves
     const unlinkedLeafNodes: INode[] = unlinkedLeaves.map((leaf) => {
       const newNode: INode = {
         id: leaf.leafId,
         type: 'leftLeaf', // could also be rightLeaf, we need to specify type
         position: {
           x: leaf.position.x,
-          y: leaf.position.y
+          y: leaf.position.y,
         },
         data: {
           label: leaf.leafName,
-          text: ''
-        }
+          text: '',
+        },
       }
 
       allNodes.push(newNode)
 
       return newNode
-
     })
 
-    setNodes(allNodes)
     console.log('allNodes', allNodes)
     console.log('unlinkedLeafNodes: ', unlinkedLeafNodes)
-
-  }, [tree, setNodes])
+  }, [tree, setNodes, setEdges])
 
   // END THE USEEFFECT HOOK FOR GETTING NODES
-  
+
   // SET EDGES
 
   useEffect(() => {
-
     const allEdges: IEdge[] = []
 
-    const edgesFromServer: IEdgeServer[] = (tree.edges as unknown as IEdgeServer[])
-    
-    const edgeNodes: IEdge[] = edgesFromServer.map((edge) => {
+    const edgesFromServer: IEdgeServer[] =
+      tree.edges as unknown as IEdgeServer[]
 
+    const edgeNodes: IEdge[] = edgesFromServer.map((edge) => {
       const newEdge: IEdge = {
         id: edge.edgeId,
         source: edge.source,
         sourceHandle: null,
         target: edge.target,
         targetHandle: null,
-        type: edge.type
+        type: edge.type,
       }
 
       allEdges.push(newEdge)
 
       return newEdge
+    })
 
-      })
-    
     // setEdges(allEdges)
 
     allEdges.map((element) => {
@@ -169,10 +166,8 @@ export function TreeCanvas({
     })
 
     console.log('allEdges', allEdges)
-  
-  }, [reactFlowInstance, tree, setEdges, edges, onEdgesChange])
-  
-  
+  }, [setNodes, tree, setEdges])
+
   useEffect(() => {
     setIsDraggable(treeMode === 'editor')
   }, [treeMode])
@@ -185,11 +180,13 @@ export function TreeCanvas({
   // const onDragOver = useCallback(CBackOnDragOver, []);
   // const onDrop = useCallback(CBackOnDrop, [reactFlowInstance, setNodes])
 
-  const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback((event) => {
-    event.preventDefault()
-    event.dataTransfer.dropEffect = 'move'
-
-  }, [])
+  const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback(
+    (event) => {
+      event.preventDefault()
+      event.dataTransfer.dropEffect = 'move'
+    },
+    []
+  )
 
   const onDrop: React.DragEventHandler<HTMLDivElement> = useCallback(
     (event) => {
@@ -218,8 +215,8 @@ export function TreeCanvas({
       // POST REQUEST FOR CREATING A NEW NODE
 
       if (type === 'branch') {
-
-        axios.post(`http://localhost:8080/trees/{$tree._id}/branch`)
+        axios
+          .post(`http://localhost:8080/trees/{$tree._id}/branch`)
           .then((response) => {
             /*
               GET DATA AND ORGANIZE AND THEN SET NODES
@@ -233,8 +230,8 @@ export function TreeCanvas({
           })
       }
       if (type === 'leftLeaf' || type === 'rightLeaf') {
-
-        axios.post(`http://localhost:8080/trees/{$tree._id}/unlinkedLeaves`)
+        axios
+          .post(`http://localhost:8080/trees/{$tree._id}/unlinkedLeaves`)
           .then((response) => {
             /* 
                 GET DATA AND ORGANIZE AND THEN SET NODES

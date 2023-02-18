@@ -50,6 +50,7 @@ import { useContext } from 'react'
 import axios from 'axios'
 import { TREE_MODE } from '../../Resources/Enums/Options'
 import { setegid } from 'process'
+import { Console } from 'console'
 // import { TreeMode } from '../../Resources/Enums/Options'
 
 let id = 0
@@ -85,60 +86,9 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   console.log('nodes: ', nodes)
   console.log('edges: ', edges)
 
-  // SET NODES
-
-  /* useEffect(() => {
-    const allNodes: INode[] = []
-    const branchesFromServer: IBranch[] = tree.branches
-    const branchNodes: INode[] = branchesFromServer.map((branch) => {
-      const newNode: INode = {
-        id: branch.branchId,
-        type: 'branch',
-        position: {
-          x: branch.position.x,
-          y: branch.position.y,
-        },
-        data: {
-          label: branch.branchName,
-          text: '',
-        },
-      }
-
-      allNodes.push(newNode)
-
-      return newNode
-    })
-    console.log('branchNodes: ', branchNodes)
-
-    const unlinkedLeaves: ILeaf[] = tree.unlinkedLeaves
-    const unlinkedLeafNodes: INode[] = unlinkedLeaves.map((leaf) => {
-      const newNode: INode = {
-        id: leaf.leafId,
-        type: 'leftLeaf', // could also be rightLeaf, we need to specify type
-        position: {
-          x: leaf.position.x,
-          y: leaf.position.y,
-        },
-        data: {
-          label: leaf.leafName,
-          text: '',
-        },
-      }
-
-      allNodes.push(newNode)
-
-      return newNode
-    })
-
-    console.log('allNodes', allNodes)
-    console.log('unlinkedLeafNodes: ', unlinkedLeafNodes)
-  }, [tree, setNodes, setEdges]) */
-
-  // END THE USEEFFECT HOOK FOR GETTING NODES
-
   // SET EDGES
 
-  useEffect(() => {
+  /* useEffect(() => {
     const allEdges: IEdge[] = []
 
     const edgesFromServer: IEdgeServer[] =
@@ -166,7 +116,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
     })
 
     console.log('allEdges', allEdges)
-  }, [setNodes, tree, setEdges])
+  }, [setNodes, tree, setEdges]) */
 
   useEffect(() => {
     setIsDraggable(treeMode === 'editor')
@@ -249,6 +199,23 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
     [reactFlowInstance, setNodes]
   )
 
+  const [hasNodes, setHasNodes] = useState<boolean>(false)
+  const [hasEdges, setHasEdges] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (nodes.length > 0) {
+      console.log('HAS NODES')
+      setHasNodes(true)
+    }
+  }, [nodes])
+
+  useEffect(() => {
+    if (edges.length > 0) {
+      console.log('HAS EDGES')
+      setHasEdges(true)
+    }
+  }, [edges])
+
   return (
     <div className="dndflow" style={{ height: '100vh' }}>
       <InputContext.Provider value={inputRef}>
@@ -258,40 +225,50 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
               className="reactflow-wrapper absolute inset-0"
               ref={reactFlowWrapper}
             >
-              <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                nodesDraggable={isDraggable}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                nodeTypes={nodeTypes}
-                onInit={setReactFlowInstance}
-                onDrop={onDrop}
-                deleteKeyCode={null}
-                onDragOver={onDragOver}
-                onPaneClick={() => {
-                  setSelected(null)
-                }}
-                onNodeDoubleClick={(event, node) => {
-                  if (treeMode === TREE_MODE.Editor) {
-                    inputRef.current?.focus()
-                    inputRef.current?.select()
-                  } // setMarked(node)
-                }}
-                onNodeClick={(event, node) => {
-                  if (treeMode === TREE_MODE.Reader) setMarked(node)
-                  setSelected(node)
-                }}
-                fitView
-              >
-                {treeMode === TREE_MODE.Editor ? (
-                  <Background />
+              {/* TERNARY TO RENDER ??? */}
+              <div style={{ height: '100vh', width: '100%' }}>
+                {hasEdges && hasNodes ? (
+                  <ReactFlow
+                    key={`${hasNodes}-${hasEdges}`}
+                    nodes={nodes}
+                    edges={edges}
+                    nodesDraggable={isDraggable}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onConnect={onConnect}
+                    nodeTypes={nodeTypes}
+                    onInit={setReactFlowInstance}
+                    onDrop={onDrop}
+                    deleteKeyCode={null}
+                    onDragOver={onDragOver}
+                    onPaneClick={() => {
+                      setSelected(null)
+                    }}
+                    onNodeDoubleClick={(event, node) => {
+                      if (treeMode === TREE_MODE.Editor) {
+                        inputRef.current?.focus()
+                        inputRef.current?.select()
+                      } // setMarked(node)
+                    }}
+                    onNodeClick={(event, node) => {
+                      if (treeMode === TREE_MODE.Reader) setMarked(node)
+                      setSelected(node)
+                    }}
+                    fitView
+                  >
+                    {treeMode === TREE_MODE.Editor ? (
+                      <Background />
+                    ) : (
+                      <Background variant={BackgroundVariant.Lines} />
+                    )}
+                    <Controls />
+                  </ReactFlow>
                 ) : (
-                  <Background variant={BackgroundVariant.Lines} />
+                  <div>
+                    <h1>NODES UNDEFINED</h1>
+                  </div>
                 )}
-                <Controls />
-              </ReactFlow>
+              </div>
               <MiniMap />
             </div>
             {/* OLD EDIT MODE SELECT FOR THE ROADMAP EDITOR */}

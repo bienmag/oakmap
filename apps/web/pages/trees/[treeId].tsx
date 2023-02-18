@@ -5,6 +5,8 @@ import { NodesContextProvider } from '../../Resources/Packages/RFlow/NodesContex
 import { TreeCanvas } from '../../Components/Modes/TreeCanvas'
 import {
   IBranch,
+  IEdge,
+  IEdgeServer,
   ILeaf,
   INode,
   ITree,
@@ -13,12 +15,17 @@ import TreeContext from '../../Resources/Packages/RFlow/TreeContext'
 
 interface TreePageProps {
   tree: ITree
-  initialNodes: INode[]
+  initialNodes: INode[] // | undefined
+  initialEdges: IEdge[]
 }
 
-export default function TreePage({ tree, initialNodes }: TreePageProps) {
+export default function TreePage({
+  tree,
+  initialNodes,
+  initialEdges,
+}: TreePageProps) {
   return (
-    <TreeContext.Provider value={{ tree, initialNodes }}>
+    <TreeContext.Provider value={{ tree, initialNodes, initialEdges }}>
       <NodesContextProvider>
         <TreeCanvas tree={tree} />
       </NodesContextProvider>
@@ -71,10 +78,29 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
 
     console.log('allNodes', allNodes)
 
+    // const allEdges: IEdge[] = []
+
+    const edgesFromServer: IEdgeServer[] = response.data
+      .edges as unknown as IEdgeServer[]
+
+    const edgeNodes: IEdge[] = edgesFromServer.map((edge) => ({
+      id: edge.edgeId,
+      source: edge.source,
+      sourceHandle: null,
+      target: edge.target,
+      targetHandle: null,
+      type: edge.type,
+    }))
+
+    console.log('edgeNodes', edgeNodes)
+
+    // setEdges((prevEdges) => [...prevEdges, ...edgeNodes])
+
     return {
       props: {
         tree: response.data,
         initialNodes: allNodes,
+        initialEdges: edgeNodes,
       },
     }
   }

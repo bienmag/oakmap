@@ -3,7 +3,7 @@ import { IEdge, INode, INodeInfo, ITree } from './Custom'
 
 export interface ITreeContext {
   tree: ITree | null
-  initialNodes: INode[] // | undefined
+  initialNodes: INode[]
   initialEdges: IEdge[]
 }
 

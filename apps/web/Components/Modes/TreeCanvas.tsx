@@ -48,7 +48,7 @@ import {
 import { NodesContext } from '../../Resources/Packages/RFlow/NodesContext'
 import { useContext } from 'react'
 import axios from 'axios'
-import { TREE_MODE } from '../../Resources/Enums/Options'
+import { NODE_TYPE, TREE_MODE } from '../../Resources/Enums/Options'
 import { setegid } from 'process'
 import { Console } from 'console'
 import { useTreeContext } from '../../Resources/Packages/RFlow/TreeContext'
@@ -80,6 +80,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
   const [treeMode, setTreeMode] = useState(TREE_MODE.Editor)
 
+  // Nodes and Edges State
   const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } =
     useContext(NodesContext)
 
@@ -87,7 +88,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   console.log('edges: ', edges)
 
   useEffect(() => {
-    setIsDraggable(treeMode === 'editor')
+    setIsDraggable(treeMode === TREE_MODE.Editor)
   }, [treeMode])
 
   const onConnect: OnConnect = useCallback(
@@ -104,7 +105,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   )
 
   const onDrop: React.DragEventHandler<HTMLDivElement> = useCallback(
-    (event) => {
+    async (event) => {
       event.preventDefault()
       if (reactFlowWrapper.current === null) return
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
@@ -129,37 +130,88 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
       // POST REQUEST FOR CREATING A NEW NODE
 
-      if (type === 'branch') {
-        axios
-          .post(`http://localhost:8080/trees/{$tree._id}/branch`)
-          .then((response) => {
-            /*
-              GET DATA AND ORGANIZE AND THEN SET NODES
-            "branchId" : "node_000",
-            "position": {"x":"0","y": "100"},
-            "branchName": "A Branch", 
-            "leaves": []
+      const treeId = tree._id
+      console.log('TREE ID: ', treeId)
 
-            */
-            setNodes(response.data)
+      if (type === NODE_TYPE.Branch) {
+        const response = await axios
+          .post(`http://localhost:8080/trees/${treeId}/branches`, {
+            branchId: newNode.id,
+            treeId: tree._id,
+            position: newNode.position,
+            type: newNode.type,
+            branchName: newNode.data.label,
+          })
+          .then((response) => {
+            // A single branch will be returned in the response
+
+            const newBranch = {
+              id: response.data.branchId,
+              type: response.data.type,
+              position: {
+                x:
+                  typeof response.data.position.x === 'number'
+                    ? response.data.position.x
+                    : parseInt(response.data.position.x), // REMINDER: We expect to receive a number here from the server. If we don't, it will break the Edges spawning upon load.
+                y:
+                  typeof response.data.position.y === 'number'
+                    ? response.data.position.y
+                    : parseInt(response.data.position.y),
+              },
+              data: {
+                label: response.data.branchName,
+                text: '',
+              },
+            }
+            // setNodes(response.data)
+
+            setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newBranch])
+            /* setNodes((nds: INode[]) => nds.concat(newBranch)) // alternative option */
+
+            console.log(
+              'Created new branch node - response.data',
+              response.data
+            )
           })
       }
-      if (type === 'leftLeaf' || type === 'rightLeaf') {
-        axios
-          .post(`http://localhost:8080/trees/{$tree._id}/unlinkedLeaves`)
+      if (type === NODE_TYPE.LeftLeaf || type === NODE_TYPE.RightLeaf) {
+        const response = await axios
+          .post(`http://localhost:8080/trees/${treeId}/unlinkedLeaves`, {
+            leafId: newNode.id,
+            treeId: tree._id,
+            position: newNode.position,
+            type: newNode.type,
+            leafName: newNode.data.label,
+          })
           .then((response) => {
-            /* 
-                GET DATA AND ORGANIZE AND THEN SET NODES
-              "leafId" : "node_001",
-              "position" : {"x":"0", "y": "200"}
+            // A single branch will be returned in the response
 
-            */
-            setNodes(response.data)
+            const newLeaf = {
+              id: response.data.leafId,
+              type: response.data.type,
+              position: {
+                x:
+                  typeof response.data.position.x === 'number'
+                    ? response.data.position.x
+                    : parseInt(response.data.position.x), // REMINDER: We expect to receive a number here from the server. If we don't, it will break the Edges spawning upon load.
+                y:
+                  typeof response.data.position.y === 'number'
+                    ? response.data.position.y
+                    : parseInt(response.data.position.y),
+              },
+              data: {
+                label: response.data.leafName,
+                text: '',
+              },
+            }
+            // setNodes(response.data)
+
+            setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newLeaf])
+            /* setNodes((nds: INode[]) => nds.concat(newLeaf)) // alternative option */
+
+            console.log('Created new leaf node - response.data', response.data)
           })
       }
-
-      // POSSIBLY USE THE CONCAT AS WELL ^^^^^^^^^^
-      /* setNodes((nds: INode[]) => nds.concat(newNode)) */
     },
     [reactFlowInstance, setNodes]
   )

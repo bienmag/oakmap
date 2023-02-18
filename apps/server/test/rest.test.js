@@ -2,16 +2,11 @@ const axios = require('axios')
 const { v4: uuidv4 } = require('uuid')
 
 describe('REST', () => {
+  var temp = ''
   describe('Trees', () => {
     it('Should fetch all Trees', async () => {
       const res = await axios.get('http://localhost:8080/trees')
       expect(!!res.data.length).toBe(true)
-    })
-
-    it('Should Get Specific Tree', async () => {
-      const id = '63ee09491b0e4ee01d67e33b'
-      const res = await axios.get(`http://localhost:8080/trees/${id}`)
-      expect(res.data._id).toBe(id)
     })
 
     it('Should Create Tree and Get The Tree', async () => {
@@ -20,11 +15,19 @@ describe('REST', () => {
         user: 'ManelAndCory',
       })
       expect(!!res.data._id).toBe(true)
+      temp = res.data._id
+      console.log(temp)
 
       const res2 = await axios.get(
         'http://localhost:8080/trees/' + res.data._id
       )
       expect(res2.data._id).toBe(res.data._id)
+    })
+
+    it('Should Get Specific Tree', async () => {
+      const id = temp
+      const res = await axios.get(`http://localhost:8080/trees/${id}`)
+      expect(res.data._id).toBe(id)
     })
 
     it('Should Create Tree and Check Tree Exists In List Of Trees', async () => {
@@ -44,7 +47,7 @@ describe('REST', () => {
   describe('Branches', () => {
     it('Should Create A New Branch', async () => {
       const tmp = { x: 10, y: 20 }
-      const id = '63ee09491b0e4ee01d67e33b'
+      const id = temp
       const res = await axios.post(
         `http://localhost:8080/trees/${id}/branches`,
         {
@@ -58,7 +61,7 @@ describe('REST', () => {
     })
     it('Should Create A New Branch & Check Branch Exists In Tree', async () => {
       const tmp = { x: 10, y: 20 }
-      const id = '63ee09491b0e4ee01d67e33b'
+      const id = temp
       const branchId = uuidv4()
       const res = await axios.post(
         `http://localhost:8080/trees/${id}/branches`,
@@ -77,7 +80,7 @@ describe('REST', () => {
   describe('Leaves', () => {
     it('Should Create New Leaf', async () => {
       const tmp = { x: 10, y: 20 }
-      const id = '63ee09491b0e4ee01d67e33b'
+      const id = temp
       const leafId = uuidv4()
       const res = await axios.post(
         `http://localhost:8080/trees/${id}/unlinkedLeaves`,

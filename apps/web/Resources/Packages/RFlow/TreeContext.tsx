@@ -2,14 +2,14 @@ import { createContext, useContext } from 'react'
 import { IEdge, INode, INodeInfo, ITree } from './Custom'
 
 export interface ITreeContext {
-  tree: ITree
+  tree: ITree | null
   initialNodes: INode[] // | undefined
   initialEdges: IEdge[]
 }
 
 const TreeContext = createContext<ITreeContext>({
   tree: null,
-  initialNodes: [], // undefined,
+  initialNodes: [],
   initialEdges: [],
 })
 

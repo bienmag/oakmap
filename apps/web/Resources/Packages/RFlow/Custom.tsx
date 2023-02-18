@@ -57,6 +57,7 @@ export interface IBranch {
   branchId: string
   branchName: string
   leaves: []
+  type: string
   position: { x: number; y: number }
   treeId: string
 }
@@ -66,6 +67,7 @@ export interface ILeaf {
   branchId: string
   leafId: string
   leafName: string
+  type: string
   position: { x: number; y: number }
   treeId: string
 }

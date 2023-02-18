@@ -15,7 +15,7 @@ import TreeContext from '../../Resources/Packages/RFlow/TreeContext'
 
 interface TreePageProps {
   tree: ITree
-  initialNodes: INode[] // | undefined
+  initialNodes: INode[]
   initialEdges: IEdge[]
 }
 
@@ -46,13 +46,19 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
 
     const allNodes: INode[] = []
 
-    response.data.branches.forEach((branch) => {
+    response.data.branches.forEach((branch: IBranch) => {
       allNodes.push({
         id: branch.branchId,
-        type: branch.type || 'branch',
+        type: branch.type, // || 'branch',
         position: {
-          x: parseInt(branch.position.x),
-          y: parseInt(branch.position.y),
+          x:
+            typeof branch.position.x === 'number'
+              ? branch.position.x
+              : parseInt(branch.position.x), // REMINDER: We expect to receive a number here from the server. If we don't, it will break the Edges spawning upon load.
+          y:
+            typeof branch.position.y === 'number'
+              ? branch.position.y
+              : parseInt(branch.position.y),
         },
         data: {
           label: branch.branchName,
@@ -61,13 +67,19 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
       })
     })
 
-    response.data.unlinkedLeaves.forEach((leaf) => {
+    response.data.unlinkedLeaves.forEach((leaf: ILeaf) => {
       allNodes.push({
         id: leaf.leafId,
-        type: leaf.type || 'leftLeaf',
+        type: leaf.type, // || 'leftLeaf',
         position: {
-          x: parseInt(leaf.position.x),
-          y: parseInt(leaf.position.y),
+          x:
+            typeof leaf.position.x === 'number'
+              ? leaf.position.x
+              : parseInt(leaf.position.x), // REMINDER: We expect to receive a number here from the server. If we don't, it will break the Edges spawning upon load.
+          y:
+            typeof leaf.position.y === 'number'
+              ? leaf.position.y
+              : parseInt(leaf.position.y),
         },
         data: {
           label: leaf.leafName,
@@ -105,6 +117,7 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
     }
   }
 
+// EXAMPLE DATA
 /*
   initialNodes: [
           {

@@ -56,7 +56,7 @@ import { useTreeContext } from '../../Resources/Packages/RFlow/TreeContext'
 
 import { v4 as uuidv4 } from 'uuid'
 
-const getId = () => `node_${uuidv4()}`
+const getId = () => uuidv4()
 
 export const InputContext =
   createContext<React.RefObject<HTMLInputElement> | null>(null)
@@ -92,10 +92,41 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
     setIsDraggable(treeMode === TREE_MODE.Editor)
   }, [treeMode])
 
-  const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds: IEdgeInfo[]) => addEdge(params, eds)),
-    []
-  )
+  // TREE ID
+
+  const treeId = tree._id
+  console.log('TREE ID: ', treeId)
+
+  // CREATING EDGES
+
+  const onConnect: OnConnect = useCallback(async (params) => {
+    console.log('Edge onConnect params: ', params)
+
+    const response = await axios
+      .post(`http://localhost:8080/trees/${treeId}/edges`, {
+        edgeId: `edge_${getId()}`,
+        source: params.source,
+        sourceHandle: params.sourceHandle,
+        target: params.target,
+        targetHandle: params.targetHandle,
+        type: 'default',
+      })
+      .then((response) => {
+        const newEdge: IEdge = {
+          // maybe needs to be IEdgeInfo ?
+          id: response.data.edgeId,
+          source: response.data.source,
+          sourceHandle: response.data.sourceHandle,
+          target: response.data.target,
+          targetHandle: response.data.targetHandle,
+          type: response.data.type,
+        }
+
+        console.log('newEdge response: ', newEdge)
+        setEdges((eds: IEdgeInfo[]) => addEdge(newEdge, eds))
+      })
+    // setEdges((eds: IEdgeInfo[]) => addEdge(params, eds))
+  }, [])
 
   const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback(
     (event) => {
@@ -123,16 +154,13 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
         y: event.clientY - reactFlowBounds.top,
       })
       const newNode: INode = {
-        id: getId(),
+        id: `node_${getId()}`,
         type,
         position,
         data: { label: ``, text: '' },
       }
 
       // POST REQUEST FOR CREATING A NEW NODE
-
-      const treeId = tree._id
-      console.log('TREE ID: ', treeId)
 
       if (type === NODE_TYPE.Branch) {
         const response = await axios

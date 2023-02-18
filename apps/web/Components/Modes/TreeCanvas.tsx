@@ -54,8 +54,9 @@ import { Console } from 'console'
 import { useTreeContext } from '../../Resources/Packages/RFlow/TreeContext'
 // import { TreeMode } from '../../Resources/Enums/Options'
 
-let id = 0
-const getId = () => `node_${id++}`
+import { v4 as uuidv4 } from 'uuid'
+
+const getId = () => `node_${uuidv4()}`
 
 export const InputContext =
   createContext<React.RefObject<HTMLInputElement> | null>(null)
@@ -312,101 +313,3 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
     </div>
   )
 }
-
-/* import DescriptionMenu from '../DescriptionMenu/DescriptionMenu'
-import Option from '../Option/Option'
-import {
-  leftLeafNode,
-  rightLeafNode,
-  BranchNode,
-  RootNode,
-} from '../CustomNode/CustomNodes' */
-
-// CODE TO REMOVE IF THE RFLOW/RFLOW FILE WORKS
-/* import {
-  leftLeafNode,
-  rightLeafNode,
-  BranchNode,
-  RootNode,
-} from '../CustomNode/CustomNodes'
-const nodeTypes = {
-  rightLeaf: rightLeafNode,
-  leftLeaf: leftLeafNode,
-  branch: BranchNode,
-  root: RootNode,
-} 
-const initialNodes = [
-  {
-    id: 'node_head',
-    data: { label: 'Root' },
-    position: { x: 0, y: 0 },
-    type: 'root',
-  },
-] */
-/* SERVER SIDE DATA:
-    {
-        "_id": "63ebb297cfc76b14bf76d970",
-        "treeName": "DummyTree",
-        "date": "2023-02-14T16:11:03.045Z",
-        "user": "Dumbo",
-        "branches": [
-            {
-                "branchId": "node_000",
-                "treeId": "63ebb297cfc76b14bf76d970",
-                "position": {
-                    "x": "0",
-                    "y": "100"
-                },
-                "branchName": null,
-                "leaves": []
-            }
-        ],
-        "unlinkedLeaves": [
-            {
-                "leafId": "node_001",
-                "treeId": "63ebb297cfc76b14bf76d970",
-                "position": {
-                    "x": "0",
-                    "y": "200"
-                },
-                "leafName": null,
-                "branchId": null
-            }
-        ]
-    }
-
-    EXAMPLE OF REACT FLOW DATA:
-    Object { id: "node_1", type: "leftLeaf", width: 144, … }
- ​
-    data: Object { label: "hello", text: "" }
-      ​
-    label: "hello"   ****************
-      ​
-    text: ""   ***************
-     ​
-     ​
-    dragging: false
-     ​
-    height: 40
-     ​
-    id: "node_1"  *************
-     ​
-    position: Object { x: 0.2512756289281697, y: 195.53476157101872 }  **************
-      ​
-    x: 0.2512756289281697   ******************
-      ​
-    y: 195.53476157101872  *******************
-      ​
-     ​
-    positionAbsolute: Object { x: 0.2512756289281697, y: 195.53476157101872 } ************
-      ​
-    x: 0.2512756289281697   *************
-      ​
-    y: 195.53476157101872   ************
-     ​
-    selected: false
-     ​
-    type: "leftLeaf"  *************
-     ​
-    width: 144
-*/

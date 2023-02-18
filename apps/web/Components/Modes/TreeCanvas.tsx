@@ -87,7 +87,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
   // SET NODES
 
-  useEffect(() => {
+  /* useEffect(() => {
     const allNodes: INode[] = []
     const branchesFromServer: IBranch[] = tree.branches
     const branchNodes: INode[] = branchesFromServer.map((branch) => {
@@ -132,7 +132,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
     console.log('allNodes', allNodes)
     console.log('unlinkedLeafNodes: ', unlinkedLeafNodes)
-  }, [tree, setNodes, setEdges])
+  }, [tree, setNodes, setEdges]) */
 
   // END THE USEEFFECT HOOK FOR GETTING NODES
 

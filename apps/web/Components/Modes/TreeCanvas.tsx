@@ -51,6 +51,7 @@ import axios from 'axios'
 import { TREE_MODE } from '../../Resources/Enums/Options'
 import { setegid } from 'process'
 import { Console } from 'console'
+import { useTreeContext } from '../../Resources/Packages/RFlow/TreeContext'
 // import { TreeMode } from '../../Resources/Enums/Options'
 
 let id = 0
@@ -85,38 +86,6 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
   console.log('nodes: ', nodes)
   console.log('edges: ', edges)
-
-  // SET EDGES
-
-  /* useEffect(() => {
-    const allEdges: IEdge[] = []
-
-    const edgesFromServer: IEdgeServer[] =
-      tree.edges as unknown as IEdgeServer[]
-
-    const edgeNodes: IEdge[] = edgesFromServer.map((edge) => {
-      const newEdge: IEdge = {
-        id: edge.edgeId,
-        source: edge.source,
-        sourceHandle: null,
-        target: edge.target,
-        targetHandle: null,
-        type: edge.type,
-      }
-
-      allEdges.push(newEdge)
-
-      return newEdge
-    })
-
-    // setEdges(allEdges)
-
-    allEdges.map((element) => {
-      setEdges((eds: IEdgeInfo[]) => addEdge(element, eds))
-    })
-
-    console.log('allEdges', allEdges)
-  }, [setNodes, tree, setEdges]) */
 
   useEffect(() => {
     setIsDraggable(treeMode === 'editor')
@@ -265,7 +234,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                   </ReactFlow>
                 ) : (
                   <div>
-                    <h1>NODES UNDEFINED</h1>
+                    <h1>NODES AND/OR EDGES STATE IS EMPTY</h1>
                   </div>
                 )}
               </div>

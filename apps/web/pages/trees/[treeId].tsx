@@ -51,8 +51,8 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
         id: branch.branchId,
         type: branch.type || 'branch',
         position: {
-          x: branch.position.x,
-          y: branch.position.y,
+          x: parseInt(branch.position.x),
+          y: parseInt(branch.position.y),
         },
         data: {
           label: branch.branchName,
@@ -66,8 +66,8 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
         id: leaf.leafId,
         type: leaf.type || 'leftLeaf',
         position: {
-          x: leaf.position.x,
-          y: leaf.position.y,
+          x: parseInt(leaf.position.x),
+          y: parseInt(leaf.position.y),
         },
         data: {
           label: leaf.leafName,

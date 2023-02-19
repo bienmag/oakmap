@@ -1,8 +1,5 @@
-import NextAuth, { NextAuthOptions, DefaultSession, TokenSet, Account, User, Session, SessionOptions, SessionStrategy, AuthOptions } from 'next-auth'
-import { SessionStore, SessionToken } from 'next-auth/core/lib/cookie'
-import { JWT, JWTOptions } from 'next-auth/jwt'
+import NextAuth, { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
-import { GetSessionParams, signIn, UseSessionOptions } from 'next-auth/react'
 
 import {
   GOOGLE_CLIENT_ID,
@@ -28,9 +25,12 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
+    /////////////////////////////////////////////////////////////////
+    ///// this is to connect with 8080 and add to DB // later //////
+    ////////////////////////////////////////////////////////////////
+
     // async signIn({ user, account, profile, email, credentials }) {
     //   // const response = await axios.post('https://localhost:8080/users', {
-
     //   // })
     //   return true
     // },
@@ -53,11 +53,6 @@ export const authOptions: AuthOptions = {
         session.user.email = token.email
       }
       return session
-
-      // Send properties to the client, like an access_token from a provider.
-
-      // session.accessToken = token.accessToken
-
     }
   }
 }

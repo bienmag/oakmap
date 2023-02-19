@@ -267,6 +267,18 @@ const TreesController = {
     } catch (e) {
       next(e)
     }
+  },
+
+  async getUserTrees(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.params
+      const trees = await DBTree.find({ user: userId })
+      res.status(201).json(trees)
+      console.log(trees)
+
+    } catch (e) {
+      next(e)
+    }
   }
 }
 

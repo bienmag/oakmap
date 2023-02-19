@@ -6,10 +6,11 @@ import { GetServerSideProps, NextPage } from 'next'
 import axios from 'axios'
 import { ITree } from '../Resources/Packages/RFlow/Custom'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import { getServerSession } from 'next-auth'
+import { getServerSession, User } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
-import { getToken } from 'next-auth/jwt'
+import { getToken, JWT } from 'next-auth/jwt'
 import { JWT_SECRET } from '../Resources/lib/constants'
+
 
 
 
@@ -17,10 +18,12 @@ import { JWT_SECRET } from '../Resources/lib/constants'
 // SIDEBAR STUFF ///////////////////////////
 ////////////////////////////////////////////
 
+
 interface DashboardPageProps {
-  trees: ITree[],
-  popularTrees: ITree[],
+  trees: ITree[]
+  popularTrees: ITree[]
   token: string
+
 }
 
 
@@ -111,19 +114,17 @@ const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees, toke
   )
 }
 
+//@ts-ignore
 export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions)
-  console.log('get server side session', session?.user.id)
-  // const response = await axios.get(`http://localhost:8080/users/${session?.user.id}/trees`)
-  const response = await axios.get(`http://localhost:8080/trees`)
+  const req = context.req
+  const token = await getToken({ req, secret: JWT_SECRET })
+  const response = await axios.get(`http://localhost:8080/users/${session?.user.id}/trees`)
 
   // this is to get the whole token 
   // const cookies = await getCookies(context)
   // const allTokens = Object.values(cookies)
   // const jwtToken = allTokens[2]
-
-  const req = context.req
-  const token = await getToken({ req, secret: JWT_SECRET })
 
 
   return {
@@ -134,6 +135,7 @@ export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async 
     }
   }
 }
+
 
 export default DashboardPage
 

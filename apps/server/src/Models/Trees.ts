@@ -6,6 +6,7 @@ class Tree {
   constructor(
     public _id: object,
     public treeName: string | undefined,
+    public root: object,
     public date?: object,
     public user?: string,
     public branches?: Array<object>,
@@ -18,8 +19,9 @@ class Tree {
 
   static async create(
     _id: object,
-    date: object,
     treeName: string,
+    root: object,
+    date: object,
     user: string,
     branches: Array<object>,
     unlinkedLeaves: Array<object>,
@@ -27,10 +29,10 @@ class Tree {
   ): Promise<Tree> {
 
     await DBTree.create({
-      _id, treeName, date, user, branches, unlinkedLeaves, edges
+      _id, treeName, root, date, user, branches, unlinkedLeaves, edges
     })
 
-    return new Tree(_id, treeName, date, user, branches, unlinkedLeaves, undefined, edges)
+    return new Tree(_id, treeName, root, date, user, branches, unlinkedLeaves, undefined, edges)
   }
 
   static async getAll(): Promise<Tree[]> {
@@ -49,7 +51,7 @@ class Tree {
 
     let tree = await DBTree.findOne({ _id: id })
     await DBTree.findOneAndUpdate({ _id: id }, { $set: { "treeName": treeName, "description": description, "edges": edges } })
-    return new Tree(id, treeName, tree?.date, tree?.user, tree?.branches, tree?.unlinkedLeaves, description, edges)
+    return new Tree(id, treeName, tree?.root, tree?.date, tree?.user, tree?.branches, tree?.unlinkedLeaves, description, edges)
   }
 
   static async getTreeById(treeId: string): Promise<Tree> {
@@ -60,9 +62,9 @@ class Tree {
     if (record === null) {
       throw new Error('There is no tree with this id')
     }
-    const { _id, treeName, date, user, branches, unlinkedLeaves, description, edges } = record
+    const { _id, treeName, root, date, user, branches, unlinkedLeaves, description, edges } = record
 
-    return new Tree(_id, treeName, date, user, branches, unlinkedLeaves, description, edges)
+    return new Tree(_id, treeName, root, date, user, branches, unlinkedLeaves, description, edges)
   }
 }
 

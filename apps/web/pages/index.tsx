@@ -15,13 +15,14 @@ import { JWT_SECRET } from '../Resources/lib/constants'
 
 
 /////////////////////////////////////////////
-// SIDEBAR STUFF ///////////////////////////
-////////////////////////////////////////////
+// DASHBOARD ///////////////////////////////
+/////////////////////////////////////////////
 
 
 interface DashboardPageProps {
   trees: ITree[]
   popularTrees: ITree[]
+ 
   token: string
 
 }
@@ -48,10 +49,11 @@ async function handleGoogleSignout() {
 const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees, token }) => {
 
   const { data: session, status } = useSession()
-
+ 
   const handleCreateTree = async (e: React.MouseEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
+ 
     if (status === "authenticated") {
       const response = await axios.post('http://localhost:8080/trees', {
         treeName: "New Tree",
@@ -66,6 +68,7 @@ const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees, toke
       signIn()
     }
   }
+ 
 
 
   // Get the unique ID of the tree
@@ -78,10 +81,13 @@ const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees, toke
 
 
   return (
-    <div className='flex justify-items'>
+    <div className="flex justify-items">
       {/* //taildwind FEEDS code here */}
-      <div className='box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto'> RITA TREES
-        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8'
+      <div className="box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto">
+        {' '}
+        RITA TREES
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8"
           onClick={(e) => {
             handleCreateTree(e) // handle server request to create tree
           }}
@@ -98,12 +104,15 @@ const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees, toke
               </p>
             )}
         </div >
+ 
       </div>
       {/* //taildwind FEEDS code here */}
-      <div className='box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto'> RECENT TREES
+      <div className="box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto">
+        {' '}
+        RECENT TREES
         <div>
           <TreeList trees={popularTrees} />
-        </div >
+        </div>
       </div>
     </div>
     // <ul>
@@ -114,6 +123,7 @@ const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees, toke
   )
 }
 
+ 
 //@ts-ignore
 export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions)
@@ -126,13 +136,16 @@ export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async 
   // const allTokens = Object.values(cookies)
   // const jwtToken = allTokens[2]
 
+ 
 
   return {
     props: {
       trees: response.data as ITree[],
       popularTrees: [],
+ 
       token
     }
+ 
   }
 }
 
@@ -145,25 +158,24 @@ interface TreeListProps {
 const TreeList = ({ trees }: TreeListProps) => {
 
   return (
-    <ul role='list' className='divide-y divide-gray-200'>
+    <ul role="list" className="divide-y divide-gray-200">
       {trees.map((tree) => (
-        <li key={tree._id} className='py-4'>
+        <li key={tree._id} className="py-4">
           <Link href={`/trees/${tree._id}`}>
-            <div className='flex space-x-3'>
-              <img className='h-8 w-8 rounded-full bg-cyan-700' alt='' />
-              <div className='flex-1 space-y-1'>
-                <div className='flex items-center justify-between'>
-                  <h3 className='text-sm font-medium'>{tree.treeName}</h3>
+            <div className="flex space-x-3">
+              <img className="h-8 w-8 rounded-full bg-cyan-700" alt="" />
+              <div className="flex-1 space-y-1">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-medium">{tree.treeName}</h3>
                   {/* <p className='text-sm text-gray-500'>{tree.popularity}</p> */}
                 </div>
-                <p className='text-sm text-gray-500'>
-                  {tree.description}
-                </p>
+                <p className="text-sm text-gray-500">{tree.description}</p>
               </div>
             </div>
           </Link>
         </li>
       ))}
-    </ul>)
+    </ul>
+  )
 }
 

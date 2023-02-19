@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const TreeSchema = new mongoose.Schema({
   _id: Object,
   treeName: String,
+  root: Object,
   date: Object,
   user: String,
   description: String,

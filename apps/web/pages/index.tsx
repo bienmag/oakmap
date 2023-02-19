@@ -11,22 +11,16 @@ import { authOptions } from './api/auth/[...nextauth]'
 import { getToken, JWT } from 'next-auth/jwt'
 import { JWT_SECRET } from '../Resources/lib/constants'
 
-
-
-
 /////////////////////////////////////////////
 // DASHBOARD ///////////////////////////////
 /////////////////////////////////////////////
 
-
 interface DashboardPageProps {
   trees: ITree[]
   popularTrees: ITree[]
- 
+
   token: string
-
 }
-
 
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
@@ -43,33 +37,34 @@ async function handleGoogleSignout() {
 ///////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 
-
-
-
-const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees, token }) => {
-
+const DashboardPage: NextPage<DashboardPageProps> = ({
+  trees,
+  popularTrees,
+  token,
+}) => {
   const { data: session, status } = useSession()
- 
+
   const handleCreateTree = async (e: React.MouseEvent) => {
     e.preventDefault()
 
- 
-    if (status === "authenticated") {
-      const response = await axios.post('http://localhost:8080/trees', {
-        treeName: "New Tree",
-        user: session.user.id
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
+    if (status === 'authenticated') {
+      const response = await axios.post(
+        'http://localhost:8080/trees',
+        {
+          treeName: 'New Tree',
+          user: session.user.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
+      )
       console.log('create tree response', response.data)
     } else {
       signIn()
     }
   }
- 
-
 
   // Get the unique ID of the tree
   /* const treeId = response.data.id``````````````````
@@ -78,7 +73,6 @@ const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees, toke
 
   // Navigate to the TreeEditorMode component and pass the tree ID as a query parameter
   /* Router.push(`/tree?id=${treeId}`) */
-
 
   return (
     <div className="flex justify-items">
@@ -91,20 +85,21 @@ const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees, toke
           onClick={(e) => {
             handleCreateTree(e) // handle server request to create tree
           }}
-        >+</button>
+        >
+          +
+        </button>
         <button onClick={handleGoogleSignin}>GOOGLE SIGN IN </button>
         <button onClick={handleGoogleSignout}>GOOGLE SIGN OUT </button>
         <p> welcome {session?.user?.name}</p>
-        < div >
-          {trees.length > 0
-            ? <TreeList trees={trees} />
-            : (
-              <p className='text-sm text-gray-500'>
-                Sing in for create more trees
-              </p>
-            )}
-        </div >
- 
+        <div>
+          {trees.length > 0 ? (
+            <TreeList trees={trees} />
+          ) : (
+            <p className="text-sm text-gray-500">
+              Sing in for create more trees
+            </p>
+          )}
+        </div>
       </div>
       {/* //taildwind FEEDS code here */}
       <div className="box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto">
@@ -123,32 +118,31 @@ const DashboardPage: NextPage<DashboardPageProps> = ({ trees, popularTrees, toke
   )
 }
 
- 
 //@ts-ignore
-export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<
+  DashboardPageProps
+> = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions)
   const req = context.req
   const token = await getToken({ req, secret: JWT_SECRET })
-  const response = await axios.get(`http://localhost:8080/users/${session?.user.id}/trees`)
+  const response = await axios.get(
+    `http://localhost:8080/users/${session?.user.id}/trees`
+  )
 
-  // this is to get the whole token 
+  // this is to get the whole token
   // const cookies = await getCookies(context)
   // const allTokens = Object.values(cookies)
   // const jwtToken = allTokens[2]
-
- 
 
   return {
     props: {
       trees: response.data as ITree[],
       popularTrees: [],
- 
-      token
-    }
- 
+
+      token,
+    },
   }
 }
-
 
 export default DashboardPage
 
@@ -156,7 +150,6 @@ interface TreeListProps {
   trees: ITree[]
 }
 const TreeList = ({ trees }: TreeListProps) => {
-
   return (
     <ul role="list" className="divide-y divide-gray-200">
       {trees.map((tree) => (
@@ -178,4 +171,3 @@ const TreeList = ({ trees }: TreeListProps) => {
     </ul>
   )
 }
-

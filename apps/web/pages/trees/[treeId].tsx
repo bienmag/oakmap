@@ -14,6 +14,7 @@ import {
 import TreeContext from '../../Resources/Packages/RFlow/TreeContext'
 
 interface TreePageProps {
+ 
   tree: ITree
   initialNodes: INode[]
   initialEdges: IEdge[]
@@ -44,6 +45,7 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
     )
     // const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/trees/63ebb297cfc76b14bf76d970`)
     console.log('response', JSON.stringify(response.data, null, 2))
+ 
 
     // GET DATA FOR NODES AND EDGES OF EXISTING TREE
 
@@ -111,6 +113,7 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
 
     // setEdges((prevEdges) => [...prevEdges, ...edgeNodes])
 
+ 
     return {
       props: {
         tree: response.data,
@@ -119,6 +122,7 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
       },
     }
   }
+ 
 
 // EXAMPLE DATA
 /*
@@ -145,3 +149,4 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
 //         </div>
 //     )
 // }
+ 

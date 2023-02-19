@@ -21,6 +21,8 @@ router.post('/trees/:treeId/edges', TreesController.createEdge)
 router.get('/trees/:treeId/edges', TreesController.getEdges)
 router.put('/trees/:treeId/edges', TreesController.updateEdge)
 router.delete('/trees/:treeId/edges', TreesController.deleteEdge)
+router.get('/users/:userId/trees', TreesController.getUserTrees)
+
 
 
 

@@ -38,6 +38,7 @@ import {
 import ReactFlow, { useNodesState, useEdgesState, Node } from 'reactflow'
 import { initialNodes } from '../../Resources/Packages/RFlow/RFlow'
 import { INodeInfo } from '../../Resources/Packages/RFlow/Custom'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 const user = {
   name: 'Whitney Francis',
@@ -98,6 +99,10 @@ export function Sidebar({ children }: SidebarProps) {
 
   const [currentTreeId, setCurrentTreeId] = useState('')
 
+
+  const { data: session, status } = useSession()
+
+
   // REACT FLOW STATE is now located in the NodesContext.tsx file
   /*   const [nodes, setNodes, onNodesChange] = useNodesState<INodeInfo>(initialNodes)
     const [edges, setEdges, onEdgesChange] = useEdgesState([]) */
@@ -117,11 +122,13 @@ export function Sidebar({ children }: SidebarProps) {
         {/* Top nav*/}
         <header className="relative flex h-16 flex-shrink-0 items-center bg-white">
           {/* Logo area */}
+
           <div className="absolute inset-y-0 left-0 md:static md:flex-shrink-0">
             <a
               href="#"
               className="flex h-16 w-16 items-center justify-center bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 md:w-20"
             >
+
               <img
                 className="h-8 w-auto"
                 src="https://tailwindui.com/img/logos/mark.svg?color=white"
@@ -129,6 +136,12 @@ export function Sidebar({ children }: SidebarProps) {
               />
             </a>
           </div>
+
+          <div>
+
+            {status === 'authenticated' ? (<button onClick={() => signOut()} className='bg-red-100'>SIGN OUT</button>) : (<button onClick={() => signIn()} className='bg-green-100'>SIGN IN</button>)}
+          </div>
+
 
           {/* Picker area */}
           <div className="mx-auto md:hidden">
@@ -168,6 +181,8 @@ export function Sidebar({ children }: SidebarProps) {
               <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
             </button>
           </div>
+
+
 
           {/* Desktop nav area */}
 
@@ -447,17 +462,17 @@ export function Sidebar({ children }: SidebarProps) {
               {/* ModeSelector(DashboardMode, TreeEditorMode) -- this was alternative as a way to pass components as props */}
               {children}
               {/* END YOUR CONTENT */}
- 
+
             </section >
             {/* INFO BOTTOM SHEET */}
             < div >
- 
+
               <DescriptionMenu
                 isOpen={isOpen}
                 closeBottomSheet={closeBottomSheet}
                 treeMode={treeMode}
               />
- 
+
             </div>
           </main>
         </div>

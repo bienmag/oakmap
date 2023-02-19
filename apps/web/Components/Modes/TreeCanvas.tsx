@@ -273,45 +273,41 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
             >
               {/* TERNARY TO RENDER ??? */}
               <div style={{ height: '100vh', width: '100%' }}>
-                {hasEdges && hasNodes ? (
-                  <ReactFlow
-                    key={`${hasNodes}-${hasEdges}`}
-                    nodes={nodes}
-                    edges={edges}
-                    nodesDraggable={isDraggable}
-                    onNodesChange={onNodesChange}
-                    onEdgesChange={onEdgesChange}
-                    onConnect={onConnect}
-                    nodeTypes={nodeTypes}
-                    onInit={setReactFlowInstance}
-                    onDrop={onDrop}
-                    deleteKeyCode={null}
-                    onDragOver={onDragOver}
-                    onPaneClick={() => {
-                      setSelected(null)
-                    }}
-                    onNodeDoubleClick={(event, node) => {
-                      if (treeMode === TREE_MODE.Editor) {
-                        inputRef.current?.focus()
-                        inputRef.current?.select()
-                      } // setMarked(node)
-                    }}
-                    onNodeClick={(event, node) => {
-                      if (treeMode === TREE_MODE.Reader) setMarked(node)
-                      setSelected(node)
-                    }}
-                    fitView
-                  >
-                    {treeMode === TREE_MODE.Editor ? (
-                      <Background />
-                    ) : (
-                      <Background variant={BackgroundVariant.Lines} />
-                    )}
-                    <Controls />
-                  </ReactFlow>
-                ) : (
-                  <div></div>
-                )}
+                <ReactFlow
+                  key={`${hasNodes}-${hasEdges}`}
+                  nodes={nodes}
+                  edges={edges}
+                  nodesDraggable={isDraggable}
+                  onNodesChange={onNodesChange}
+                  onEdgesChange={onEdgesChange}
+                  onConnect={onConnect}
+                  nodeTypes={nodeTypes}
+                  onInit={setReactFlowInstance}
+                  onDrop={onDrop}
+                  deleteKeyCode={null}
+                  onDragOver={onDragOver}
+                  onPaneClick={() => {
+                    setSelected(null)
+                  }}
+                  onNodeDoubleClick={(event, node) => {
+                    if (treeMode === TREE_MODE.Editor) {
+                      inputRef.current?.focus()
+                      inputRef.current?.select()
+                    } // setMarked(node)
+                  }}
+                  onNodeClick={(event, node) => {
+                    if (treeMode === TREE_MODE.Reader) setMarked(node)
+                    setSelected(node)
+                  }}
+                  fitView
+                >
+                  {treeMode === TREE_MODE.Editor ? (
+                    <Background />
+                  ) : (
+                    <Background variant={BackgroundVariant.Lines} />
+                  )}
+                  <Controls />
+                </ReactFlow>
               </div>
               <MiniMap />
             </div>

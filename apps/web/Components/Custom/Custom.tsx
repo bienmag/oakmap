@@ -19,12 +19,21 @@ import { Node } from 'reactflow'
 
 interface ICustomProps {
   selected: Node<INodeInfo> | null
+  setSelectedData: React.Dispatch<React.SetStateAction<string>>
+  selectedData: string
   setNodes: React.Dispatch<React.SetStateAction<Node<INodeInfo>[]>>
   setMarked: React.Dispatch<React.SetStateAction<Node<INodeInfo> | null>>
   treeMode: TreeMode
 }
 
-function Custom({ selected, setNodes, setMarked, treeMode }: ICustomProps) {
+function Custom({
+  selected,
+  setSelectedData,
+  selectedData,
+  setNodes,
+  setMarked,
+  treeMode,
+}: ICustomProps) {
   const [nodeName, setNodeName] = useState('')
 
   const handleDelNode = () => {
@@ -78,7 +87,11 @@ function Custom({ selected, setNodes, setMarked, treeMode }: ICustomProps) {
           <div className="custom-name-input">
             <label htmlFor="name">Name</label>
             <input
-              onChange={(e) => setNodeName(e.target.value)}
+              onChange={(e) => {
+                setNodeName(e.target.value)
+                setSelectedData(e.target.value) // for updating server
+                console.log('selectedData: ', selectedData)
+              }}
               value={nodeName}
               className="pl-2"
               type="text"

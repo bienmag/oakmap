@@ -172,46 +172,62 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   } */
 
   const handleUpdateNode = useCallback(
-    async (node: Node<INodeInfo, string | undefined> | null) => {
-      // BRANCH
-      if (node !== null && node.type === NODE_TYPE.Branch) {
-        // && node.data.label !== ''
-        try {
-          const response = await axios.put(
-            `http://localhost:8080/trees/${treeId}/branches`,
-            {
-              branchId: node.id,
-              treeId: tree._id,
-              position: node.position,
-              type: node.type,
-              branchName: node.data.label ? node.data.label : null,
-            }
-          )
-          console.log('Update node with text: ', response)
-        } catch (error) {
-          console.error('Failed to update branch node', error)
-          throw error
-        }
+    async (
+      node: Node<INodeInfo, string | undefined> | null,
+      selectedData: string
+    ) => {
+      if (node === null) {
+        console.log('Node is null!')
       }
-      // LEAF
-      if (
-        (node !== null && node.type === NODE_TYPE.LeftLeaf) ||
-        (node !== null && node.type === NODE_TYPE.RightLeaf)
-      ) {
-        try {
-          const response = await axios.put(
-            `http://localhost:8080/trees/${treeId}/unlinkedLeaves`,
-            {
-              leafId: node.id,
-              treeId: tree._id,
-              position: node.position,
-              type: node.type,
-              leafName: node.data.label,
-            }
-          )
-          console.log('Updated leaf with text: ', response)
-        } catch (error) {
-          console.log('Error updating leaf position:', error)
+      // BRANCH
+      else if (node !== null) {
+        if (node.type === NODE_TYPE.Branch) {
+          // node !== null &&
+          // && node.data.label !== ''
+          try {
+            const response = await axios.put(
+              `http://localhost:8080/trees/${treeId}/branches`,
+              {
+                branchId: node.id,
+                treeId: tree._id,
+                position: node.position,
+                type: node.type,
+                branchName: selectedData,
+                // branchName: node.data.label ? node.data.label : null,
+              }
+            )
+            console.log('node.data.label: ', node.data.label)
+            console.log('Update branch with selectedData: ', selectedData)
+            console.log('Update branch with text from response: ', response)
+          } catch (error) {
+            console.error('Failed to update branch node', error)
+            throw error
+          }
+        }
+        // LEAF
+        if (
+          (node !== null && node.type === NODE_TYPE.LeftLeaf) ||
+          (node !== null && node.type === NODE_TYPE.RightLeaf)
+        ) {
+          try {
+            const response = await axios.put(
+              `http://localhost:8080/trees/${treeId}/unlinkedLeaves`,
+              {
+                leafId: node.id,
+                treeId: tree._id,
+                position: node.position,
+                type: node.type,
+                leafName: selectedData,
+                // leafName: node.data.label,
+              }
+            )
+            // PROBLEM -- I think we're sending this request before we have set the node.data.label in the state
+            console.log('node.data.label: ', node.data.label)
+            console.log('Update leaf with selectedData: ', selectedData)
+            console.log('Updated leaf with text from response: ', response)
+          } catch (error) {
+            console.log('Failed to update leaf node', error)
+          }
         }
       }
     },
@@ -377,7 +393,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                   deleteKeyCode={null}
                   onDragOver={onDragOver}
                   onPaneClick={() => {
-                    handleUpdateNode(selectedNode)
+                    handleUpdateNode(selectedNode, selectedData)
                     setSelectedData('')
                     setSelectedNode(null)
                     setSelected(null)
@@ -392,7 +408,6 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                   }}
                   onNodeClick={(event, node) => {
                     if (treeMode === TREE_MODE.Reader) setMarked(node)
-                    setSelectedData(node.data.label)
                     setSelected(node)
                     setSelectedNode(node)
                     console.log('SELECTED CLICK: ', selected)
@@ -417,6 +432,8 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
             {treeMode === TREE_MODE.Editor ? (
               <Custom
                 selected={selected}
+                setSelectedData={setSelectedData}
+                selectedData={selectedData}
                 setNodes={setNodes}
                 setMarked={setMarked}
                 treeMode={treeMode}

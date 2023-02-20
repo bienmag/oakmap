@@ -22,12 +22,11 @@ export const DBTree = mongoose.model(
 )
 
 const UserSchema = new mongoose.Schema({
-  _id: Object,
-  user: String,
+  _id: String,
+  userId: String,
   email: String,
-  password: String,
   tokens: Array,
-  treeName: Array
+  trees: Array
 
 }, { versionKey: false })
 

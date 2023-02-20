@@ -1,5 +1,6 @@
 import express from "express";
 import TreesController from "./Controllers/Trees.controller";
+import User from "./Models/Users";
 
 
 
@@ -22,6 +23,7 @@ router.get('/trees/:treeId/edges', TreesController.getEdges)
 router.put('/trees/:treeId/edges', TreesController.updateEdge)
 router.delete('/trees/:treeId/edges', TreesController.deleteEdge)
 router.get('/users/:userId/trees', TreesController.getUserTrees)
+router.post('/users', TreesController.createUser)
 
 
 

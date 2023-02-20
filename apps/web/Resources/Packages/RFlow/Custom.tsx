@@ -50,6 +50,7 @@ export interface INode {
   type: string
   position: { x: number; y: number }
   data: { label: string; text: string }
+  draggable: boolean
 }
 
 export interface IRoot {

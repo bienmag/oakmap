@@ -283,6 +283,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
         type,
         position,
         data: { label: ``, text: '' },
+        draggable: true,
       }
 
       /* setNodes((nds: INode[]) => nds.concat(newLeaf)) // alternative option */

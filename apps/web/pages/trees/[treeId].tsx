@@ -68,6 +68,7 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
         label: root.label,
         text: '',
       },
+      draggable: false,
     })
 
     response.data.branches.forEach((branch: IBranch) => {
@@ -88,6 +89,7 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
           label: branch.branchName,
           text: '',
         },
+        draggable: true,
       })
     })
 
@@ -109,6 +111,7 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
           label: leaf.leafName,
           text: '',
         },
+        draggable: true,
       })
     })
 

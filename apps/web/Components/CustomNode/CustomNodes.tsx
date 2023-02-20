@@ -95,11 +95,21 @@ export function BranchNode({ data }: LeafNodeProps) {
           position={Position.Top}
           className="!bg-green-700"
         />
+        {/* <Handle
+          type="target"
+          position={Position.Right}
+          className="!bg-green-700"
+        /> */}
         <Handle
           type="source"
           position={Position.Bottom}
           className="!bg-green-700"
         />
+        {/* <Handle
+          type="target"
+          position={Position.Left}
+          className="!bg-green-700"
+        /> */}
       </div>
     </div>
   )

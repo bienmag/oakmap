@@ -55,9 +55,11 @@ function Custom({
       selected.type === NODE_TYPE.LeftLeaf ||
       selected.type === NODE_TYPE.RightLeaf
     ) {
-      const leafId = selected.id
+      const leafIdNew = selected.id
+
+      console.log('leafIdNew: ', leafIdNew)
       const response = await axios
-        .delete(`http://localhost:8080/trees/${treeId}/leaves/${leafId}`)
+        .delete(`http://localhost:8080/trees/${treeId}/leaves/${leafIdNew}`) // req.body though could include leafId: leafIdNew
         .catch((error) => {
           console.log('Error deleting leaf:', error)
         })

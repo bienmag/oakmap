@@ -10,6 +10,7 @@ import { getServerSession, User } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
 import { getToken, JWT } from 'next-auth/jwt'
 import { JWT_SECRET } from '../Resources/lib/constants'
+import Container from '../Components/Wrapper/Container'
 
 /////////////////////////////////////////////
 // DASHBOARD ///////////////////////////////
@@ -75,40 +76,36 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
   /* Router.push(`/tree?id=${treeId}`) */
 
   return (
-    <div className="flex justify-items">
-      {/* //taildwind FEEDS code here */}
-      <div className="box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto">
-        {' '}
-        RITA TREES
+    <div className="flex justify-center h-screen w-auto bg-[url('../Resources/Images/SVG.png')]">
+      <Container className=" bg-dark-palette text-white">
+        <b>Your</b> TREES
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4"
           onClick={(e) => {
             handleCreateTree(e) // handle server request to create tree
           }}
         >
           +
         </button>
-        <button onClick={handleGoogleSignin}>GOOGLE SIGN IN </button>
-        <button onClick={handleGoogleSignout}>GOOGLE SIGN OUT </button>
-        <p> welcome {session?.user?.name}</p>
+        <p> {session ? `Welcome ${session.user.name}` : ''}</p>
         <div>
           {trees.length > 0 ? (
             <TreeList trees={trees} />
           ) : (
-            <p className="text-sm text-gray-500">
-              Sing in for create more trees
+            <p className="text-lg text-gray-500">
+              Sing in to create more trees
             </p>
           )}
         </div>
-      </div>
-      {/* //taildwind FEEDS code here */}
-      <div className="box-border h-62 w-62 p-4 border-4 max-w-screen-sm text-center m-8 flex-auto">
-        {' '}
-        RECENT TREES
-        <div>
-          <TreeList trees={popularTrees} />
-        </div>
-      </div>
+      </Container>
+      <Container className=" bg-ylw-palette ">
+        <>
+          RECENT TREES
+          <div>
+            <TreeList trees={popularTrees} />
+          </div>
+        </>
+      </Container>
     </div>
     // <ul>
     //   {trees.map(tree => (

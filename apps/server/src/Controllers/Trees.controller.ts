@@ -17,7 +17,7 @@ const TreesController = {
   // create tree
   async createTree(req: Request, res: Response, next: NextFunction) {
     try {
-      const { treeName, user } = req.body
+      const { treeName, user, username, userpic } = req.body
       const date = new Date()
       const branches: object[] = []
       const unlinkedLeaves: object[] = []
@@ -36,7 +36,7 @@ const TreesController = {
         type: 'root',
         label: 'root'
       }
-      const tree = await Tree.create(treeId, treeName, root, date, user, branches, unlinkedLeaves, edges)
+      const tree = await Tree.create(treeId, treeName, root, date, user, branches, unlinkedLeaves, edges, username)
 
       const id = new mongodb.ObjectId(treeId)
       await User.update(user, id)

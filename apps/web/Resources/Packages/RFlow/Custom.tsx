@@ -11,6 +11,7 @@ export interface ITree {
   unlinkedLeaves: ILeaf[]
   edges: IEdge[]
   markdown?: string
+  username: string
 }
 
 export interface INodeInfo {

@@ -97,6 +97,29 @@ export async function createNewLeafNode(data: ILeaf) {
   return newLeaf
 }
 
+/* export async function updateBranch(
+  tree: any,
+  treeId: string,
+  node: INode
+): Promise<AxiosResponse<IBranch>> {
+  try {
+    const response = await axios.put(
+      `http://localhost:8080/trees/${treeId}/branches`,
+      {
+        branchId: node.id,
+        treeId: tree._id,
+        position: node.position,
+        type: node.type,
+        branchName: node.data.label,
+      }
+    )
+    return response
+  } catch (error) {
+    console.error('Failed to update branch node', error)
+    throw error
+  }
+} */
+
 /* export function TreeRequests() {
   const { nodes, setNodes, onNodesChange } = useContext(NodesContext)
 } */

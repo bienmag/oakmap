@@ -139,10 +139,17 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
   // NODES
 
-  // DRAG EXISTING NODE
+  // DRAGGING AN EXISTING NODE
   const handleNodeDragStop: NodeDragHandler = async (event, node) => {
     if (node.type === NODE_TYPE.Branch) {
       console.log('THIS IS THE DRAGGED BRANCH: ', node)
+
+      // REFACTOR IDEA -- Unused due to issue with node typescript
+      /*  try {
+        const response = await updateBranch(tree, treeId, node)
+      } catch (error) {
+        console.log('Error updating branch position:', error)
+      } */
 
       // IF DRAGGING A BRANCH
       const response = await axios

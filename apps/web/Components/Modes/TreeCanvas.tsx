@@ -22,6 +22,7 @@ import ReactFlow, {
   BackgroundVariant,
   updateEdge,
   SmoothStepEdge,
+  NodeDragHandler,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 
@@ -139,7 +140,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   // NODES
 
   // DRAG EXISTING NODE
-  const handleNodeDragStop = async (event: MouseEvent, node: INode) => {
+  const handleNodeDragStop: NodeDragHandler = async (event, node) => {
     if (node.type === NODE_TYPE.Branch) {
       console.log('THIS IS THE DRAGGED BRANCH: ', node)
 

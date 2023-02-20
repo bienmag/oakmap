@@ -86,7 +86,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
     useState<ReactFlowInstance | null>(null)
   const [selected, setSelected] = useState<Node<INodeInfo> | null>(null)
   const [selectedNode, setSelectedNode] = useState<Node<INodeInfo> | null>(null)
-  const [selectedData, setSelectedData] = useState<string>('')
+  const [selectedData, setSelectedData] = useState<string>('') // contains the name
   const [marked, setMarked] = useState<Node<INodeInfo> | null>(null)
 
   // useRef for double click on node to focus on input text
@@ -416,6 +416,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                 setNodes={setNodes}
                 setMarked={setMarked}
                 treeMode={treeMode}
+                treeId={treeId}
               />
             ) : (
               <div></div>

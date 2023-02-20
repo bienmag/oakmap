@@ -12,6 +12,8 @@ import {
 } from '../../Resources/Packages/RFlow/Custom'
 import { v4 as uuidv4 } from 'uuid'
 import { Node } from 'reactflow'
+import { NODE_TYPE } from '../../Resources/Enums/Options'
+import axios from 'axios'
 
 /////////////////////////////////////////////////////
 // CUSTOM MENU ON THE LEFT SIDE FOR DRAGGING NODES
@@ -24,6 +26,7 @@ interface ICustomProps {
   setNodes: React.Dispatch<React.SetStateAction<Node<INodeInfo>[]>>
   setMarked: React.Dispatch<React.SetStateAction<Node<INodeInfo> | null>>
   treeMode: TreeMode
+  treeId: string
 }
 
 function Custom({
@@ -33,11 +36,32 @@ function Custom({
   setNodes,
   setMarked,
   treeMode,
+  treeId,
 }: ICustomProps) {
   const [nodeName, setNodeName] = useState('')
 
-  const handleDelNode = () => {
+  const handleDelNode = async () => {
+    console.log('selected to delete: ', selected)
     if (selected === null) return
+    if (selected.type === NODE_TYPE.Branch) {
+      const branchId = selected.id
+      const response = await axios
+        .delete(`http://localhost:8080/trees/${treeId}/branches/${branchId}`)
+        .catch((error) => {
+          console.log('Error deleting branch:', error)
+        })
+    }
+    if (
+      selected.type === NODE_TYPE.LeftLeaf ||
+      selected.type === NODE_TYPE.RightLeaf
+    ) {
+      const leafId = selected.id
+      const response = await axios
+        .delete(`http://localhost:8080/trees/${treeId}/leaves/${leafId}`)
+        .catch((error) => {
+          console.log('Error deleting leaf:', error)
+        })
+    }
     CBackHandleDelNode(setNodes, selected)
   }
 

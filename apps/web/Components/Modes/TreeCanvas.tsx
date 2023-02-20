@@ -23,6 +23,8 @@ import ReactFlow, {
   updateEdge,
   SmoothStepEdge,
   NodeDragHandler,
+  useStore,
+  useOnSelectionChange,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 
@@ -83,6 +85,8 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null)
   const [selected, setSelected] = useState<Node<INodeInfo> | null>(null)
+  const [selectedNode, setSelectedNode] = useState<Node<INodeInfo> | null>(null)
+  const [selectedData, setSelectedData] = useState<string>('')
   const [marked, setMarked] = useState<Node<INodeInfo> | null>(null)
 
   // useRef for double click on node to focus on input text
@@ -104,7 +108,6 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   // TREE ID
 
   const treeId = tree._id
-  console.log('TREE ID: ', treeId)
 
   // POST REQUEST FOR EDGES
 
@@ -137,9 +140,85 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
     // setEdges((eds: IEdgeInfo[]) => addEdge(params, eds))
   }, [])
 
-  // NODES
+  //////////////////////////////////////////
+  //////////////// NODES ///////////////////
+  //////////////////////////////////////////
 
-  // DRAGGING AN EXISTING NODE
+  // UPDATE FOR CHANGING TEXT ON A NODE
+
+  /* const handleUpdateNode = (node: INode) => {
+    if (selected && selected.data && selected.data.label !== labelRef.current) {
+      // send PUT request to update node's label here
+      try {
+        const response = await axios.put(
+          `http://localhost:8080/trees/${treeId}/branches`,
+          {
+            branchId: node.id,
+            treeId: tree._id,
+            position: node.position,
+            type: node.type,
+            branchName: node.data.label,
+          }
+        )
+        console.log('Update node with text: ', response)
+      } catch (error) {
+        console.error('Failed to update branch node', error)
+        throw error
+      }
+      console.log(
+        `Sending PUT request to update node ${selected.id} label from "${selected.data.label}" to "${labelRef.current}"`
+      )
+    }
+  } */
+
+  const handleUpdateNode = useCallback(
+    async (node: Node<INodeInfo, string | undefined> | null) => {
+      // BRANCH
+      if (node !== null && node.type === NODE_TYPE.Branch) {
+        // && node.data.label !== ''
+        try {
+          const response = await axios.put(
+            `http://localhost:8080/trees/${treeId}/branches`,
+            {
+              branchId: node.id,
+              treeId: tree._id,
+              position: node.position,
+              type: node.type,
+              branchName: node.data.label ? node.data.label : null,
+            }
+          )
+          console.log('Update node with text: ', response)
+        } catch (error) {
+          console.error('Failed to update branch node', error)
+          throw error
+        }
+      }
+      // LEAF
+      if (
+        (node !== null && node.type === NODE_TYPE.LeftLeaf) ||
+        (node !== null && node.type === NODE_TYPE.RightLeaf)
+      ) {
+        try {
+          const response = await axios.put(
+            `http://localhost:8080/trees/${treeId}/unlinkedLeaves`,
+            {
+              leafId: node.id,
+              treeId: tree._id,
+              position: node.position,
+              type: node.type,
+              leafName: node.data.label,
+            }
+          )
+          console.log('Updated leaf with text: ', response)
+        } catch (error) {
+          console.log('Error updating leaf position:', error)
+        }
+      }
+    },
+    [tree, treeId]
+  )
+
+  // UPDATE FOR DRAGGING AN EXISTING NODE
   const handleNodeDragStop: NodeDragHandler = async (event, node) => {
     if (node.type === NODE_TYPE.Branch) {
       console.log('THIS IS THE DRAGGED BRANCH: ', node)
@@ -216,7 +295,6 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
       }
 
       /* setNodes((nds: INode[]) => nds.concat(newLeaf)) // alternative option */
-
       // POST REQUESTS FOR NEW BRANCHES AND LEAVES
 
       if (type === NODE_TYPE.Branch) {
@@ -289,6 +367,9 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                   onNodesChange={onNodesChange}
                   onEdgesChange={onEdgesChange}
                   onNodeDragStop={handleNodeDragStop}
+                  /* elements={elements}
+                  onElementClick={onElementClick}
+                  onBackgroundClick={handleDeselect} */
                   onConnect={onConnect}
                   nodeTypes={nodeTypes}
                   onInit={setReactFlowInstance}
@@ -296,7 +377,12 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                   deleteKeyCode={null}
                   onDragOver={onDragOver}
                   onPaneClick={() => {
+                    handleUpdateNode(selectedNode)
+                    setSelectedData('')
+                    setSelectedNode(null)
                     setSelected(null)
+                    console.log('CLICKED BACKGROUND')
+                    console.log('SELECTED: ', selected)
                   }}
                   onNodeDoubleClick={(event, node) => {
                     if (treeMode === TREE_MODE.Editor) {
@@ -306,7 +392,11 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                   }}
                   onNodeClick={(event, node) => {
                     if (treeMode === TREE_MODE.Reader) setMarked(node)
+                    setSelectedData(node.data.label)
                     setSelected(node)
+                    setSelectedNode(node)
+                    console.log('SELECTED CLICK: ', selected)
+                    console.log('selected data: ', selectedData)
                   }}
                   fitView
                 >
@@ -347,17 +437,16 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   )
 }
 
-/*
-  useEffect(() => {
-    if (nodes.length > 0) {
-      console.log('HAS NODES')
-      setHasNodes(true)
-    }
-  }, [nodes])
+// useEffect(() => {
+//   if (nodes.length > 0) {
+//     console.log('HAS NODES')
+//     setHasNodes(true)
+//   }
+// }, [nodes])
 
-  useEffect(() => {
-    if (edges.length > 0) {
-      console.log('HAS EDGES')
-      setHasEdges(true)
-    }
-  }, [edges]) */
+// useEffect(() => {
+//   if (edges.length > 0) {
+//     console.log('HAS EDGES')
+//     setHasEdges(true)
+//   }
+// }, [edges])

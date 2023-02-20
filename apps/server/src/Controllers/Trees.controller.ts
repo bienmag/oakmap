@@ -8,6 +8,7 @@ import Leaf from "../Models/Leaves";
 import { ObjectId } from "mongodb";
 import Edge from "../Models/Edges";
 import { mongo } from "mongoose";
+import User from "../Models/Users";
 
 
 const TreesController = {
@@ -36,6 +37,9 @@ const TreesController = {
         label: 'root'
       }
       const tree = await Tree.create(treeId, treeName, root, date, user, branches, unlinkedLeaves, edges)
+
+      const id = new mongodb.ObjectId(treeId)
+      await User.update(user, id)
       res.status(201).json(tree)
     }
     catch (e) { next(e) }
@@ -283,12 +287,24 @@ const TreesController = {
       const { userId } = req.params
       const trees = await DBTree.find({ user: userId })
       res.status(201).json(trees)
-      console.log(trees)
-
     } catch (e) {
       next(e)
     }
+  },
+
+  async createUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const _id = new ObjectId()
+      const { userId, email, accessToken } = req.body
+      const user = await User.create(_id, userId, email, accessToken)
+      console.log('user from controller', user)
+      res.status(201).json(user)
+    }
+    catch (e) {
+      next(e)
+    }
   }
+
 }
 
 

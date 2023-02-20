@@ -55,6 +55,7 @@ import { useTreeContext } from '../../Resources/Packages/RFlow/TreeContext'
 // import { TreeMode } from '../../Resources/Enums/Options'
 
 import { v4 as uuidv4 } from 'uuid'
+import Field from '../Field/Field'
 
 const getId = () => uuidv4()
 
@@ -311,10 +312,9 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
               </div>
               <MiniMap />
             </div>
+            <Field treeMode={treeMode} setTreeMode={setTreeMode} />
             {/* OLD EDIT MODE SELECT FOR THE ROADMAP EDITOR */}
-
             {/* <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} /> */}
-
             {treeMode === TREE_MODE.Editor ? (
               <Custom
                 selected={selected}

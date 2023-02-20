@@ -87,7 +87,7 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
         >
           +
         </button>
-        <p> {session ? `WZelcome ${session.user.name}` : ''}</p>
+        <p> {session ? `Welcome ${session.user.name}` : ''}</p>
         <div>
           {trees.length > 0 ? (
             <TreeList trees={trees} />

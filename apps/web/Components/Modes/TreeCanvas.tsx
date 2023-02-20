@@ -140,26 +140,39 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
   // DRAG EXISTING NODE
   const handleNodeDragStop = async (event: MouseEvent, node: INode) => {
-    // make the PUT request to the server with the updated position data
-    // using fetch or any other method you prefer
+    if (node.type === NODE_TYPE.Branch) {
+      console.log('THIS IS THE DRAGGED BRANCH: ', node)
 
-    /*     if (node.type === NODE_TYPE.Branch) {
+      // IF DRAGGING A BRANCH
+      const response = await axios
+        .put(`http://localhost:8080/trees/${treeId}/branches`, {
+          branchId: node.id,
+          treeId: tree._id,
+          position: node.position,
+          type: node.type,
+          branchName: node.data.label,
+        })
+        .catch((error) => {
+          console.log('Error updating branch position:', error)
+        })
+    }
 
-    } */
+    // IF DRAGGING A LEAF
+    if (node.type === NODE_TYPE.LeftLeaf || node.type === NODE_TYPE.RightLeaf) {
+      console.log('THIS IS THE DRAGGED LEAF: ', node)
 
-    console.log('THIS IS THE DRAGGED NODE: ', node)
-
-    // IF DRAGGING A BRANCH
-    const response = await axios.put(
-      `http://localhost:8080/trees/${treeId}/branches`,
-      {
-        branchId: node.id,
-        treeId: tree._id,
-        position: node.position,
-        type: node.type,
-        branchName: node.data.label,
-      }
-    )
+      const response = await axios
+        .put(`http://localhost:8080/trees/${treeId}/unlinkedLeaves`, {
+          leafId: node.id,
+          treeId: tree._id,
+          position: node.position,
+          type: node.type,
+          leafName: node.data.label,
+        })
+        .catch((error) => {
+          console.log('Error updating leaf position:', error)
+        })
+    }
   }
 
   const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback(

@@ -4,7 +4,7 @@ import Option from '../Option/Option'
 import Button from '../Wrapper/Button'
 import cogoToast from 'cogo-toast'
 
-function Field({ treeMode, setTreeMode }) {
+function Field({ treeMode, setTreeMode }: any) {
   const [isOpen, setIsOpen] = useState(false)
 
   const openBottomSheet = () => setIsOpen(true)

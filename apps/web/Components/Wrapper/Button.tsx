@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Button({ className, onClick, children }) {
+function Button({ className, onClick, children }: any) {
   return (
     <>
       <a href="#" className="text-sm font-medium text-gray-900">

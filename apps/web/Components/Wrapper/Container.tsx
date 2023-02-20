@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Container({ className, children }) {
+function Container({ className, children }: any) {
   return (
     <div
       className={

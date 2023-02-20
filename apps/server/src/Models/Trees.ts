@@ -12,7 +12,8 @@ class Tree {
     public branches?: Array<object>,
     public unlinkedLeaves?: Array<object>,
     public description?: string,
-    public edges?: Array<object>
+    public edges?: Array<object>,
+    public username?: string
   ) { }
 
 
@@ -25,14 +26,15 @@ class Tree {
     user: string,
     branches: Array<object>,
     unlinkedLeaves: Array<object>,
-    edges: Array<object>
+    edges: Array<object>,
+    username: string
   ): Promise<Tree> {
 
     await DBTree.create({
-      _id, treeName, root, date, user, branches, unlinkedLeaves, edges
+      _id, treeName, root, date, user, branches, unlinkedLeaves, edges, username
     })
 
-    return new Tree(_id, treeName, root, date, user, branches, unlinkedLeaves, undefined, edges)
+    return new Tree(_id, treeName, root, date, user, branches, unlinkedLeaves, undefined, edges, username)
   }
 
   static async getAll(): Promise<Tree[]> {

@@ -12,6 +12,8 @@ import { getToken } from 'next-auth/jwt'
 import { JWT_SECRET } from '../Resources/lib/constants'
 import Container from '../Components/Wrapper/Container'
 import { Sidebar } from '../Components/Sidebar/Sidebar'
+import { redirect } from 'next/dist/server/api-utils'
+import cogoToast from 'cogo-toast'
 
 
 /////////////////////////////////////////////
@@ -37,13 +39,18 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
 
   const handleCreateTree = async (e: React.MouseEvent) => {
     e.preventDefault()
+    console.log('status', status)
 
     if (status === 'authenticated') {
+
+
       const tree = await axios.post(
         'http://localhost:8080/trees',
         {
           treeName: 'New Tree',
           user: session.user.id,
+          username: session.user.name,
+          userpic: session.user.image
         }
         // {
         //   headers: {
@@ -51,12 +58,12 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
         //   },
         // }
       )
-
+      console.log('masession', session.user.name)
+      cogoToast.success('The tree was created!', { hideAfter: 1 })
 
       ////////////////////////////redirect//////////////////////////////////////
       // redirect(`/trees/${tree.data._id}`)
-
-
+      //////////////////////////////////
 
     } else {
       signIn('google')
@@ -175,6 +182,8 @@ interface AllTreesProps {
   allTrees: ITree[]
 }
 const TreeList = ({ allTrees }: AllTreesProps) => {
+
+
   return (
     <div className="px-6 lg:px-8">
       <div className="mt-2 flow-root">
@@ -204,7 +213,7 @@ const TreeList = ({ allTrees }: AllTreesProps) => {
                           {tree.treeName}
                         </Link>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-left text-gray-500">{tree._id}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-left text-gray-500">{tree.username?.split(' ')[0]}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">123</td>
                     </tr>
                   ))}

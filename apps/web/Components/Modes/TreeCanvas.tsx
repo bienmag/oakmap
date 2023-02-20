@@ -392,8 +392,8 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                   onDrop={onDrop}
                   deleteKeyCode={null}
                   onDragOver={onDragOver}
-                  onPaneClick={() => {
-                    handleUpdateNode(selectedNode, selectedData)
+                  onPaneClick={async () => {
+                    await handleUpdateNode(selectedNode, selectedData)
                     setSelectedData('')
                     setSelectedNode(null)
                     setSelected(null)

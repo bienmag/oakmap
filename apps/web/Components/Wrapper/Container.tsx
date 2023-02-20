@@ -6,7 +6,7 @@ function Container({ className, children }: any) {
       className={
         className +
         ' ' +
-        'box-border h-62 w-62 p-4 border-0 max-w-screen-sm text-center m-8 flex-auto rounded-xl'
+        'box-border  w-62 p-4 border-0 max-w-screen-sm text-center m-8 flex-auto rounded-xl w-64'
       }
     >
       {children}

@@ -1,0 +1,120 @@
+@font-face {
+    font-family: 'GillSansCondC';
+    src: url('GillSansCondC-Bold.eot');
+    src: local('GillSansCondC Bold'), local('GillSansCondC-Bold'),
+        url('GillSansCondC-Bold.eot?#iefix') format('embedded-opentype'),
+        url('GillSansCondC-Bold.woff2') format('woff2'),
+        url('GillSansCondC-Bold.woff') format('woff'),
+        url('GillSansCondC-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GillSansCondBlackC';
+    src: url('GillSansCondBlackC.eot');
+    src: local('GillSansCondBlackC'),
+        url('GillSansCondBlackC.eot?#iefix') format('embedded-opentype'),
+        url('GillSansCondBlackC.woff2') format('woff2'),
+        url('GillSansCondBlackC.woff') format('woff'),
+        url('GillSansCondBlackC.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GillSansCondC';
+    src: url('GillSansCondC.eot');
+    src: local('GillSansCondC'),
+        url('GillSansCondC.eot?#iefix') format('embedded-opentype'),
+        url('GillSansCondC.woff2') format('woff2'),
+        url('GillSansCondC.woff') format('woff'),
+        url('GillSansCondC.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GillSansC';
+    src: url('GillSansC-Italic.eot');
+    src: local('GillSansC Italic'), local('GillSansC-Italic'),
+        url('GillSansC-Italic.eot?#iefix') format('embedded-opentype'),
+        url('GillSansC-Italic.woff2') format('woff2'),
+        url('GillSansC-Italic.woff') format('woff'),
+        url('GillSansC-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'GillSansC';
+    src: url('GillSansC-BoldItalic.eot');
+    src: local('GillSansC Bold Italic'), local('GillSansC-BoldItalic'),
+        url('GillSansC-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('GillSansC-BoldItalic.woff2') format('woff2'),
+        url('GillSansC-BoldItalic.woff') format('woff'),
+        url('GillSansC-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'GillSansC';
+    src: url('GillSansC.eot');
+    src: local('GillSansC'),
+        url('GillSansC.eot?#iefix') format('embedded-opentype'),
+        url('GillSansC.woff2') format('woff2'),
+        url('GillSansC.woff') format('woff'),
+        url('GillSansC.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GillSansExtraBoldC';
+    src: url('GillSansExtraBoldC.eot');
+    src: local('GillSansExtraBoldC'),
+        url('GillSansExtraBoldC.eot?#iefix') format('embedded-opentype'),
+        url('GillSansExtraBoldC.woff2') format('woff2'),
+        url('GillSansExtraBoldC.woff') format('woff'),
+        url('GillSansExtraBoldC.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GillSansC';
+    src: url('GillSansC-Bold.eot');
+    src: local('GillSansC Bold'), local('GillSansC-Bold'),
+        url('GillSansC-Bold.eot?#iefix') format('embedded-opentype'),
+        url('GillSansC-Bold.woff2') format('woff2'),
+        url('GillSansC-Bold.woff') format('woff'),
+        url('GillSansC-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GillSansLightC';
+    src: url('GillSansLightC.eot');
+    src: local('GillSansLightC'),
+        url('GillSansLightC.eot?#iefix') format('embedded-opentype'),
+        url('GillSansLightC.woff2') format('woff2'),
+        url('GillSansLightC.woff') format('woff'),
+        url('GillSansLightC.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GillSansLightC';
+    src: url('GillSansLightC-Italic.eot');
+    src: local('GillSansLightC Italic'), local('GillSansLightC-Italic'),
+        url('GillSansLightC-Italic.eot?#iefix') format('embedded-opentype'),
+        url('GillSansLightC-Italic.woff2') format('woff2'),
+        url('GillSansLightC-Italic.woff') format('woff'),
+        url('GillSansLightC-Italic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+

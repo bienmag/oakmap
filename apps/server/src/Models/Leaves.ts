@@ -33,7 +33,9 @@ class Leaf {
 
     const id = new mongodb.ObjectId(treeId)
 
-    const tree = await DBTree.findOneAndUpdate(
+
+
+    const foundinUnlinked = await DBTree.findOneAndUpdate(
       {
         _id: id, "unlinkedLeaves.leafId": leafId
       }, {
@@ -46,11 +48,32 @@ class Leaf {
       { new: true }
     )
 
+    let foundLeaf
+    if (foundinUnlinked === null) {
+
+      const tree = await DBTree.findOne({ id: id })
+      if (tree === null) {
+        throw new Error('The tree is not found')
+      }
+
+      for (const branch of tree.branches) {
+        if (branch.leaves !== null) {
+          for (const leaf of branch.leaves) {
+            if (leaf.leafId === leafId) {
+              foundLeaf = leaf
+
+              const thing = await DBTree.findOneAndUpdate(
+                { _id: id, "branches": { $elemMatch: { "branchId": foundLeaf.branchId, "leaves": { $elemMatch: { "leafId": leafId } } } } },
+                { $set: { "branches.$[i].leaves.$[j].position": position, "branches.$[i].leaves.$[j].leafName": leafName, "branches.$[i].leaves.$[j].branchId": branchId } },
+                { arrayFilters: [{ "i.branchId": foundLeaf.branchId }, { "j.leafId": leafId }], upsert: true }
+              );
+            }
+          }
+        }
+      }
+    }
     return new Leaf(leafId, treeId, position, type, leafName, branchId)
   }
-
-
-
   static async deleteLeaf(
     treeId: string,
     leafId: string

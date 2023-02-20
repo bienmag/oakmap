@@ -155,13 +155,15 @@ export function Sidebar({ children }: SidebarProps) {
     */}
       <div className="flex h-screen flex-col">
         {/* Top nav*/}
-        <header className="relative flex h-16 flex-shrink-0 items-center  bg-org-palette">
+        <header className="relative flex h-16 flex-shrink-0 items-center  bg-white">
           {/* Logo area */}
 
           <div className="absolute inset-y-0 left-0 md:static md:flex-shrink-0">
             <Link
               href="/"
-              className="flex box-content h-16 w-16 items-center justify-center bg-white md:w-20 border-r-2 border-dark-palette"
+
+              className="flex h-16 w-16 items-center justify-center bg-org-palette md:w-20"
+
             >
               <Image className="h-8 w-auto " src={logo} alt="Your Company" />
             </Link>
@@ -233,11 +235,11 @@ export function Sidebar({ children }: SidebarProps) {
                   id="desktop-search"
                   type="search"
                   placeholder="Search"
-                  className="rounded-3xl bg-org-palette border-4 border-white  text-white block w-full border-transparent pl-12 placeholder-white   sm:text-base"
+                  className="rounded-3xl bg-white border-2 border-gray-400 text-gray-400 block w-full border-transparent pl-10 placeholder-gray-400   sm:text-base"
                 />
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-4">
                   <MagnifyingGlassIcon
-                    className="ml-3 text-white h-5 w-5"
+                    className="ml-3 text-gray-400 h-5 w-5"
                     aria-hidden="true"
                   />
                 </div>
@@ -247,10 +249,10 @@ export function Sidebar({ children }: SidebarProps) {
           <div className="mr-3">
             <Button
               className={
-                'bg-dark-palette hover:bg-ylw-palette  hover:text-black text-white'
+                'bg-dark-palette hover:bg-org-palette  hover:text-black text-white'
               }
               onClick={() =>
-                status === 'authenticated' ? signOut() : signIn()
+                status === 'authenticated' ? signOut() : signIn('google')
               }
             >
               {status === 'authenticated' ? 'SIGN OUT' : 'SIGN IN'}

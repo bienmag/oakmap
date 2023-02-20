@@ -5,6 +5,7 @@ export interface ITree {
   _id: string
   treeName: string
   user: string
+  date: string
   description: string
   branches: IBranch[]
   unlinkedLeaves: ILeaf[]

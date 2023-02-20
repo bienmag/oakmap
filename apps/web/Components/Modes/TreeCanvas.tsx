@@ -146,31 +146,6 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
   // UPDATE FOR CHANGING TEXT ON A NODE
 
-  /* const handleUpdateNode = (node: INode) => {
-    if (selected && selected.data && selected.data.label !== labelRef.current) {
-      // send PUT request to update node's label here
-      try {
-        const response = await axios.put(
-          `http://localhost:8080/trees/${treeId}/branches`,
-          {
-            branchId: node.id,
-            treeId: tree._id,
-            position: node.position,
-            type: node.type,
-            branchName: node.data.label,
-          }
-        )
-        console.log('Update node with text: ', response)
-      } catch (error) {
-        console.error('Failed to update branch node', error)
-        throw error
-      }
-      console.log(
-        `Sending PUT request to update node ${selected.id} label from "${selected.data.label}" to "${labelRef.current}"`
-      )
-    }
-  } */
-
   const handleUpdateNode = useCallback(
     async (
       node: Node<INodeInfo, string | undefined> | null,
@@ -406,11 +381,14 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                       inputRef.current?.select()
                     } // setMarked(node)
                   }}
-                  onNodeClick={(event, node) => {
+                  onNodeClick={async (event, node) => {
                     if (treeMode === TREE_MODE.Reader) setMarked(node)
+                    if (selectedData !== '') {
+                      await handleUpdateNode(selectedNode, selectedData)
+                    }
                     setSelected(node)
                     setSelectedNode(node)
-                    console.log('SELECTED CLICK: ', selected)
+                    console.log('SELECTED A NODE: ', selected)
                     console.log('selected data: ', selectedData)
                   }}
                   fitView

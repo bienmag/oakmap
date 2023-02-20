@@ -90,7 +90,7 @@ function Custom({
               onChange={(e) => {
                 setNodeName(e.target.value)
                 setSelectedData(e.target.value) // for updating server
-                console.log('selectedData: ', selectedData)
+                // console.log('selectedData: ', selectedData)
               }}
               value={nodeName}
               className="pl-2"

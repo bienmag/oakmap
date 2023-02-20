@@ -348,81 +348,82 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   const [hasEdges, setHasEdges] = useState<boolean>(false)
 
   return (
-  <Sidebar>
-    <div className="dndflow" style={{ height: '100vh' }}>
-      <InputContext.Provider value={inputRef}>
-        <div className="React-Flow-Container">
-          <ReactFlowProvider>
-            <div
-              className="reactflow-wrapper absolute inset-0"
-              ref={reactFlowWrapper}
-            >
-              {/* TERNARY TO RENDER ??? */}
-              <div style={{ height: '100vh', width: '100%' }}>
-                <ReactFlow
-                  key={`${hasNodes}-${hasEdges}`}
-                  nodes={nodes}
-                  edges={edges}
-                  nodesDraggable={isDraggable}
-                  onNodesChange={onNodesChange}
-                  onEdgesChange={onEdgesChange}
-                  onNodeDragStop={handleNodeDragStop}
-                  /* elements={elements}
+    <Sidebar>
+      <div className="dndflow" style={{ height: '100vh' }}>
+        <InputContext.Provider value={inputRef}>
+          <div className="React-Flow-Container">
+            <ReactFlowProvider>
+              <div
+                className="reactflow-wrapper absolute inset-0"
+                ref={reactFlowWrapper}
+              >
+                {/* TERNARY TO RENDER ??? */}
+                <div style={{ height: '100vh', width: '100%' }}>
+                  <ReactFlow
+                    key={`${hasNodes}-${hasEdges}`}
+                    nodes={nodes}
+                    edges={edges}
+                    nodesDraggable={isDraggable}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onNodeDragStop={handleNodeDragStop}
+                    /* elements={elements}
                   onElementClick={onElementClick}
                   onBackgroundClick={handleDeselect} */
-                  onConnect={onConnect}
-                  nodeTypes={nodeTypes}
-                  onInit={setReactFlowInstance}
-                  onDrop={onDrop}
-                  deleteKeyCode={null}
-                  onDragOver={onDragOver}
-                  onPaneClick={async () => {
-                    await handleUpdateNode(selectedNode, selectedData)
-                    setSelectedData('')
-                    setSelectedNode(null)
-                    setSelected(null)
-                    console.log('CLICKED BACKGROUND')
-                    console.log('SELECTED: ', selected)
-                  }}
-                  onNodeDoubleClick={(event, node) => {
-                    if (treeMode === TREE_MODE.Editor) {
-                      inputRef.current?.focus()
-                      inputRef.current?.select()
-                    } // setMarked(node)
-                  }}
-                  onNodeClick={async (event, node) => {
-                    if (treeMode === TREE_MODE.Reader) setMarked(node)
-                    if (selectedData !== '') {
+                    onConnect={onConnect}
+                    nodeTypes={nodeTypes}
+                    onInit={setReactFlowInstance}
+                    onDrop={onDrop}
+                    deleteKeyCode={null}
+                    onDragOver={onDragOver}
+                    onPaneClick={async () => {
                       await handleUpdateNode(selectedNode, selectedData)
-                    }
-                    setSelected(node)
-                    setSelectedNode(node)
-                    console.log('SELECTED A NODE: ', selected)
-                    console.log('selected data: ', selectedData)
-                  }}
-                  fitView
-                >
-                  {treeMode === TREE_MODE.Editor ? (
-                    <Background />
-                  ) : (
-                    <Background variant={BackgroundVariant.Lines} />
-                  )}
-                  <Controls />
-                </ReactFlow>
+                      setSelectedData('')
+                      setSelectedNode(null)
+                      setSelected(null)
+                      console.log('CLICKED BACKGROUND')
+                      console.log('SELECTED: ', selected)
+                    }}
+                    onNodeDoubleClick={(event, node) => {
+                      if (treeMode === TREE_MODE.Editor) {
+                        inputRef.current?.focus()
+                        inputRef.current?.select()
+                      } // setMarked(node)
+                    }}
+                    onNodeClick={async (event, node) => {
+                      if (treeMode === TREE_MODE.Reader) setMarked(node)
+                      if (selectedData !== '') {
+                        await handleUpdateNode(selectedNode, selectedData)
+                      }
+                      setSelected(node)
+                      setSelectedNode(node)
+                      console.log('SELECTED A NODE: ', selected)
+                      console.log('selected data: ', selectedData)
+                    }}
+                    fitView
+                  >
+                    {treeMode === TREE_MODE.Editor ? (
+                      <Background />
+                    ) : (
+                      <Background variant={BackgroundVariant.Lines} />
+                    )}
+                    <Controls />
+                  </ReactFlow>
+                </div>
+                <MiniMap />
               </div>
-              <MiniMap />
-            </div>
-            <Field treeMode={treeMode} setTreeMode={setTreeMode} />
-            {/* OLD EDIT MODE SELECT FOR THE ROADMAP EDITOR */}
-            {/* <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} /> */}
-            {treeMode === TREE_MODE.Editor ? (
-              <Custom
-                selected={selected}
-                setSelectedData={setSelectedData}
-                selectedData={selectedData}
-                setNodes={setNodes}
-                setMarked={setMarked}
-                treeMode={treeMode}
+              <Field treeMode={treeMode} setTreeMode={setTreeMode} />
+              {/* OLD EDIT MODE SELECT FOR THE ROADMAP EDITOR */}
+              {/* <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} /> */}
+              {treeMode === TREE_MODE.Editor ? (
+                <Custom
+                  selected={selected}
+                  setSelectedData={setSelectedData}
+                  selectedData={selectedData}
+                  setNodes={setNodes}
+                  setMarked={setMarked}
+                  treeMode={treeMode}
+                  treeId={treeId}
                 />
               ) : (
                 <div></div>
@@ -432,7 +433,6 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                 setMarked={setMarked}
                 setNodes={setNodes}
                 treeMode={treeMode}
-                treeId={treeId}
               />
             </ReactFlowProvider>
           </div>

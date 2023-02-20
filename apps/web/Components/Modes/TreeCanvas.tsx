@@ -142,7 +142,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
         setEdges((eds: IEdgeInfo[]) => addEdge(newEdge, eds))
       })
     // setEdges((eds: IEdgeInfo[]) => addEdge(params, eds))
-  }, [])
+  }, [setEdges, treeId])
 
   //////////////////////////////////////////
   //////////////// NODES ///////////////////
@@ -341,7 +341,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
         }
       }
     },
-    [reactFlowInstance, setNodes]
+    [reactFlowInstance, setNodes, nodes, tree, treeId]
   )
 
   const [hasNodes, setHasNodes] = useState<boolean>(false)

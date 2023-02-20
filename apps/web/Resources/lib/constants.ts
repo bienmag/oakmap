@@ -1,7 +1,4 @@
 
-import dotenv from 'dotenv'
-dotenv.config()
-
 
 export const GOOGLE_CLIENT_ID = ensureEnvVarExistance('GOOGLE_CLIENT_ID')
 export const GOOGLE_CLIENT_SECRET = ensureEnvVarExistance('GOOGLE_CLIENT_SECRET')

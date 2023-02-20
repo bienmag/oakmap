@@ -204,6 +204,9 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
             console.log('Failed to update leaf node', error)
           }
         }
+        if (node !== null && node.type === NODE_TYPE.Root) {
+          console.log('Sorry, root node cannot be updated at the moment!')
+        }
       }
     },
     [tree, treeId]

@@ -62,6 +62,8 @@ import {
   postNewLeaf,
 } from '../../Resources/Packages/RFlow/TreeRequests'
 
+// CODE
+
 const getId = () => uuidv4()
 
 export const InputContext =
@@ -87,7 +89,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
   const [treeMode, setTreeMode] = useState(TREE_MODE.Editor)
 
-  // Nodes and Edges State
+  // Import State for Nodes and Edges from NodesContext
   const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } =
     useContext(NodesContext)
 
@@ -103,7 +105,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   const treeId = tree._id
   console.log('TREE ID: ', treeId)
 
-  // CREATING EDGES
+  // POST REQUEST FOR EDGES
 
   const onConnect: OnConnect = useCallback(async (params) => {
     console.log('Edge onConnect params: ', params)
@@ -133,6 +135,32 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
       })
     // setEdges((eds: IEdgeInfo[]) => addEdge(params, eds))
   }, [])
+
+  // NODES
+
+  // DRAG EXISTING NODE
+  const handleNodeDragStop = async (event: MouseEvent, node: INode) => {
+    // make the PUT request to the server with the updated position data
+    // using fetch or any other method you prefer
+
+    /*     if (node.type === NODE_TYPE.Branch) {
+
+    } */
+
+    console.log('THIS IS THE DRAGGED NODE: ', node)
+
+    // IF DRAGGING A BRANCH
+    const response = await axios.put(
+      `http://localhost:8080/trees/${treeId}/branches`,
+      {
+        branchId: node.id,
+        treeId: tree._id,
+        position: node.position,
+        type: node.type,
+        branchName: node.data.label,
+      }
+    )
+  }
 
   const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback(
     (event) => {
@@ -168,7 +196,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
       /* setNodes((nds: INode[]) => nds.concat(newLeaf)) // alternative option */
 
-      // REFACTORING TO DO -- POST REQUEST FOR CREATING A NEW NODE
+      // POST REQUESTS FOR NEW BRANCHES AND LEAVES
 
       if (type === NODE_TYPE.Branch) {
         try {
@@ -221,20 +249,6 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   const [hasNodes, setHasNodes] = useState<boolean>(false)
   const [hasEdges, setHasEdges] = useState<boolean>(false)
 
-  /*   useEffect(() => {
-    if (nodes.length > 0) {
-      console.log('HAS NODES')
-      setHasNodes(true)
-    }
-  }, [nodes])
-
-  useEffect(() => {
-    if (edges.length > 0) {
-      console.log('HAS EDGES')
-      setHasEdges(true)
-    }
-  }, [edges]) */
-
   return (
     <div className="dndflow" style={{ height: '100vh' }}>
       <InputContext.Provider value={inputRef}>
@@ -253,6 +267,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                   nodesDraggable={isDraggable}
                   onNodesChange={onNodesChange}
                   onEdgesChange={onEdgesChange}
+                  onNodeDragStop={handleNodeDragStop}
                   onConnect={onConnect}
                   nodeTypes={nodeTypes}
                   onInit={setReactFlowInstance}
@@ -310,3 +325,18 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
     </div>
   )
 }
+
+/*
+  useEffect(() => {
+    if (nodes.length > 0) {
+      console.log('HAS NODES')
+      setHasNodes(true)
+    }
+  }, [nodes])
+
+  useEffect(() => {
+    if (edges.length > 0) {
+      console.log('HAS EDGES')
+      setHasEdges(true)
+    }
+  }, [edges]) */

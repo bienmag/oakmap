@@ -21,7 +21,7 @@ import ModeSelector from '../Modes/ModeSelector'
 
 // import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon, HeartIcon, MagnifyingGlassIcon, PlusCircleIcon, UserIcon } from '@heroicons/react/20/solid'
 import {
   ArchiveBoxIcon,
   Bars3Icon,
@@ -34,12 +34,55 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 
+enum Page {
+  NotDefined,
+  Dashboard,
+  TreeDetail,
+}
+
+interface IPageMap {
+  '/': Page
+  '/trees/[treeId]': Page
+}
+const PageMap: IPageMap = {
+  '/': Page.Dashboard,
+  '/trees/[treeId]': Page.TreeDetail
+}
+
+interface INavigationItem {
+  name: string
+  href: string
+  icon: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+    titleId?: string | undefined;
+  }>
+  page?: Page
+  disabled?: boolean
+}
+
+const sidebarNavigation: INavigationItem[] = [
+
+  // set as selected false
+
+  { name: 'Dashboard', href: '/', icon: InboxIcon, page: Page.Dashboard },
+  { name: 'Trees', href: '#', icon: ArchiveBoxIcon, page: Page.TreeDetail },
+  { name: 'Customers', href: '#', icon: UserCircleIcon, disabled: true },
+]
+
+const accessoryNavigation: INavigationItem[] = [
+  { name: 'HeartIcon', href: '#', icon: HeartIcon, disabled: true },
+  { name: 'plusCircle', href: '#', icon: PlusCircleIcon, disabled: true },
+  { name: 'UserIcon', href: '#', icon: UserIcon, disabled: true },
+]
+
+
 // REACT FLOW
 import ReactFlow, { useNodesState, useEdgesState, Node } from 'reactflow'
 import { initialNodes } from '../../Resources/Packages/RFlow/RFlow'
 import { INodeInfo } from '../../Resources/Packages/RFlow/Custom'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Button from '../Wrapper/Button'
+import { useRouter } from 'next/router'
 
 const user = {
   name: 'Whitney Francis',
@@ -75,6 +118,9 @@ interface SidebarProps {
 
 // { TreeEditorMode, DashboardMode, ModeSelector }: any
 export function Sidebar({ children }: SidebarProps) {
+  const { route } = useRouter()
+  const currentPage: Page = PageMap[route as keyof IPageMap] || Page.NotDefined
+
   // removed epxort default
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // from Tailwind UI
 
@@ -115,13 +161,54 @@ export function Sidebar({ children }: SidebarProps) {
           <div className="absolute inset-y-0 left-0 md:static md:flex-shrink-0">
             <Link
               href="/"
+
               className="flex h-16 w-16 items-center justify-center bg-org-palette md:w-20"
+
             >
               <Image className="h-8 w-auto " src={logo} alt="Your Company" />
             </Link>
           </div>
 
           {/* Picker area */}
+
+          {/* ///////////////////copied until from here sidebarnvaigation/////////////////// we should do it dynamic.*/}
+
+          <div className="mx-auto md:hidden">
+            <div className="relative">
+              <label htmlFor="inbox-select" className="sr-only">
+                Choose inbox
+              </label>
+
+              <select
+                id="inbox-select"
+                className="rounded-md border-0 bg-none pl-3 pr-8 text-base font-medium text-gray-900 focus:ring-2 focus:ring-indigo-600"
+                defaultValue={
+                  sidebarNavigation
+                    .concat(accessoryNavigation)?.find(
+                      (item) => item.page === currentPage
+                    )?.name ?? ""
+                }
+              >
+                <optgroup>
+                  {sidebarNavigation &&
+                    sidebarNavigation.map((item) => (
+                      <option key={item.name} value={item.name}>{item.name}</option>
+                    ))}
+                </optgroup>
+                <optgroup>
+                  {accessoryNavigation &&
+                    accessoryNavigation.map((item) => (
+                      <option key={item.name} value={item.name}>{item.name}</option>
+                    ))}
+                </optgroup>
+              </select>
+
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center pr-2">
+                <ChevronDownIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
+              </div>
+            </div>
+          </div>
+          {/* ///////////////////copied until here sidebarnvaigation/////////////////// */}
 
           {/* Menu button area */}
           <div className="absolute inset-y-0 right-0 flex items-center pr-4 sm:pr-6 md:hidden">
@@ -178,10 +265,53 @@ export function Sidebar({ children }: SidebarProps) {
         <div className="flex min-h-0 flex-1 overflow-hidden">
           {/* Narrow sidebar*/}
           <nav
+
+            /////// SIDEBAR ICONS//////
             aria-label="Sidebar"
-            className="hidden md:block md:flex-shrink-0 md:overflow-y-auto md:bg-gray-800"
-          >
-            <div className="relative flex w-20 flex-col space-y-3 p-3"></div>
+            className="hidden md:flex md:flex-shrink-0 md:overflow-y-auto md:bg-white border-r-2 border-dark-palette flex-col justify-between">
+            <div className="relative flex w-20 flex-col space-y-3 p-3"> {
+              sidebarNavigation.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+
+                  //////// INSIDE ICONS COLOR////////
+                  className={classNames(
+                    item.page === currentPage
+                      ? 'bg-gray-900 text-white'
+                      : item.disabled
+                        ? 'text-gray-300 hover:bg-white'
+                        : 'text-dark-palette hover:bg-white',
+                    'flex-shrink-0 inline-flex items-center justify-center h-14 w-14 rounded-lg'
+                  )}
+                >
+                  <span className="sr-only">{item.name}</span>
+                  <item.icon className="h-7 w-7" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+
+            <div className="relative flex w-20 flex-col space-y-3 p-3"> {
+              accessoryNavigation.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+
+                  //////// INSIDE ICONS COLOR////////
+                  className={classNames(
+                    item.page === currentPage
+                      ? 'bg-gray-900 text-white'
+                      : item.disabled
+                        ? 'text-gray-300 hover:bg-white'
+                        : 'text-dark-palette hover:bg-white',
+                    'flex-shrink-0 inline-flex items-center justify-center h-14 w-14 rounded-lg'
+                  )}
+                >
+                  <span className="sr-only">{item.name}</span>
+                  <item.icon className="h-7 w-7" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
           </nav>
 
           {/* Main area */}

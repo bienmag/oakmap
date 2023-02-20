@@ -4,8 +4,8 @@ import { Sidebar } from '../Components/Sidebar/Sidebar'
 import { SessionProvider } from 'next-auth/react'
 
 import './index.css'
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return <>
     <SessionProvider session={session}>
 

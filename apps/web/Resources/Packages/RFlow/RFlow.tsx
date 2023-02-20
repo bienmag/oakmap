@@ -23,13 +23,30 @@ export const initialNodes = [
   },
 ]
 
-let id = 0
-export const getId = () => `node_${id++}`
-
-export const CBackOnDragOver: React.DragEventHandler<HTMLDivElement> = (event) => {
-  event.preventDefault()
-  event.dataTransfer.dropEffect = 'move'
+export const handleOnPaneClick = (
+  setSelected: React.Dispatch<React.SetStateAction<string>>
+) => {
+  setSelected('')
 }
+export const handleOnNodeDoubleClick = (
+  treeMode: TreeMode,
+  inputRef: React.RefObject<HTMLInputElement>
+) => {
+  if (treeMode === 'editor') {
+    inputRef.current?.focus()
+    inputRef.current?.select()
+  } // setMarked(node)
+}
+
+// export const CBackOnDragOver: React.DragEventHandler<HTMLDivElement> = (
+//   event
+// ) => {
+//   event.preventDefault()
+//   event.dataTransfer.dropEffect = 'move'
+// }
+
+// let id = 0
+// export const getId = () => `node_${id++}`
 
 // export const CBackOnDrop: React.DragEventHandler<HTMLDivElement> = (
 //   event: React.DragEvent,
@@ -62,17 +79,7 @@ export const CBackOnDragOver: React.DragEventHandler<HTMLDivElement> = (event) =
 //   setNodes((nds) => nds.concat(newNode))
 // }
 
-export const handleOnPaneClick = (setSelected: React.Dispatch<React.SetStateAction<string>>) => {
-  setSelected('')
-}
-export const handleOnNodeDoubleClick = (treeMode: TreeMode, inputRef: React.RefObject<HTMLInputElement>) => {
-  if (treeMode === 'editor') {
-    inputRef.current?.focus()
-    inputRef.current?.select()
-  } // setMarked(node)
-}
 // export const handleOnNodeClick = (node, treeMode, setMarked, setSelected) => {
 //   if (treeMode === 'reader') setMarked(node)
 //   setSelected(node)
 // }
- 

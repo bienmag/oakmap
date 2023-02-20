@@ -9,6 +9,7 @@ import {
   IEdgeServer,
   ILeaf,
   INode,
+  IRoot,
   ITree,
 } from '../../Resources/Packages/RFlow/Custom'
 import TreeContext from '../../Resources/Packages/RFlow/TreeContext'
@@ -49,6 +50,27 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
 
     const allNodes: INode[] = []
 
+    const root = response.data.root
+    allNodes.push({
+      id: root.id,
+      type: root.type, // || 'branch',
+      position: {
+        x:
+          typeof root.position.x === 'number'
+            ? root.position.x
+            : parseInt(root.position.x), // REMINDER: We expect to receive a number here from the server. If we don't, it will break the Edges spawning upon load.
+        y:
+          typeof root.position.y === 'number'
+            ? root.position.y
+            : parseInt(root.position.y),
+      },
+      data: {
+        label: root.label,
+        text: '',
+      },
+      draggable: false,
+    })
+
     response.data.branches.forEach((branch: IBranch) => {
       allNodes.push({
         id: branch.branchId,
@@ -67,6 +89,7 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
           label: branch.branchName,
           text: '',
         },
+        draggable: true,
       })
     })
 
@@ -88,6 +111,7 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
           label: leaf.leafName,
           text: '',
         },
+        draggable: true,
       })
     })
 

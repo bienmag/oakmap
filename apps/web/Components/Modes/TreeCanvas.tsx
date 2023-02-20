@@ -22,6 +22,9 @@ import ReactFlow, {
   BackgroundVariant,
   updateEdge,
   SmoothStepEdge,
+  NodeDragHandler,
+  useStore,
+  useOnSelectionChange,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 
@@ -47,7 +50,7 @@ import {
 // CONTEXT FOR REACT FLOW NODES
 import { NodesContext } from '../../Resources/Packages/RFlow/NodesContext'
 import { useContext } from 'react'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { NODE_TYPE, TREE_MODE } from '../../Resources/Enums/Options'
 import { setegid } from 'process'
 import { Console } from 'console'
@@ -55,8 +58,18 @@ import { useTreeContext } from '../../Resources/Packages/RFlow/TreeContext'
 // import { TreeMode } from '../../Resources/Enums/Options'
 
 import { v4 as uuidv4 } from 'uuid'
+
+import {
+  createNewBranchNode,
+  createNewLeafNode,
+  postNewBranch,
+  postNewLeaf,
+} from '../../Resources/Packages/RFlow/TreeRequests'
+
 import Field from '../Field/Field'
 import { Sidebar } from '../Sidebar/Sidebar'
+
+// CODE
 
 const getId = () => uuidv4()
 
@@ -76,6 +89,8 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null)
   const [selected, setSelected] = useState<Node<INodeInfo> | null>(null)
+  const [selectedNode, setSelectedNode] = useState<Node<INodeInfo> | null>(null)
+  const [selectedData, setSelectedData] = useState<string>('') // contains the name
   const [marked, setMarked] = useState<Node<INodeInfo> | null>(null)
 
   // useRef for double click on node to focus on input text
@@ -83,7 +98,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
   const [treeMode, setTreeMode] = useState(TREE_MODE.Editor)
 
-  // Nodes and Edges State
+  // Import State for Nodes and Edges from NodesContext
   const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } =
     useContext(NodesContext)
 
@@ -97,9 +112,8 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   // TREE ID
 
   const treeId = tree._id
-  console.log('TREE ID: ', treeId)
 
-  // CREATING EDGES
+  // POST REQUEST FOR EDGES
 
   const onConnect: OnConnect = useCallback(async (params) => {
     console.log('Edge onConnect params: ', params)
@@ -129,6 +143,122 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
       })
     // setEdges((eds: IEdgeInfo[]) => addEdge(params, eds))
   }, [])
+
+  //////////////////////////////////////////
+  //////////////// NODES ///////////////////
+  //////////////////////////////////////////
+
+  // UPDATE FOR CHANGING TEXT ON A NODE
+
+  const handleUpdateNode = useCallback(
+    async (
+      node: Node<INodeInfo, string | undefined> | null,
+      selectedData: string
+    ) => {
+      if (node === null) {
+        console.log('Node is null!')
+      }
+      // BRANCH
+      else if (node !== null) {
+        if (node.type === NODE_TYPE.Branch) {
+          // node !== null &&
+          // && node.data.label !== ''
+          try {
+            const response = await axios.put(
+              `http://localhost:8080/trees/${treeId}/branches`,
+              {
+                branchId: node.id,
+                treeId: tree._id,
+                position: node.position,
+                type: node.type,
+                branchName: selectedData,
+                // branchName: node.data.label ? node.data.label : null,
+              }
+            )
+            console.log('node.data.label: ', node.data.label)
+            console.log('Update branch with selectedData: ', selectedData)
+            console.log('Update branch with text from response: ', response)
+          } catch (error) {
+            console.error('Failed to update branch node', error)
+            throw error
+          }
+        }
+        // LEAF
+        if (
+          (node !== null && node.type === NODE_TYPE.LeftLeaf) ||
+          (node !== null && node.type === NODE_TYPE.RightLeaf)
+        ) {
+          try {
+            const response = await axios.put(
+              `http://localhost:8080/trees/${treeId}/unlinkedLeaves`,
+              {
+                leafId: node.id,
+                treeId: tree._id,
+                position: node.position,
+                type: node.type,
+                leafName: selectedData,
+                // leafName: node.data.label,
+              }
+            )
+            // PROBLEM -- I think we're sending this request before we have set the node.data.label in the state
+            console.log('node.data.label: ', node.data.label)
+            console.log('Update leaf with selectedData: ', selectedData)
+            console.log('Updated leaf with text from response: ', response)
+          } catch (error) {
+            console.log('Failed to update leaf node', error)
+          }
+        }
+        if (node !== null && node.type === NODE_TYPE.Root) {
+          console.log('Sorry, root node cannot be updated at the moment!')
+        }
+      }
+    },
+    [tree, treeId]
+  )
+
+  // UPDATE FOR DRAGGING AN EXISTING NODE
+  const handleNodeDragStop: NodeDragHandler = async (event, node) => {
+    if (node.type === NODE_TYPE.Branch) {
+      console.log('THIS IS THE DRAGGED BRANCH: ', node)
+
+      // REFACTOR IDEA -- Unused due to issue with node typescript
+      /*  try {
+        const response = await updateBranch(tree, treeId, node)
+      } catch (error) {
+        console.log('Error updating branch position:', error)
+      } */
+
+      // IF DRAGGING A BRANCH
+      const response = await axios
+        .put(`http://localhost:8080/trees/${treeId}/branches`, {
+          branchId: node.id,
+          treeId: tree._id,
+          position: node.position,
+          type: node.type,
+          branchName: node.data.label,
+        })
+        .catch((error) => {
+          console.log('Error updating branch position:', error)
+        })
+    }
+
+    // IF DRAGGING A LEAF
+    if (node.type === NODE_TYPE.LeftLeaf || node.type === NODE_TYPE.RightLeaf) {
+      console.log('THIS IS THE DRAGGED LEAF: ', node)
+
+      const response = await axios
+        .put(`http://localhost:8080/trees/${treeId}/unlinkedLeaves`, {
+          leafId: node.id,
+          treeId: tree._id,
+          position: node.position,
+          type: node.type,
+          leafName: node.data.label,
+        })
+        .catch((error) => {
+          console.log('Error updating leaf position:', error)
+        })
+    }
+  }
 
   const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback(
     (event) => {
@@ -160,88 +290,55 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
         type,
         position,
         data: { label: ``, text: '' },
+        draggable: true,
       }
 
-      // POST REQUEST FOR CREATING A NEW NODE
+      /* setNodes((nds: INode[]) => nds.concat(newLeaf)) // alternative option */
+      // POST REQUESTS FOR NEW BRANCHES AND LEAVES
 
       if (type === NODE_TYPE.Branch) {
-        const response = await axios
-          .post(`http://localhost:8080/trees/${treeId}/branches`, {
-            branchId: newNode.id,
-            treeId: tree._id,
-            position: newNode.position,
-            type: newNode.type,
-            branchName: newNode.data.label,
-          })
-          .then((response) => {
-            // A single branch will be returned in the response
-
-            const newBranch = {
-              id: response.data.branchId,
-              type: response.data.type,
-              position: {
-                x:
-                  typeof response.data.position.x === 'number'
-                    ? response.data.position.x
-                    : parseInt(response.data.position.x), // REMINDER: We expect to receive a number here from the server. If we don't, it will break the Edges spawning upon load.
-                y:
-                  typeof response.data.position.y === 'number'
-                    ? response.data.position.y
-                    : parseInt(response.data.position.y),
-              },
-              data: {
-                label: response.data.branchName,
-                text: '',
-              },
-            }
-            // setNodes(response.data)
-
-            setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newBranch])
-            /* setNodes((nds: INode[]) => nds.concat(newBranch)) // alternative option */
-
-            console.log(
-              'Created new branch node - response.data',
-              response.data
-            )
-          })
+        try {
+          const response = await postNewBranch(tree, treeId, newNode)
+          const branchData = response.data
+          const newBranch = await createNewBranchNode(branchData)
+          setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newBranch])
+          console.log(
+            `Created a new ${NODE_TYPE.Branch} node -- All Nodes: `,
+            nodes
+          )
+        } catch (error) {
+          console.error(error)
+        }
       }
-      if (type === NODE_TYPE.LeftLeaf || type === NODE_TYPE.RightLeaf) {
-        const response = await axios
-          .post(`http://localhost:8080/trees/${treeId}/unlinkedLeaves`, {
-            leafId: newNode.id,
-            treeId: tree._id,
-            position: newNode.position,
-            type: newNode.type,
-            leafName: newNode.data.label,
-          })
-          .then((response) => {
-            // A single branch will be returned in the response
 
-            const newLeaf = {
-              id: response.data.leafId,
-              type: response.data.type,
-              position: {
-                x:
-                  typeof response.data.position.x === 'number'
-                    ? response.data.position.x
-                    : parseInt(response.data.position.x), // REMINDER: We expect to receive a number here from the server. If we don't, it will break the Edges spawning upon load.
-                y:
-                  typeof response.data.position.y === 'number'
-                    ? response.data.position.y
-                    : parseInt(response.data.position.y),
-              },
-              data: {
-                label: response.data.leafName,
-                text: '',
-              },
-            }
-            // setNodes(response.data)
+      if (type === NODE_TYPE.LeftLeaf) {
+        try {
+          const response = await postNewLeaf(tree, treeId, newNode)
+          const leafData = response.data
+          const newBranch = await createNewLeafNode(leafData)
+          setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newBranch])
+          console.log(
+            `Created a new ${NODE_TYPE.LeftLeaf} node -- All Nodes: `,
+            nodes
+          )
+        } catch (error) {
+          console.error(error)
+        }
+      }
 
-            setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newLeaf])
-            /* setNodes((nds: INode[]) => nds.concat(newLeaf)) // alternative option */
-
-            console.log('Created new leaf node - response.data', response.data)
-          })
+      if (type === NODE_TYPE.RightLeaf) {
+        try {
+          const response = await postNewLeaf(tree, treeId, newNode)
+          const leafData = response.data
+          const newBranch = await createNewLeafNode(leafData)
+          setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newBranch])
+          console.log(
+            `Created a new ${NODE_TYPE.RightLeaf} node -- All Nodes: `,
+            nodes
+          )
+        } catch (error) {
+          console.error(error)
+        }
       }
     },
     [reactFlowInstance, setNodes]
@@ -250,23 +347,8 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   const [hasNodes, setHasNodes] = useState<boolean>(false)
   const [hasEdges, setHasEdges] = useState<boolean>(false)
 
-  useEffect(() => {
-    if (nodes.length > 0) {
-      console.log('HAS NODES')
-      setHasNodes(true)
-    }
-  }, [nodes])
-
-  useEffect(() => {
-    if (edges.length > 0) {
-      console.log('HAS EDGES')
-      setHasEdges(true)
-    }
-  }, [edges])
-
   return (
     <Sidebar>
-
       <div className="dndflow" style={{ height: '100vh' }}>
         <InputContext.Provider value={inputRef}>
           <div className="React-Flow-Container">
@@ -284,14 +366,23 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                     nodesDraggable={isDraggable}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
+                    onNodeDragStop={handleNodeDragStop}
+                    /* elements={elements}
+                  onElementClick={onElementClick}
+                  onBackgroundClick={handleDeselect} */
                     onConnect={onConnect}
                     nodeTypes={nodeTypes}
                     onInit={setReactFlowInstance}
                     onDrop={onDrop}
                     deleteKeyCode={null}
                     onDragOver={onDragOver}
-                    onPaneClick={() => {
+                    onPaneClick={async () => {
+                      await handleUpdateNode(selectedNode, selectedData)
+                      setSelectedData('')
+                      setSelectedNode(null)
                       setSelected(null)
+                      console.log('CLICKED BACKGROUND')
+                      console.log('SELECTED: ', selected)
                     }}
                     onNodeDoubleClick={(event, node) => {
                       if (treeMode === TREE_MODE.Editor) {
@@ -299,9 +390,15 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                         inputRef.current?.select()
                       } // setMarked(node)
                     }}
-                    onNodeClick={(event, node) => {
+                    onNodeClick={async (event, node) => {
                       if (treeMode === TREE_MODE.Reader) setMarked(node)
+                      if (selectedData !== '') {
+                        await handleUpdateNode(selectedNode, selectedData)
+                      }
                       setSelected(node)
+                      setSelectedNode(node)
+                      console.log('SELECTED A NODE: ', selected)
+                      console.log('selected data: ', selectedData)
                     }}
                     fitView
                   >
@@ -321,9 +418,12 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
               {treeMode === TREE_MODE.Editor ? (
                 <Custom
                   selected={selected}
+                  setSelectedData={setSelectedData}
+                  selectedData={selectedData}
                   setNodes={setNodes}
                   setMarked={setMarked}
                   treeMode={treeMode}
+                  treeId={treeId}
                 />
               ) : (
                 <div></div>
@@ -341,3 +441,17 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
     </Sidebar>
   )
 }
+
+// useEffect(() => {
+//   if (nodes.length > 0) {
+//     console.log('HAS NODES')
+//     setHasNodes(true)
+//   }
+// }, [nodes])
+
+// useEffect(() => {
+//   if (edges.length > 0) {
+//     console.log('HAS EDGES')
+//     setHasEdges(true)
+//   }
+// }, [edges])

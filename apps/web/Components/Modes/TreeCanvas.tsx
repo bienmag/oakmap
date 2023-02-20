@@ -47,7 +47,7 @@ import {
 // CONTEXT FOR REACT FLOW NODES
 import { NodesContext } from '../../Resources/Packages/RFlow/NodesContext'
 import { useContext } from 'react'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { NODE_TYPE, TREE_MODE } from '../../Resources/Enums/Options'
 import { setegid } from 'process'
 import { Console } from 'console'
@@ -55,6 +55,12 @@ import { useTreeContext } from '../../Resources/Packages/RFlow/TreeContext'
 // import { TreeMode } from '../../Resources/Enums/Options'
 
 import { v4 as uuidv4 } from 'uuid'
+import {
+  createNewBranchNode,
+  createNewLeafNode,
+  postNewBranch,
+  postNewLeaf,
+} from '../../Resources/Packages/RFlow/TreeRequests'
 
 const getId = () => uuidv4()
 
@@ -160,86 +166,53 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
         data: { label: ``, text: '' },
       }
 
-      // POST REQUEST FOR CREATING A NEW NODE
+      /* setNodes((nds: INode[]) => nds.concat(newLeaf)) // alternative option */
+
+      // REFACTORING TO DO -- POST REQUEST FOR CREATING A NEW NODE
 
       if (type === NODE_TYPE.Branch) {
-        const response = await axios
-          .post(`http://localhost:8080/trees/${treeId}/branches`, {
-            branchId: newNode.id,
-            treeId: tree._id,
-            position: newNode.position,
-            type: newNode.type,
-            branchName: newNode.data.label,
-          })
-          .then((response) => {
-            // A single branch will be returned in the response
-
-            const newBranch = {
-              id: response.data.branchId,
-              type: response.data.type,
-              position: {
-                x:
-                  typeof response.data.position.x === 'number'
-                    ? response.data.position.x
-                    : parseInt(response.data.position.x), // REMINDER: We expect to receive a number here from the server. If we don't, it will break the Edges spawning upon load.
-                y:
-                  typeof response.data.position.y === 'number'
-                    ? response.data.position.y
-                    : parseInt(response.data.position.y),
-              },
-              data: {
-                label: response.data.branchName,
-                text: '',
-              },
-            }
-            // setNodes(response.data)
-
-            setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newBranch])
-            /* setNodes((nds: INode[]) => nds.concat(newBranch)) // alternative option */
-
-            console.log(
-              'Created new branch node - response.data',
-              response.data
-            )
-          })
+        try {
+          const response = await postNewBranch(tree, treeId, newNode)
+          const branchData = response.data
+          const newBranch = await createNewBranchNode(branchData)
+          setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newBranch])
+          console.log(
+            `Created a new ${NODE_TYPE.Branch} node -- All Nodes: `,
+            nodes
+          )
+        } catch (error) {
+          console.error(error)
+        }
       }
-      if (type === NODE_TYPE.LeftLeaf || type === NODE_TYPE.RightLeaf) {
-        const response = await axios
-          .post(`http://localhost:8080/trees/${treeId}/unlinkedLeaves`, {
-            leafId: newNode.id,
-            treeId: tree._id,
-            position: newNode.position,
-            type: newNode.type,
-            leafName: newNode.data.label,
-          })
-          .then((response) => {
-            // A single branch will be returned in the response
 
-            const newLeaf = {
-              id: response.data.leafId,
-              type: response.data.type,
-              position: {
-                x:
-                  typeof response.data.position.x === 'number'
-                    ? response.data.position.x
-                    : parseInt(response.data.position.x), // REMINDER: We expect to receive a number here from the server. If we don't, it will break the Edges spawning upon load.
-                y:
-                  typeof response.data.position.y === 'number'
-                    ? response.data.position.y
-                    : parseInt(response.data.position.y),
-              },
-              data: {
-                label: response.data.leafName,
-                text: '',
-              },
-            }
-            // setNodes(response.data)
+      if (type === NODE_TYPE.LeftLeaf) {
+        try {
+          const response = await postNewLeaf(tree, treeId, newNode)
+          const leafData = response.data
+          const newBranch = await createNewLeafNode(leafData)
+          setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newBranch])
+          console.log(
+            `Created a new ${NODE_TYPE.LeftLeaf} node -- All Nodes: `,
+            nodes
+          )
+        } catch (error) {
+          console.error(error)
+        }
+      }
 
-            setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newLeaf])
-            /* setNodes((nds: INode[]) => nds.concat(newLeaf)) // alternative option */
-
-            console.log('Created new leaf node - response.data', response.data)
-          })
+      if (type === NODE_TYPE.RightLeaf) {
+        try {
+          const response = await postNewLeaf(tree, treeId, newNode)
+          const leafData = response.data
+          const newBranch = await createNewLeafNode(leafData)
+          setNodes((prevNodes: INodeInfo[]) => [...prevNodes, newBranch])
+          console.log(
+            `Created a new ${NODE_TYPE.RightLeaf} node -- All Nodes: `,
+            nodes
+          )
+        } catch (error) {
+          console.error(error)
+        }
       }
     },
     [reactFlowInstance, setNodes]
@@ -248,7 +221,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   const [hasNodes, setHasNodes] = useState<boolean>(false)
   const [hasEdges, setHasEdges] = useState<boolean>(false)
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (nodes.length > 0) {
       console.log('HAS NODES')
       setHasNodes(true)
@@ -260,7 +233,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
       console.log('HAS EDGES')
       setHasEdges(true)
     }
-  }, [edges])
+  }, [edges]) */
 
   return (
     <div className="dndflow" style={{ height: '100vh' }}>

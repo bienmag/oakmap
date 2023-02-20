@@ -1,5 +1,12 @@
 import React, { memo, useCallback } from 'react'
-import { Connection, Node, getConnectedEdges, Handle, Position, useReactFlow } from 'reactflow'
+import {
+  Connection,
+  Node,
+  getConnectedEdges,
+  Handle,
+  Position,
+  useReactFlow,
+} from 'reactflow'
 import { INodeInfo } from '../../Resources/Packages/RFlow/Custom'
 import Text from './Text'
 
@@ -107,7 +114,7 @@ export function RootNode({ data }: LeafNodeProps) {
         <Handle
           type="source"
           position={Position.Bottom}
-          className="w-16 !bg-green-700"
+          className="!bg-green-700"
         />
       </div>
     </div>

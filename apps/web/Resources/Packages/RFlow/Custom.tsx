@@ -52,6 +52,15 @@ export interface INode {
   data: { label: string; text: string }
 }
 
+export interface IRoot {
+  // Root Data from server response
+  id: string
+  treeId: string
+  type: string
+  position: { x: number; y: number }
+  label: string
+}
+
 export interface IBranch {
   // Branch Data from server response
   branchId: string

@@ -7,7 +7,7 @@ html {
   font-family: 'Courier New', Courier, monospace;
 }
 
-.markdown>* {
+.markdown > * {
   all: revert;
 }
 
@@ -26,8 +26,7 @@ a {
   /* flex-direction: column;
   display: flex;
   flex-grow: 1;
-  height: 100%; */
-  ;
+  height: 100%; */;
 }
 
 .react-flow {
@@ -40,8 +39,7 @@ a {
   border-right: 1px solid #eee;
   padding: 15px 10px;
   font-size: 12px;
-  background: #fcfcfc; */
-  ;
+  background: #fcfcfc; */;
 }
 
 .dndflow aside .description {
@@ -56,8 +54,7 @@ a {
   height: 100%;
   border-right: 1px solid #eee;
   font-size: 12px;
-  background: #4e4e4e; */
-  ;
+  background: #4e4e4e; */;
 }
 
 input {
@@ -73,8 +70,7 @@ input {
   position: absolute;
   right: 0;
   font-size: 12px;
-  background: #ffffff; */
-  ;
+  background: #ffffff; */;
 }
 
 /* .dndflow .flex-markdown {
@@ -106,8 +102,7 @@ input {
   border-right: 1px solid #eee;
   padding: 15px 10px;
   font-size: 12px;
-  background: #fcfcfc; */
-  ;
+  background: #fcfcfc; */;
 }
 
 .dndflow .custom-name-input {
@@ -132,8 +127,7 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: grab; */
-  ;
+  cursor: grab; */;
 }
 
 .dndflow .dndnode.input {
@@ -154,22 +148,19 @@ input {
 
 .dndflow .selectall {
   @apply mt-3
-  /* margin-top: 10px; */
-  ;
+  /* margin-top: 10px; */;
 }
 
 @media screen and (min-width: 768px) {
   .dndflow {
     @apply flex flex-row
-    /* flex-direction: row; */
-    ;
+    /* flex-direction: row; */;
   }
 
   .dndflow aside {
     @apply w-1/5 max-w-xs mt-48 border-2 rounded-xl pl-2 pr-4;
   }
 }
-
 
 .React-Flow-Container {
   position: relative;

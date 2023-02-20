@@ -67,6 +67,7 @@ import {
 } from '../../Resources/Packages/RFlow/TreeRequests'
 
 import Field from '../Field/Field'
+import { Sidebar } from '../Sidebar/Sidebar'
 
 // CODE
 
@@ -347,6 +348,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   const [hasEdges, setHasEdges] = useState<boolean>(false)
 
   return (
+  <Sidebar>
     <div className="dndflow" style={{ height: '100vh' }}>
       <InputContext.Provider value={inputRef}>
         <div className="React-Flow-Container">
@@ -421,21 +423,22 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                 setNodes={setNodes}
                 setMarked={setMarked}
                 treeMode={treeMode}
+                />
+              ) : (
+                <div></div>
+              )}
+              <Markdown
+                marked={marked}
+                setMarked={setMarked}
+                setNodes={setNodes}
+                treeMode={treeMode}
                 treeId={treeId}
               />
-            ) : (
-              <div></div>
-            )}
-            <Markdown
-              marked={marked}
-              setMarked={setMarked}
-              setNodes={setNodes}
-              treeMode={treeMode}
-            />
-          </ReactFlowProvider>
-        </div>
-      </InputContext.Provider>
-    </div>
+            </ReactFlowProvider>
+          </div>
+        </InputContext.Provider>
+      </div>
+    </Sidebar>
   )
 }
 

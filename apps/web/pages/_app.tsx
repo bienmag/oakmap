@@ -8,9 +8,9 @@ import './index.css'
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return <>
     <SessionProvider session={session}>
-      <Sidebar>
-        <Component {...pageProps} />
-      </Sidebar>
+
+      <Component {...pageProps} />
+
     </SessionProvider>
   </>
 }

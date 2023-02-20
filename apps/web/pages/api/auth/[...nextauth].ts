@@ -9,6 +9,9 @@ import {
 
 
 export const authOptions: AuthOptions = {
+  // pages: {
+  //   signIn: '/signin'
+  // },
   providers: [
     // google
     GoogleProvider({
@@ -26,9 +29,6 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    /////////////////////////////////////////////////////////////////
-    ///// this is to connect with 8080 and add to DB // later //////
-    ////////////////////////////////////////////////////////////////
 
     async signIn({ profile, account }) {
       console.log('profile from singing', account)
@@ -44,27 +44,6 @@ export const authOptions: AuthOptions = {
         .catch(function (error) {
           console.log(error);
         });
-
-
-
-      // user from profile {
-      // iss: 'https://accounts.google.com',
-      // azp: '1011566304996-qp7tecc8v921pfdlv7ta6i5hu2umaad2.apps.googleusercontent.com',
-      // aud: '1011566304996-qp7tecc8v921pfdlv7ta6i5hu2umaad2.apps.googleusercontent.com',
-      // sub: '111993592575618588576',
-      // email: 'mvaretckaia@gmail.com',
-      // email_verified: true,
-      // at_hash: 'KN0ujQNtixubKnDQI4AJOg',
-      // name: 'Margarita Varetckaia',
-      // picture: 'https://lh3.googleusercontent.com/a/AEdFTp5Pe0roeHwuwkijx_o_kHj-Q0RxT0Xp_7pKaIQM=s96-c',
-      // given_name: 'Margarita',
-      // family_name: 'Varetckaia',
-      // locale: 'ru',
-      // iat: 1676884952,
-      // exp: 1676888552
-      //  }
-
-
       return true
     },
     async jwt({ token, account }) {

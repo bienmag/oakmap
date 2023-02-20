@@ -8,7 +8,7 @@ import { ITree } from '../Resources/Packages/RFlow/Custom'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { getServerSession, User } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
-import { getToken, JWT } from 'next-auth/jwt'
+import { getToken } from 'next-auth/jwt'
 import { JWT_SECRET } from '../Resources/lib/constants'
 import Container from '../Components/Wrapper/Container'
 import { Sidebar } from '../Components/Sidebar/Sidebar'
@@ -18,10 +18,12 @@ import { Sidebar } from '../Components/Sidebar/Sidebar'
 // DASHBOARD ///////////////////////////////
 /////////////////////////////////////////////
 
+
+
 interface DashboardPageProps {
   trees: ITree[]
   allTrees: ITree[]
-  token: string
+  // token: JWT
 }
 
 
@@ -29,7 +31,7 @@ interface DashboardPageProps {
 const DashboardPage: NextPage<DashboardPageProps> = ({
   trees,
   allTrees,
-  token,
+  // token, 
 }) => {
   const { data: session, status } = useSession()
 
@@ -141,10 +143,8 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
   )
 }
 
-//@ts-ignore
 export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions)
-  console.log('session form tsx index', session)
 
   const req = context.req
   const token = await getToken({ req, secret: JWT_SECRET })
@@ -159,7 +159,7 @@ export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async 
     props: {
       trees: response.data as ITree[],
       allTrees: alltrees.data as ITree[],
-      token,
+      // token,
     },
   }
 }

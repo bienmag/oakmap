@@ -31,7 +31,6 @@ export const authOptions: AuthOptions = {
   callbacks: {
 
     async signIn({ profile, account }) {
-      console.log('profile from singing', account)
       const userId = profile?.sub
       const email = profile?.email
       const accessToken = account?.id_token
@@ -39,7 +38,6 @@ export const authOptions: AuthOptions = {
       const response = await axios.post('http://localhost:8080/users', {
         userId, email, accessToken
       }).then(function (response) {
-        console.log(response.data);
       })
         .catch(function (error) {
           console.log(error);

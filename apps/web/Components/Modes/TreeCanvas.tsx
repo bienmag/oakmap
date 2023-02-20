@@ -56,6 +56,7 @@ import { useTreeContext } from '../../Resources/Packages/RFlow/TreeContext'
 
 import { v4 as uuidv4 } from 'uuid'
 import Field from '../Field/Field'
+import { Sidebar } from '../Sidebar/Sidebar'
 
 const getId = () => uuidv4()
 
@@ -264,76 +265,79 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   }, [edges])
 
   return (
-    <div className="dndflow" style={{ height: '100vh' }}>
-      <InputContext.Provider value={inputRef}>
-        <div className="React-Flow-Container">
-          <ReactFlowProvider>
-            <div
-              className="reactflow-wrapper absolute inset-0"
-              ref={reactFlowWrapper}
-            >
-              {/* TERNARY TO RENDER ??? */}
-              <div style={{ height: '100vh', width: '100%' }}>
-                <ReactFlow
-                  key={`${hasNodes}-${hasEdges}`}
-                  nodes={nodes}
-                  edges={edges}
-                  nodesDraggable={isDraggable}
-                  onNodesChange={onNodesChange}
-                  onEdgesChange={onEdgesChange}
-                  onConnect={onConnect}
-                  nodeTypes={nodeTypes}
-                  onInit={setReactFlowInstance}
-                  onDrop={onDrop}
-                  deleteKeyCode={null}
-                  onDragOver={onDragOver}
-                  onPaneClick={() => {
-                    setSelected(null)
-                  }}
-                  onNodeDoubleClick={(event, node) => {
-                    if (treeMode === TREE_MODE.Editor) {
-                      inputRef.current?.focus()
-                      inputRef.current?.select()
-                    } // setMarked(node)
-                  }}
-                  onNodeClick={(event, node) => {
-                    if (treeMode === TREE_MODE.Reader) setMarked(node)
-                    setSelected(node)
-                  }}
-                  fitView
-                >
-                  {treeMode === TREE_MODE.Editor ? (
-                    <Background />
-                  ) : (
-                    <Background variant={BackgroundVariant.Lines} />
-                  )}
-                  <Controls />
-                </ReactFlow>
+    <Sidebar>
+
+      <div className="dndflow" style={{ height: '100vh' }}>
+        <InputContext.Provider value={inputRef}>
+          <div className="React-Flow-Container">
+            <ReactFlowProvider>
+              <div
+                className="reactflow-wrapper absolute inset-0"
+                ref={reactFlowWrapper}
+              >
+                {/* TERNARY TO RENDER ??? */}
+                <div style={{ height: '100vh', width: '100%' }}>
+                  <ReactFlow
+                    key={`${hasNodes}-${hasEdges}`}
+                    nodes={nodes}
+                    edges={edges}
+                    nodesDraggable={isDraggable}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onConnect={onConnect}
+                    nodeTypes={nodeTypes}
+                    onInit={setReactFlowInstance}
+                    onDrop={onDrop}
+                    deleteKeyCode={null}
+                    onDragOver={onDragOver}
+                    onPaneClick={() => {
+                      setSelected(null)
+                    }}
+                    onNodeDoubleClick={(event, node) => {
+                      if (treeMode === TREE_MODE.Editor) {
+                        inputRef.current?.focus()
+                        inputRef.current?.select()
+                      } // setMarked(node)
+                    }}
+                    onNodeClick={(event, node) => {
+                      if (treeMode === TREE_MODE.Reader) setMarked(node)
+                      setSelected(node)
+                    }}
+                    fitView
+                  >
+                    {treeMode === TREE_MODE.Editor ? (
+                      <Background />
+                    ) : (
+                      <Background variant={BackgroundVariant.Lines} />
+                    )}
+                    <Controls />
+                  </ReactFlow>
+                </div>
+                <MiniMap />
               </div>
-              <MiniMap />
-            </div>
-            <Field treeMode={treeMode} setTreeMode={setTreeMode} />
-            {/* OLD EDIT MODE SELECT FOR THE ROADMAP EDITOR */}
-            {/* <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} /> */}
-            {treeMode === TREE_MODE.Editor ? (
-              <Custom
-                selected={selected}
-                setNodes={setNodes}
+              <Field treeMode={treeMode} setTreeMode={setTreeMode} />
+              {/* OLD EDIT MODE SELECT FOR THE ROADMAP EDITOR */}
+              {/* <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} /> */}
+              {treeMode === TREE_MODE.Editor ? (
+                <Custom
+                  selected={selected}
+                  setNodes={setNodes}
+                  setMarked={setMarked}
+                  treeMode={treeMode}
+                />
+              ) : (
+                <div></div>
+              )}
+              <Markdown
+                marked={marked}
                 setMarked={setMarked}
+                setNodes={setNodes}
                 treeMode={treeMode}
               />
-            ) : (
-              <div></div>
-            )}
-            <Markdown
-              marked={marked}
-              setMarked={setMarked}
-              setNodes={setNodes}
-              treeMode={treeMode}
-            />
-          </ReactFlowProvider>
-        </div>
-      </InputContext.Provider>
-    </div>
+            </ReactFlowProvider>
+          </div>
+        </InputContext.Provider>
+      </div>
+    </Sidebar>
   )
 }

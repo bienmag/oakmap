@@ -35,9 +35,9 @@ const TreesController = {
         type: 'root',
         label: 'root',
       }
- 
+
       const tree = await Tree.create(treeId, treeName, root, date, user, branches, unlinkedLeaves, edges, username)
- 
+
 
       const id = new mongodb.ObjectId(treeId)
       await User.update(user, id)
@@ -216,8 +216,8 @@ const TreesController = {
   // delete a branch
   async deleteBranch(req: Request, res: Response, next: NextFunction) {
     try {
-      const { treeId } = req.params
-      const { branchId } = req.body
+      const { treeId, branchId } = req.params
+
       await Branch.deleteBranch(treeId, branchId)
       res.json('The branch was deleted successfully')
     } catch (e) {
@@ -228,8 +228,7 @@ const TreesController = {
   // delete a leaf
   async deleteLeaf(req: Request, res: Response, next: NextFunction) {
     try {
-      const { treeId } = req.params
-      const { leafId } = req.body
+      const { treeId, leafId } = req.params
       await Leaf.deleteLeaf(treeId, leafId)
       res.json('The leaf has been sucsessfully deleted')
     } catch (e) {

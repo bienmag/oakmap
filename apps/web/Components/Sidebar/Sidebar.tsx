@@ -9,6 +9,8 @@ import React, {
 import 'reactflow/dist/style.css'
 import Image from 'next/image'
 import logo from '../../Resources/Images/logo.png'
+import oakmap from '../../Resources/Images/oakmap.png'
+
 // import Sidebar from './Components/Sidebar/Sidebar'
 import DescriptionMenu from '../DescriptionMenu/DescriptionMenu'
 import Link from 'next/link'
@@ -155,7 +157,7 @@ export function Sidebar({ children }: SidebarProps) {
     */}
       <div className="flex h-screen flex-col">
         {/* Top nav*/}
-        <header className="relative flex h-16 flex-shrink-0 items-center  bg-white">
+        <header className="relative flex h-16 flex-shrink-0 items-center  bg-org-palette">
           {/* Logo area */}
 
           <div className="absolute inset-y-0 left-0 md:static md:flex-shrink-0">
@@ -245,6 +247,10 @@ export function Sidebar({ children }: SidebarProps) {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className='mr-96'>
+            <Image className="h-8 w-auto mr-32" src={oakmap} alt="Your Company" />
           </div>
           <div className="mr-3">
             <Button

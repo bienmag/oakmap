@@ -41,7 +41,6 @@ function Custom({
   const [nodeName, setNodeName] = useState('')
 
   const handleDelNode = async () => {
-    console.log('selected to delete: ', selected)
     if (selected === null) return
     if (selected.type === NODE_TYPE.Branch) {
       const branchId = selected.id
@@ -56,8 +55,6 @@ function Custom({
       selected.type === NODE_TYPE.RightLeaf
     ) {
       const leafIdNew = selected.id
-
-      console.log('leafIdNew: ', leafIdNew)
       const response = await axios
         .delete(`http://localhost:8080/trees/${treeId}/leaves/${leafIdNew}`) // req.body though could include leafId: leafIdNew
         .catch((error) => {

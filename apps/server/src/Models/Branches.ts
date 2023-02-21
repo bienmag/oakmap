@@ -9,7 +9,7 @@ class Branch {
     public type: string,
     public branchName?: string,
     public leaves?: Array<object>
-  ) {}
+  ) { }
 
   static async create(
     branchId: string,

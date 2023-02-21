@@ -77,7 +77,7 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
         <Container>
           <div className="sm:flex sm:items-center ">
             <div className="sm:flex-auto ">
-              <h1 className="pl-4 text-3xl text-left font-semibold text-gray-900 ">
+              <h1 className="Gill-Sans pl-4 text-3xl text-left font-semibold text-gray-900 ">
                 {' '}
                 {session
                   ? `Your trees,  ${session.user.name?.split(' ')[0]} `
@@ -115,7 +115,7 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
           <>
             <div className="sm:flex sm:items-center ">
               <div className="sm:flex-auto ">
-                <h1 className="pl-4 text-3xl text-left font-semibold text-gray-900 ">
+                <h1 className=" Gill-Sans pl-4 text-3xl text-left font-semibold text-gray-900 ">
                   Last trees by community
                 </h1>
                 {/* <p> {session ? `Welcome ${session.user.name}` : ''}</p>         ////////////////// add greetings  */}
@@ -164,7 +164,7 @@ const YourListEmpty = () => {
         <div className="-my-2 -mx-6 overflow-x-auto lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle">
             <div className="overflow-hidden ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-300">
+              <table className="Gill-Sans min-w-full divide-y divide-gray-300">
                 <thead className="bg-ylw-palette">
                   <tr>
                     <th

@@ -6,7 +6,7 @@ interface TextProps {
 }
 function Text({ data }: TextProps) {
   return (
-    <div className="flex justify-center text-center">
+    <div className="Gill-Sans flex justify-center text-center">
       <div className="ml-2">
         <div className="text-sm font-bold">{data.label}</div>
       </div>

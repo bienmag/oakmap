@@ -11,7 +11,7 @@ function Field({ treeMode, setTreeMode }: any) {
   const closeBottomSheet = () => setIsOpen(false)
 
   return (
-    <div className="flex justify-end m-4">
+    <div className="z-10 relative flex justify-end m-4">
       <DescriptionMenu
         isOpen={isOpen}
         closeBottomSheet={closeBottomSheet}

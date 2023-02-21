@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import moment from 'moment'
 
 const List = ({ global, trees }: any) => {
   return (
@@ -52,7 +53,7 @@ const List = ({ global, trees }: any) => {
                         </td>
                       )}
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        123
+                        {moment(tree.date).fromNow()}
                       </td>
                     </tr>
                   ))}

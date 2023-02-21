@@ -3,12 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
-  "engines": {
-    "node": "18.x"
-  },
+ 
   "scripts": {
     "test": "jest",
-    "dev": "node src/index.ts"
+    "dev": "nodemon src/index.ts"
   },
   "author": "",
   "license": "ISC",

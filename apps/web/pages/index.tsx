@@ -14,13 +14,11 @@ import Container from '../Components/Wrapper/Container'
 import { Sidebar } from '../Components/Sidebar/Sidebar'
 import { redirect } from 'next/dist/server/api-utils'
 import cogoToast from 'cogo-toast'
-
+import List from '../Components/Wrapper/List'
 
 /////////////////////////////////////////////
 // DASHBOARD ///////////////////////////////
 /////////////////////////////////////////////
-
-
 
 interface DashboardPageProps {
   trees: ITree[]
@@ -28,12 +26,10 @@ interface DashboardPageProps {
   // token: JWT
 }
 
-
-
 const DashboardPage: NextPage<DashboardPageProps> = ({
   trees,
   allTrees,
-  // token, 
+  // token,
 }) => {
   const { data: session, status } = useSession()
 
@@ -42,15 +38,13 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
     console.log('status', status)
 
     if (status === 'authenticated') {
-
-
       const tree = await axios.post(
         'http://localhost:8080/trees',
         {
           treeName: 'New Tree',
           user: session.user.id,
           username: session.user.name,
-          userpic: session.user.image
+          userpic: session.user.image,
         }
         // {
         //   headers: {
@@ -64,12 +58,10 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
       ////////////////////////////redirect//////////////////////////////////////
       // redirect(`/trees/${tree.data._id}`)
       //////////////////////////////////
-
     } else {
       signIn('google')
     }
   }
-
 
   // Get the unique ID of the tree
   /* const treeId = response.data.id``````````````````
@@ -80,17 +72,17 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
   /* Router.push(`/tree?id=${treeId}`) */
 
   return (
-
     <Sidebar>
-
-      <div className="flex justify-center h-screen w-auto bg-[url('../Resources/Images/SVG.png')] "  >
-        <Container  >
+      <div className="flex justify-center h-screen w-auto bg-[url('../Resources/Images/SVG.png')] ">
+        <Container>
           <div className="sm:flex sm:items-center ">
             <div className="sm:flex-auto ">
-
-
-              <h1 className="pl-4 text-3xl text-left font-semibold text-gray-900 "> {session ? `Your trees,  ${session.user.name?.split(' ')[0]} ` : 'Your trees will be here'}</h1>
-
+              <h1 className="pl-4 text-3xl text-left font-semibold text-gray-900 ">
+                {' '}
+                {session
+                  ? `Your trees,  ${session.user.name?.split(' ')[0]} `
+                  : 'Your trees will be here'}
+              </h1>
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
               <button
@@ -105,10 +97,6 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
             </div>
           </div>
 
-
-
-
-
           {/* <b>Your</b> TREES
         <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4"
@@ -120,37 +108,33 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
           </button>
           <p> {session ? `Welcome ${session.user.name}` : ''}</p>
         <div> */}
-          {
-            session ? (
-              <YourTreeList trees={trees} />
-            ) : (
-              <YourListEmpty />
-            )
-          }
+          {session ? <List trees={trees} /> : <YourListEmpty />}
           {/* </div> */}
-        </Container >
-        <Container >
+        </Container>
+        <Container>
           <>
             <div className="sm:flex sm:items-center ">
               <div className="sm:flex-auto ">
-                <h1 className="pl-4 text-3xl text-left font-semibold text-gray-900 ">Last trees by community</h1>
+                <h1 className="pl-4 text-3xl text-left font-semibold text-gray-900 ">
+                  Last trees by community
+                </h1>
                 {/* <p> {session ? `Welcome ${session.user.name}` : ''}</p>         ////////////////// add greetings  */}
               </div>
-              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-
-              </div>
+              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none"></div>
             </div>
             <div>
-              <TreeList allTrees={allTrees} />
+              <List global={true} trees={allTrees} />
             </div>
           </>
         </Container>
-      </div >
+      </div>
     </Sidebar>
   )
 }
 
-export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<
+  DashboardPageProps
+> = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions)
 
   const req = context.req
@@ -173,105 +157,6 @@ export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async 
 
 export default DashboardPage
 
-interface TreeListProps {
-  trees: ITree[]
-
-}
-
-interface AllTreesProps {
-  allTrees: ITree[]
-}
-const TreeList = ({ allTrees }: AllTreesProps) => {
-
-
-  return (
-    <div className="px-6 lg:px-8">
-      <div className="mt-2 flow-root">
-        <div className="-my-2 -mx-6 overflow-x-auto lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle">
-            <div className="overflow-hidden ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead className="bg-ylw-palette">
-                  <tr>
-                    <th scope="col" className="py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-gray-900">
-                      Name
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      User
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Created
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
-                  {allTrees.map((tree) => (
-                    <tr key={tree._id}>
-                      <td className="whitespace-nowrap py-4 pl-6 pr-3 text-sm font-medium text-left text-gray-900"
-                      >
-                        <Link href={`/trees/${tree._id}`} className="no-underline text-gray-900">
-                          {tree.treeName}
-                        </Link>
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-left text-gray-500">{tree.username?.split(' ')[0]}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">123</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const YourTreeList = ({ trees }: TreeListProps) => {
-  return (
-    <div className="px-6 lg:px-8">
-      <div className="mt-2 flow-root">
-        <div className="-my-2 -mx-6 overflow-x-auto lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle">
-            <div className="overflow-hidden ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-              <p className="text-lg text-gray-500">
-              </p>
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead className="bg-ylw-palette">
-                  <tr>
-                    <th scope="col" className="py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-gray-900">
-                      Name
-                    </th>
-
-                    <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                      Created
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
-                  {trees.map((tree) => (
-                    <tr key={tree._id}>
-                      <td className="whitespace-nowrap py-4 pl-6 pr-3 text-sm font-medium text-left text-gray-900"
-                      >
-                        <Link href={`/trees/${tree._id}`} className="no-underline text-gray-900">
-                          {tree.treeName}
-                        </Link>
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">123</td>
-
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-
 const YourListEmpty = () => {
   return (
     <div className="px-6 lg:px-8">
@@ -282,19 +167,18 @@ const YourListEmpty = () => {
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-ylw-palette">
                   <tr>
-                    <th scope="col" className="py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-ylw-palette">
+                    <th
+                      scope="col"
+                      className="py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-ylw-palette"
+                    >
                       Sign in to create your first tree
                     </th>
-
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-
                   <tr key={123}>
-                    <td className="whitespace-nowrap  text-md font-medium text-center text-gray-900 h-72"
-                    >
+                    <td className="whitespace-nowrap  text-md font-medium text-center text-gray-900 h-72">
                       Sign in to create your first tree
-
                     </td>
                   </tr>
                 </tbody>
@@ -303,6 +187,6 @@ const YourListEmpty = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   )
 }

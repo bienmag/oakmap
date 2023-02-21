@@ -110,11 +110,11 @@ input {
 }
 
 .dndflow .custom-menu-buttons {
-  @apply clear-both m-4;
+  @apply clear-both m-4 ml-0;
 }
 
 .dndflow .custom-button {
-  @apply clear-both m-2 bg-gray-200 p-2 w-24;
+  @apply clear-both m-2 bg-white p-2 w-24;
 }
 
 .dndflow .dndnode {
@@ -158,7 +158,10 @@ input {
   }
 
   .dndflow aside {
-    @apply w-1/5 max-w-xs mt-48 border-2 rounded-xl pl-2 pr-4;
+    @apply w-1/5 max-w-xs mt-48 border-0;
+  }
+  .dndflow aside > div {
+    @apply border-2 rounded-xl p-6;
   }
 }
 

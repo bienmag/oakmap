@@ -1,22 +1,22 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import router from './router'
+import router from './src/router'
 import { Server } from 'http'
-import Logger from './lib/logger'
-const expSession = require('express-session')
-const bodyParser = require('body-parser')
+import Logger from './src/lib/logger'
+
+
 
 import dotenv from 'dotenv'
 dotenv.config()
-require('./passport')
 
-import { MONGODB_DB, MONGODB_URL, PORT } from './lib/constants'
+
+import { MONGODB_DB, MONGODB_URL, PORT } from './src/lib/constants'
 
 const app = express()
 const cors = require('cors')
 
-app.use(expSession({ secret: 'cats' }))
-app.use(bodyParser())
+
+
 
 app.use(
   cors({

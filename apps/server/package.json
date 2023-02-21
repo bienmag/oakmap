@@ -6,7 +6,7 @@
  
   "scripts": {
     "test": "jest",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon index.ts"
   },
   "author": "",
   "license": "ISC",

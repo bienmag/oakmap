@@ -3,7 +3,6 @@ import mongoose from 'mongoose'
 import router from './router'
 import { Server } from 'http'
 import Logger from './lib/logger'
-import passport = require('passport')
 const expSession = require('express-session')
 const bodyParser = require('body-parser')
 
@@ -11,7 +10,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 require('./passport')
 
-import { MONGODB_DB, MONGODB_URL } from './lib/constants'
+import { MONGODB_DB, MONGODB_URL, PORT } from './lib/constants'
 
 const app = express()
 const cors = require('cors')
@@ -49,7 +48,7 @@ app.use(router)
 // )
 
 export function startServer(): Server {
-  const port = 8080
+  const port = PORT || 8080
 
   console.log('Connecting to database', MONGODB_URL, '...')
   mongoose

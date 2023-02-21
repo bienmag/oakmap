@@ -115,34 +115,37 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
   // POST REQUEST FOR EDGES
 
-  const onConnect: OnConnect = useCallback(async (params) => {
-    console.log('Edge onConnect params: ', params)
+  const onConnect: OnConnect = useCallback(
+    async (params) => {
+      console.log('Edge onConnect params: ', params)
 
-    const response = await axios
-      .post(`http://localhost:8080/trees/${treeId}/edges`, {
-        edgeId: `edge_${getId()}`,
-        source: params.source,
-        sourceHandle: params.sourceHandle,
-        target: params.target,
-        targetHandle: params.targetHandle,
-        type: 'default',
-      })
-      .then((response) => {
-        const newEdge: IEdge = {
-          // maybe needs to be IEdgeInfo ?
-          id: response.data.edgeId,
-          source: response.data.source,
-          sourceHandle: response.data.sourceHandle,
-          target: response.data.target,
-          targetHandle: response.data.targetHandle,
-          type: response.data.type,
-        }
+      const response = await axios
+        .post(`http://localhost:8080/trees/${treeId}/edges`, {
+          edgeId: `edge_${getId()}`,
+          source: params.source,
+          sourceHandle: params.sourceHandle,
+          target: params.target,
+          targetHandle: params.targetHandle,
+          type: 'default',
+        })
+        .then((response) => {
+          const newEdge: IEdge = {
+            // maybe needs to be IEdgeInfo ?
+            id: response.data.edgeId,
+            source: response.data.source,
+            sourceHandle: response.data.sourceHandle,
+            target: response.data.target,
+            targetHandle: response.data.targetHandle,
+            type: response.data.type,
+          }
 
-        console.log('newEdge response: ', newEdge)
-        setEdges((eds: IEdgeInfo[]) => addEdge(newEdge, eds))
-      })
-    // setEdges((eds: IEdgeInfo[]) => addEdge(params, eds))
-  }, [setEdges, treeId])
+          console.log('newEdge response: ', newEdge)
+          setEdges((eds: IEdgeInfo[]) => addEdge(newEdge, eds))
+        })
+      // setEdges((eds: IEdgeInfo[]) => addEdge(params, eds))
+    },
+    [setEdges, treeId]
+  )
 
   //////////////////////////////////////////
   //////////////// NODES ///////////////////
@@ -349,7 +352,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
   return (
     <Sidebar>
-      <div className="dndflow" style={{ height: '100vh' }}>
+      <div className="dndflow" style={{ height: '100%' }}>
         <InputContext.Provider value={inputRef}>
           <div className="React-Flow-Container">
             <ReactFlowProvider>
@@ -358,7 +361,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                 ref={reactFlowWrapper}
               >
                 {/* TERNARY TO RENDER ??? */}
-                <div style={{ height: '100vh', width: '100%' }}>
+                <div style={{ height: '100%', width: '100%' }}>
                   <ReactFlow
                     key={`${hasNodes}-${hasEdges}`}
                     nodes={nodes}
@@ -402,20 +405,22 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                     }}
                     fitView
                   >
+                    <Field treeMode={treeMode} setTreeMode={setTreeMode} />
                     {treeMode === TREE_MODE.Editor ? (
                       <Background />
                     ) : (
                       <Background variant={BackgroundVariant.Lines} />
                     )}
+
                     <Controls />
+                    <MiniMap />
                   </ReactFlow>
                 </div>
-                <MiniMap />
               </div>
-              <Field treeMode={treeMode} setTreeMode={setTreeMode} />
+
               {/* OLD EDIT MODE SELECT FOR THE ROADMAP EDITOR */}
               {/* <Option option={option} setOption={setOption} openBottomSheet={openBottomSheet} /> */}
-              {treeMode === TREE_MODE.Editor ? (
+              {treeMode === TREE_MODE.Editor && (
                 <Custom
                   selected={selected}
                   setSelectedData={setSelectedData}
@@ -425,8 +430,6 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
                   treeMode={treeMode}
                   treeId={treeId}
                 />
-              ) : (
-                <div></div>
               )}
               <Markdown
                 marked={marked}

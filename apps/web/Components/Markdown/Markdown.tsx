@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { EDITOR, READER } from '../../Resources/Enums/Options'
-import { handleSetNode, INodeInfo, TreeMode } from '../../Resources/Packages/RFlow/Custom'
+import {
+  handleSetNode,
+  INodeInfo,
+  TreeMode,
+} from '../../Resources/Packages/RFlow/Custom'
 import {
   allButtonTypes,
   CBackInsertText,
@@ -10,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Node } from 'reactflow'
 
 interface IMarkdownProps {
-  marked: Node<INodeInfo> | null,
+  marked: Node<INodeInfo> | null
   setMarked: React.Dispatch<React.SetStateAction<Node<INodeInfo> | null>>
   setNodes: React.Dispatch<React.SetStateAction<Node<INodeInfo>[]>>
   treeMode: TreeMode
@@ -65,9 +69,9 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
       <>
         <div className="markdownBG" onClick={handleBackgroundClick}></div>
         <div className="markdown">
-          <div className="flex-markdown">
+          <div className="flex-markdown flex justify-center">
             <textarea
-              className="text-area-style"
+              className="text-area-style w-auto"
               onChange={(e) => setText(e.target.value)}
               value={text}
               disabled={false}
@@ -92,7 +96,10 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
   } else {
     return (
       <>
-        <p>This thing crashed terribly. Our devs are in panic and running to their homes to their moms. Brace yourselves.</p>
+        <p>
+          This thing crashed terribly. Our devs are in panic and running to
+          their homes to their moms. Brace yourselves.
+        </p>
       </>
     )
   }

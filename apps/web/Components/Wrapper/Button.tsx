@@ -9,9 +9,9 @@ function Button({ className, onClick, children }: any) {
           className={
             className +
             ' ' +
-            'rounded-3xl p-2 px-5 rounded hover:text-white'
+            'rounded-3xl p-2 px-5 border-black border-2 hover:text-white'
           }
-        /* disabled={option === 'reader'} */
+          /* disabled={option === 'reader'} */
         >
           {children}
         </button>

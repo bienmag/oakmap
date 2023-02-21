@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Node } from 'reactflow'
 import { NODE_TYPE } from '../../Resources/Enums/Options'
 import axios from 'axios'
+import Button from '../Wrapper/Button'
 
 /////////////////////////////////////////////////////
 // CUSTOM MENU ON THE LEFT SIDE FOR DRAGGING NODES
@@ -88,61 +89,62 @@ function Custom({
 
   return (
     <aside>
-      <div className="description">
-        You can drag these nodes to the pane on the right.
-      </div>
-      {allNodesOptions.map((option) => {
-        return (
-          <div
-            key={uuidv4()}
-            className={option.className}
-            onDragStart={(event) => onDragStart(event, option.type)}
-            draggable
-          >
-            {option.name}
-          </div>
-        )
-      })}
-      {/* <div className="custom"> */}
-      <div className="description">
-        <h3> Selected Node: {selected === null ? 'None' : selected.id}</h3>
-        {selected !== null && (
-          <div className="custom-name-input">
-            <label htmlFor="name">Name</label>
-            <input
-              onChange={(e) => {
-                setNodeName(e.target.value)
-                setSelectedData(e.target.value) // for updating server
-                // console.log('selectedData: ', selectedData)
-              }}
-              value={nodeName}
-              className="pl-2"
-              type="text"
-              name="name"
-              disabled={false}
-              ref={inputRef}
-            />
-            {/* className="opacity-0" */}
-            <div className="custom-menu-buttons">
-              {selected.id !== 'node_head' && (
-                <>
-                  <button
-                    className="custom-button hover:bg-blue-400"
-                    onClick={handleMarkdown}
-                  >
-                    Markdown
-                  </button>
-                  <button
-                    className="custom-button hover:bg-red-400"
-                    onClick={handleDelNode}
-                  >
-                    Delete
-                  </button>
-                </>
-              )}
+      <div className="bg-ylw-palette">
+        <div className="description ">
+          You can drag these nodes to the pane on the right.
+        </div>
+        {allNodesOptions.map((option) => {
+          return (
+            <div
+              key={uuidv4()}
+              className={option.className}
+              onDragStart={(event) => onDragStart(event, option.type)}
+              draggable
+            >
+              {option.name}
             </div>
-          </div>
-        )}
+          )
+        })}
+        {/* <div className="custom"> */}
+        <div className="description">
+          {selected !== null && (
+            <div className="custom-name-input">
+              <label htmlFor="name">Name</label>
+              <input
+                onChange={(e) => {
+                  setNodeName(e.target.value)
+                  setSelectedData(e.target.value) // for updating server
+                  // console.log('selectedData: ', selectedData)
+                }}
+                value={nodeName}
+                className="pl-2 m-0 "
+                type="text"
+                name="name"
+                disabled={false}
+                ref={inputRef}
+              />
+              {/* className="opacity-0" */}
+              <div className="custom-menu-buttons">
+                {selected.id !== 'node_head' && (
+                  <>
+                    <Button
+                      className="custom-button hover:bg-sky-600 "
+                      onClick={handleMarkdown}
+                    >
+                      Markdown
+                    </Button>
+                    <Button
+                      className="custom-button hover:bg-red-600"
+                      onClick={handleDelNode}
+                    >
+                      Delete
+                    </Button>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </aside>
   )

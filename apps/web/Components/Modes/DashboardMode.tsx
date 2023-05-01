@@ -42,7 +42,7 @@ function DashboardMode({ renderPage, setRenderPage }: any) {
 
 
   useEffect(() => {
-    axios.get('http://localhost:8080/trees')
+    axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees`)
       .then((response) => {
         setTrees(response.data)
       })

@@ -46,7 +46,7 @@ function Custom({
     if (selected.type === NODE_TYPE.Branch) {
       const branchId = selected.id
       const response = await axios
-        .delete(`http://localhost:8080/trees/${treeId}/branches/${branchId}`)
+        .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/branches/${branchId}`)
         .catch((error) => {
           console.log('Error deleting branch:', error)
         })
@@ -57,7 +57,7 @@ function Custom({
     ) {
       const leafIdNew = selected.id
       const response = await axios
-        .delete(`http://localhost:8080/trees/${treeId}/leaves/${leafIdNew}`) // req.body though could include leafId: leafIdNew
+        .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/leaves/${leafIdNew}`) // req.body though could include leafId: leafIdNew
         .catch((error) => {
           console.log('Error deleting leaf:', error)
         })

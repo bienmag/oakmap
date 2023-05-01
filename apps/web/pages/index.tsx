@@ -39,7 +39,7 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
 
     if (status === 'authenticated') {
       const tree = await axios.post(
-        'http://localhost:8080/trees',
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/trees`,
         {
           treeName: 'New Tree',
           user: session.user.id,
@@ -141,10 +141,10 @@ export const getServerSideProps: GetServerSideProps<
   const token = await getToken({ req, secret: JWT_SECRET })
 
   const response = await axios.get(
-    `http://localhost:8080/users/${session?.user.id}/trees`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${session?.user.id}/trees`
   )
 
-  const alltrees = await axios.get('http://localhost:8080/trees')
+  const alltrees = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees`)
 
   return {
     props: {

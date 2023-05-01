@@ -10,7 +10,7 @@ export async function postNewBranch(
 ): Promise<AxiosResponse<IBranch>> {
   try {
     const response = await axios.post(
-      `http://localhost:8080/trees/${treeId}/branches`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/branches`,
       {
         branchId: newNode.id,
         treeId: tree._id,
@@ -57,7 +57,7 @@ export async function postNewLeaf(
 ): Promise<AxiosResponse<ILeaf>> {
   try {
     const response = await axios.post(
-      `http://localhost:8080/trees/${treeId}/unlinkedLeaves`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/unlinkedLeaves`,
       {
         leafId: newNode.id,
         treeId: tree._id,
@@ -104,7 +104,7 @@ export async function createNewLeafNode(data: ILeaf) {
 ): Promise<AxiosResponse<IBranch>> {
   try {
     const response = await axios.put(
-      `http://localhost:8080/trees/${treeId}/branches`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/branches`,
       {
         branchId: node.id,
         treeId: tree._id,

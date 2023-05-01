@@ -1,12 +1,14 @@
 {
-  "name": "server",
+  "name": "@oakmap/server",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
  
   "scripts": {
     "test": "jest",
-    "dev": "docker compose up -d  && nodemon src/index.ts"
+    "dev": "docker compose up -d  && nodemon src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",

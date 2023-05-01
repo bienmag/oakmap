@@ -35,7 +35,7 @@ export const authOptions: AuthOptions = {
       const email = profile?.email
       const accessToken = account?.id_token
 
-      const response = await axios.post('http://localhost:8080/users', {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/users`, {
         userId, email, accessToken
       }).then(function (response) {
       })

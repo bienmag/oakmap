@@ -120,7 +120,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
       console.log('Edge onConnect params: ', params)
 
       const response = await axios
-        .post(`http://localhost:8080/trees/${treeId}/edges`, {
+        .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/edges`, {
           edgeId: `edge_${getId()}`,
           source: params.source,
           sourceHandle: params.sourceHandle,
@@ -168,7 +168,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
           // && node.data.label !== ''
           try {
             const response = await axios.put(
-              `http://localhost:8080/trees/${treeId}/branches`,
+              `${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/branches`,
               {
                 branchId: node.id,
                 treeId: tree._id,
@@ -193,7 +193,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
         ) {
           try {
             const response = await axios.put(
-              `http://localhost:8080/trees/${treeId}/unlinkedLeaves`,
+              `${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/unlinkedLeaves`,
               {
                 leafId: node.id,
                 treeId: tree._id,
@@ -233,7 +233,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
 
       // IF DRAGGING A BRANCH
       const response = await axios
-        .put(`http://localhost:8080/trees/${treeId}/branches`, {
+        .put(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/branches`, {
           branchId: node.id,
           treeId: tree._id,
           position: node.position,
@@ -250,7 +250,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
       console.log('THIS IS THE DRAGGED LEAF: ', node)
 
       const response = await axios
-        .put(`http://localhost:8080/trees/${treeId}/unlinkedLeaves`, {
+        .put(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/unlinkedLeaves`, {
           leafId: node.id,
           treeId: tree._id,
           position: node.position,

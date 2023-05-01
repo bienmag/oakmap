@@ -13,6 +13,9 @@
     "dev": {
       "cache": false
     },
-    "test": {}
+    "test": {},
+    "start" :  {
+      "dependsOn": ["^build"]
+     }
   }
 }

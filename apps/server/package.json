@@ -6,7 +6,9 @@
  
   "scripts": {
     "test": "jest",
-    "dev": "docker compose up -d  && nodemon src/index.ts"
+    "dev": "docker compose up -d  && nodemon src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",

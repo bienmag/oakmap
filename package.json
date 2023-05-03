@@ -20,7 +20,7 @@
     "turbo": "^1.7.2"
   },
   "engines": {
-    "node": "16.10"
+    "node": "16.x"
   },
   "packageManager": "yarn@1.22.19",
   "dependencies": {

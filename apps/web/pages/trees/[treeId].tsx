@@ -41,9 +41,9 @@ export const getServerSideProps: GetServerSideProps<TreePageProps> =
 
     console.log(treeId)
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/trees/${treeId}`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}`
     )
-    // const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/trees/63ebb297cfc76b14bf76d970`)
+    // const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees/63ebb297cfc76b14bf76d970`)
     console.log('response', JSON.stringify(response.data, null, 2))
 
     // GET DATA FOR NODES AND EDGES OF EXISTING TREE

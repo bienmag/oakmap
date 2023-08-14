@@ -1,0 +1,423 @@
+{
+	"info": {
+		"_postman_id": "69e9d212-a429-4f66-9ff8-7ca8977826fb",
+		"name": "Oakmap",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21955051"
+	},
+	"item": [
+		{
+			"name": "Create a tree",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"treeName\": \"new tree name\",\n    \"user\" : \"user\"\n    \n}\n ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:{{url}}/trees",
+					"host": [
+						"localhost"
+					],
+					"port": "{{url}}",
+					"path": [
+						"trees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a tree",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"treeName\": \"updated tree name\",\n    \"description\":  \"updated description\" \n}\n ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:{{url}}/trees/:treeId",
+					"host": [
+						"localhost"
+					],
+					"port": "{{url}}",
+					"path": [
+						"trees",
+						":treeId"
+					],
+					"variable": [
+						{
+							"key": "treeId",
+							"value": "63ea51951e9665c6b5b1f1cf"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all trees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:{{url}}/trees",
+					"host": [
+						"localhost"
+					],
+					"port": "{{url}}",
+					"path": [
+						"trees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get one tree by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:{{url}}/trees/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "{{url}}",
+					"path": [
+						"trees",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "63e77bf007e9b4032fe3c740"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a branch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \n\"branchId\" : \"node_214\",\n\"position\": {\"value\":\"value\"},\n\"branchName\": \"name opf the branch\", \n\"leaves\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:{{url}}/trees/:treeId/branches",
+					"host": [
+						"localhost"
+					],
+					"port": "{{url}}",
+					"path": [
+						"trees",
+						":treeId",
+						"branches"
+					],
+					"variable": [
+						{
+							"key": "treeId",
+							"value": "63ea76531a122b8ef7212adf"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a branch",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \n\"branchId\" : \"node_27\",\n\"position\": {\"value\":\"value\"},\n\"markdownText\": \"and i've just updated it again\",\n\"branchName\": \"an updated branch name\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:{{url}}/trees/:treeId/branches",
+					"host": [
+						"localhost"
+					],
+					"port": "{{url}}",
+					"path": [
+						"trees",
+						":treeId",
+						"branches"
+					],
+					"variable": [
+						{
+							"key": "treeId",
+							"value": "63ea51951e9665c6b5b1f1cf"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a branch",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:{{url}}/trees/:id/branches/:branchId",
+					"host": [
+						"localhost"
+					],
+					"port": "{{url}}",
+					"path": [
+						"trees",
+						":id",
+						"branches",
+						":branchId"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						},
+						{
+							"key": "branchId",
+							"value": "node_999"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a list of branches",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/trees/id/branches",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"trees",
+						"id",
+						"branches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a branch",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/trees/id/branches/id",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"trees",
+						"id",
+						"branches",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a leaf",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"leafId\" : \"node_342\",\n\"position\" : {\"value\":\"value\"}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:{{url}}/trees/:treeId/unlinkedLeaves",
+					"host": [
+						"localhost"
+					],
+					"port": "{{url}}",
+					"path": [
+						"trees",
+						":treeId",
+						"unlinkedLeaves"
+					],
+					"variable": [
+						{
+							"key": "treeId",
+							"value": "63ea76531a122b8ef7212adf"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Leaf",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"leafId\" : \"node_342\",\n\"position\" : {\"value\":\"value\"}, \n\"leafName\": \"This is the updated leaf name\",\n\"markdownText\": \"the newest markdown\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:{{url}}/trees/:treeId/unlinkedLeaves/",
+					"host": [
+						"localhost"
+					],
+					"port": "{{url}}",
+					"path": [
+						"trees",
+						":treeId",
+						"unlinkedLeaves",
+						""
+					],
+					"variable": [
+						{
+							"key": "treeId",
+							"value": "63ea51951e9665c6b5b1f1cf"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a list of leaves",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/trees/id/branches/id/leaves",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"trees",
+						"id",
+						"branches",
+						"id",
+						"leaves"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a leaf",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Markdown",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:{{url}}/markdown/node_999",
+					"host": [
+						"localhost"
+					],
+					"port": "{{url}}",
+					"path": [
+						"markdown",
+						"node_999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Link/unlink",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n   \"branchId\" : \"node_214\", \n   \"leafId\": \"node_342\"\n\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:{{url}}/trees/:treeId/leaves",
+					"host": [
+						"localhost"
+					],
+					"port": "{{url}}",
+					"path": [
+						"trees",
+						":treeId",
+						"leaves"
+					],
+					"variable": [
+						{
+							"key": "treeId",
+							"value": "63ea76531a122b8ef7212adf"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "8080"
+		}
+	]
+}

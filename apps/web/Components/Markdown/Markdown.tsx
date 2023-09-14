@@ -31,12 +31,11 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
   const createMD = async () => {
     if (marked === null) return
     if (marked.type === NODE_TYPE.Branch) {
-      const response = await axios
-        .put(`http://localhost:8080/trees/${treeId}/branches`,
-          {
-            branchId: marked.id,
-            markdownText: text
-          })
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/branches`,
+        {
+          branchId: marked.id,
+          markdownText: text
+        })
         .catch((error) => {
           console.log('Error adding markdown:', error)
         })
@@ -46,13 +45,12 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
       marked.type === NODE_TYPE.RightLeaf
     ) {
 
-      const response = await axios
-        .put(`http://localhost:8080/trees/${treeId}/unlinkedLeaves`,
-          {
-            leafId: marked.id,
-            markdownText: text
-          }
-        )
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/unlinkedLeaves`,
+        {
+          leafId: marked.id,
+          markdownText: text
+        }
+      )
         .catch((error) => {
           console.log('Error adding markdown:', error)
         })
@@ -76,8 +74,7 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
     if (marked === null) return
     if (marked.type === NODE_TYPE.Branch) {
       const nodeId = marked.id
-      const response = await axios
-        .get(`http://localhost:8080/markdown/${nodeId}`)
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/markdown/${nodeId}`)
         .catch((error) => {
           console.log('There is no markdown:', error)
         })
@@ -89,8 +86,7 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
       marked.type === NODE_TYPE.RightLeaf
     ) {
       const nodeId = marked.id
-      const response = await axios
-        .get(`http://localhost:8080/markdown/${nodeId}`)
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/markdown/${nodeId}`)
         .catch((error) => {
           console.log('There is no markdown:', error)
         })

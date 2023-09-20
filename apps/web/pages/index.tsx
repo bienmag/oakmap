@@ -12,7 +12,7 @@ import { getToken } from 'next-auth/jwt'
 import { JWT_SECRET } from '../Resources/lib/constants'
 import Container from '../Components/Wrapper/Container'
 import { Sidebar } from '../Components/Sidebar/Sidebar'
-import { redirect } from 'next/dist/server/api-utils'
+import { useRouter } from 'next/router'
 import cogoToast from 'cogo-toast'
 import List from '../Components/Wrapper/List'
 
@@ -32,6 +32,7 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
   // token,
 }) => {
   const { data: session, status } = useSession()
+  const router = useRouter()
 
   const handleCreateTree = async (e: React.MouseEvent) => {
     e.preventDefault()
@@ -56,7 +57,7 @@ const DashboardPage: NextPage<DashboardPageProps> = ({
       cogoToast.success('The tree was created!', { hideAfter: 1 })
 
       ////////////////////////////redirect//////////////////////////////////////
-      // redirect(`/trees/${tree.data._id}`)
+      router.push(`/trees/${tree.data._id}`)
       //////////////////////////////////
     } else {
       signIn('google')

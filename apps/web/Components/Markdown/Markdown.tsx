@@ -79,7 +79,6 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
           console.log('There is no markdown:', error)
         })
       setMDText(response?.data.markdownText)
-
     }
     if (
       marked.type === NODE_TYPE.LeftLeaf ||
@@ -102,7 +101,7 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
   useEffect(() => {
     // setText(marked === null ? '' : text)
     setText(marked === null ? '' : mdText)
-  }, [marked])
+  }, [marked, mdText])
 
   // Text Formatting Buttons function
   const textAreaRef = useRef<HTMLTextAreaElement>(null)

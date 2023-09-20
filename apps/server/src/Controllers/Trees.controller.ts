@@ -1,15 +1,14 @@
-
-import { Request, Response, NextFunction } from "express";
-import Tree from "../Models/Trees";
-import Branch from "../Models/Branches";
-const mongodb = require('mongodb');
-import { DBTree } from "../lib/mongo";
-import Markdown from "../Models/Markdowns";
-import Leaf from "../Models/Leaves";
-import { ObjectId } from "mongodb";
-import Edge from "../Models/Edges";
-import { mongo } from "mongoose";
-import User from "../Models/Users";
+import { Request, Response, NextFunction } from 'express'
+import Tree from '../Models/Trees'
+import Branch from '../Models/Branches'
+const mongodb = require('mongodb')
+import { DBTree } from '../lib/mongo'
+import Markdown from '../Models/Markdowns'
+import Leaf from '../Models/Leaves'
+import { ObjectId } from 'mongodb'
+import Edge from '../Models/Edges'
+import { mongo } from 'mongoose'
+import User from '../Models/Users'
 
 const TreesController = {
   // create tree
@@ -36,8 +35,17 @@ const TreesController = {
         label: 'root',
       }
 
-      const tree = await Tree.create(treeId, treeName, root, date, user, branches, unlinkedLeaves, edges, username)
-
+      const tree = await Tree.create(
+        treeId,
+        treeName,
+        root,
+        date,
+        user,
+        branches,
+        unlinkedLeaves,
+        edges,
+        username
+      )
 
       const id = new mongodb.ObjectId(treeId)
       await User.update(user, id)
@@ -130,8 +138,12 @@ const TreesController = {
       res.status(201).json(branch)
 
       if (markdownText) {
-        console.log('here', markdownText)
-        await Markdown.updateBranchMD(treeId, markdownText, branchId)
+        const updatedBranch = await Markdown.updateBranchMD(
+          treeId,
+          markdownText,
+          branchId
+        )
+        return updatedBranch
       }
     } catch (e) {
       next(e)
@@ -330,11 +342,10 @@ const TreesController = {
       const user = await User.create(_id, userId, email, accessToken)
       console.log('user from controller', user)
       res.status(201).json(user)
-    }
-    catch (e) {
+    } catch (e) {
       next(e)
     }
-  }
+  },
 }
 
 export default TreesController

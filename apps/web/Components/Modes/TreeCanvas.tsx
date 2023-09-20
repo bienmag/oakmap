@@ -96,7 +96,7 @@ export function TreeCanvas({ tree }: TreeCanvasProps) {
   // useRef for double click on node to focus on input text
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const [treeMode, setTreeMode] = useState(TREE_MODE.Editor)
+  const [treeMode, setTreeMode] = useState(TREE_MODE.Reader)
 
   // Import State for Nodes and Edges from NodesContext
   const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } =

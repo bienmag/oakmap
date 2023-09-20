@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { EDITOR, READER } from '../../Resources/Enums/Options'
+import { EDITOR, NODE_TYPE, READER } from '../../Resources/Enums/Options'
 import {
   handleSetNode,
   INodeInfo,
@@ -12,6 +12,8 @@ import {
 } from '../../Resources/Packages/RFlow/Markdown'
 import { v4 as uuidv4 } from 'uuid'
 import { Node } from 'reactflow'
+import { useRouter } from 'next/router'
+import axios from 'axios'
 
 interface IMarkdownProps {
   marked: Node<INodeInfo> | null
@@ -20,12 +22,76 @@ interface IMarkdownProps {
   treeMode: TreeMode
 }
 
+
 function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
+  const router = useRouter()
+  const objtreeId = router.query
+  const treeId = Object.values(objtreeId)[0]
+
+  const createMD = async () => {
+    if (marked === null) return
+    if (marked.type === NODE_TYPE.Branch) {
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/branches`,
+        {
+          branchId: marked.id,
+          markdownText: text
+        })
+        .catch((error) => {
+          console.log('Error adding markdown:', error)
+        })
+    }
+    if (
+      marked.type === NODE_TYPE.LeftLeaf ||
+      marked.type === NODE_TYPE.RightLeaf
+    ) {
+
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_SERVER_URL}/trees/${treeId}/unlinkedLeaves`,
+        {
+          leafId: marked.id,
+          markdownText: text
+        }
+      )
+        .catch((error) => {
+          console.log('Error adding markdown:', error)
+        })
+    }
+  }
+
+
+
   const handleBackgroundClick = (e: React.MouseEvent) => {
+    createMD()
     setMarked(null)
   }
 
   const [text, setText] = useState('')
+  const [mdText, setMDText] = useState('')
+
+  const getMD = async () => {
+
+
+
+    if (marked === null) return
+    if (marked.type === NODE_TYPE.Branch) {
+      const nodeId = marked.id
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/markdown/${nodeId}`)
+        .catch((error) => {
+          console.log('There is no markdown:', error)
+        })
+      setMDText(response?.data.markdownText)
+    }
+    if (
+      marked.type === NODE_TYPE.LeftLeaf ||
+      marked.type === NODE_TYPE.RightLeaf
+    ) {
+      const nodeId = marked.id
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/markdown/${nodeId}`)
+        .catch((error) => {
+          console.log('There is no markdown:', error)
+        })
+      setMDText(response?.data.markdownText)
+    }
+  }
 
   useEffect(() => {
     if (marked === null) return
@@ -33,14 +99,17 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
   }, [marked, text, setNodes])
 
   useEffect(() => {
-    setText(marked === null ? '' : marked.data.text)
-  }, [marked])
+    // setText(marked === null ? '' : text)
+    setText(marked === null ? '' : mdText)
+  }, [marked, mdText])
 
   // Text Formatting Buttons function
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   const insertText = (insertion: string) =>
     CBackInsertText(textAreaRef, setText, insertion)
+
+  getMD()
 
   //reader and no text
   if (
@@ -53,11 +122,12 @@ function Markdown({ marked, setMarked, setNodes, treeMode }: IMarkdownProps) {
 
   //reader and text
   else if (marked && treeMode === READER && marked.data.text !== '') {
+
     return (
       <>
         <div className="markdownBG" onClick={handleBackgroundClick}></div>
         <div className="markdown">
-          <ReactMarkdown>{text}</ReactMarkdown>
+          <ReactMarkdown>{mdText}</ReactMarkdown>
         </div>
       </>
     )

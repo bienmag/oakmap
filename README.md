@@ -1,73 +1,29 @@
-# Turborepo starter
+# OAKMAP
 
-This is an official Yarn v1 starter turborepo.
+## Description:
+Oakmap is a user-friendly tool designed for creating educational roadmaps. It simplifies the process of planning and visualizing educational journeys, making it easy for educators, students, and anyone interested in structured learning to create and share roadmaps for various subjects and goals.
 
-## What's inside?
+## Getting Started:
+Feel free to explore Oakmap using the following link: [OAKMAP](https://oakmap.vercel.app/)
 
-This turborepo uses [Yarn](https://classic.yarnpkg.com/) as a package manager. It includes the following packages/apps:
+You can browse the trees created by us or create your own trees by simply logging in with your Gmail account and clicking the "+" button on the main Dashboard. You will be redirected to the page of your newly created tree. By default, it's set to "Reader" mode. To add branches and leaves, click the "Edit" button in the right corner. You can add nodes by dragging them to your tree map. Once a node is placed, you can link it to its parent. To name a node, simply double-click on it and start typing. To add Markdown text, click on a node and then select "Markdown." A markdown panel will appear on the right. When you finish adding the markdown text, click outside of the markdown panel to close it.
 
-### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+## Open Source Project:
+Oakmap is an open-source project, and we welcome contributions from the community. If you're interested in improving or extending Oakmap, please consider contributing. 
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## Installation: 
+To install Oakmap locally for development or testing purposes, follow these steps:
 
-### Utilities
+- Clone the Oakmap repository from GitHub:
+``` gco https://github.com/bienmag/oakmap.git ```
 
-This turborepo has some additional tools already setup for you:
+- Create a .env file in the apps/server and apps/web directories of the project and add the necessary environment variables
+  
+- Navigate to the Oakmap directory:
+``` cd oakmap ```
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- Install the required dependencies:
+``` yarn install ``` 
 
-### Build
 
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-yarn run build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-yarn run dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
